@@ -20,5 +20,18 @@ Pascal bindings that allow you to use **SDL** and other useful libraries with <a
 ### Usage
 You simply add `SDL` to your uses section and everything will be linked in and ready for use. You will have direct access to all the above libraries. 
 
+### Support
+- <a href="https://github.com/tinyBigGAMES/SDL/issues" target="_blank">Issues</a>
+- <a href="https://github.com/tinyBigGAMES/SDL/projects/1" target="_blank">Issue Tracking</a>
+- <a href="https://github.com/tinyBigGAMES/SDL/discussions" target="_blank">Discussions</a>
+- <a href="https://github.com/tinyBigGAMES/SDL/wiki" target="_blank">Wiki</a>
+- <a href="https://tinybiggames.com/contact/" target="_blank">Contact</a>
+
 ***NOTE:** We're using SDL for our game projects therefore these bindings will always remain up to date.* :cool:
+
+<div style="text-align: center;">
+
+![Delphi](media/delphi.png)   
+Made with :heart: in Delphi 11
+</div>
 
