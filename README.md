@@ -28,10 +28,15 @@ You simply add `SDL` to your uses section and everything will be linked in and r
 - <a href="https://tinybiggames.com/contact/" target="_blank">Contact</a>
 
 ***NOTE:** We're using SDL for our game projects therefore these bindings will always remain up to date.* :cool:
+<p align="center">
+<img src="media/delphi.png" alt="Delphi">
+</p>
+<h5 align="center">
 
-<center>
-
-![Delphi](media/delphi.png)   
 Made with :heart: in Delphi 11
-</center>
+</h6>
+
+
+
+
 
