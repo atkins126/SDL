@@ -29,9 +29,9 @@ You simply add `SDL` to your uses section and everything will be linked in and r
 
 ***NOTE:** We're using SDL for our game projects therefore these bindings will always remain up to date.* :cool:
 
-<div style="text-align: center;">
+<center>
 
 ![Delphi](media/delphi.png)   
 Made with :heart: in Delphi 11
-</div>
+</center>
 
