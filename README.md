@@ -6,13 +6,13 @@ Pascal bindings that allow you to use **SDL** and other useful libraries with <a
 
 ### Included
 - **SDL** (https://github.com/libsdl-org/SDL)
-- **PL_MPEG** (https://github.com/phoboslab/pl_mpeg)
+- **pl_mpeg** (https://github.com/phoboslab/pl_mpeg)
 - **Nuklear** (https://github.com/Immediate-Mode-UI/Nuklear)
 - **stb_image** (https://github.com/nothings/stb)
 - **stb_image_write** (https://github.com/nothings/stb)
 - **stb_truetype** (https://github.com/nothings/stb)
-- **MINIAUDIO** (https://github.com/mackron/miniaudio)
-
+- **miniaudio** (https://github.com/mackron/miniaudio)
+- **physfs** (https://github.com/icculus/physfs)
 ### Minimum Requirements 
 - Windows 10+ (64 bits)
 - <a href="https://www.embarcadero.com/products/delphi/starter" target="_blank">Delphi Community Edition</a> (Win64 platform only)

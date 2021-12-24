@@ -13,12 +13,13 @@
 
  Inclued:
    - SDL (https://github.com/libsdl-org/SDL)
-   - PL_MPEG (https://github.com/phoboslab/pl_mpeg)
+   - pl_mpeg (https://github.com/phoboslab/pl_mpeg)
    - Nuklear (https://github.com/Immediate-Mode-UI/Nuklear)
    - stb_image (https://github.com/nothings/stb)
    - stb_image_write (https://github.com/nothings/stb)
    - stb_truetype (https://github.com/nothings/stb)
-   - MINIAUDIO (https://github.com/mackron/miniaudio)
+   - miniaudio (https://github.com/mackron/miniaudio)
+   - physfs (https://github.com/icculus/physfs)
    
  Minimum Requirements:
    - Windows 10+ (64 bits)
@@ -715,6 +716,9 @@ const
   MA_SOUND_FLAG_NO_SPATIALIZATION = $00000040;
   MA_ENGINE_MAX_LISTENERS = 4;
   MA_SOUND_SOURCE_CHANNEL_COUNT = $FFFFFFFF;
+  PHYSFS_VER_MAJOR = 3;
+  PHYSFS_VER_MINOR = 1;
+  PHYSFS_VER_PATCH = 0;
   SDL_FALSE = 0;
   SDL_TRUE = 1;
   SDL_ASSERTION_RETRY = 0;
@@ -2156,6 +2160,43 @@ const
   ma_node_state_stopped = 1;
   ma_engine_node_type_sound = 0;
   ma_engine_node_type_group = 1;
+  PHYSFS_ENUM_ERROR = -1;
+  PHYSFS_ENUM_STOP = 0;
+  PHYSFS_ENUM_OK = 1;
+  PHYSFS_FILETYPE_REGULAR = 0;
+  PHYSFS_FILETYPE_DIRECTORY = 1;
+  PHYSFS_FILETYPE_SYMLINK = 2;
+  PHYSFS_FILETYPE_OTHER = 3;
+  PHYSFS_ERR_OK = 0;
+  PHYSFS_ERR_OTHER_ERROR = 1;
+  PHYSFS_ERR_OUT_OF_MEMORY = 2;
+  PHYSFS_ERR_NOT_INITIALIZED = 3;
+  PHYSFS_ERR_IS_INITIALIZED = 4;
+  PHYSFS_ERR_ARGV0_IS_NULL = 5;
+  PHYSFS_ERR_UNSUPPORTED = 6;
+  PHYSFS_ERR_PAST_EOF = 7;
+  PHYSFS_ERR_FILES_STILL_OPEN = 8;
+  PHYSFS_ERR_INVALID_ARGUMENT = 9;
+  PHYSFS_ERR_NOT_MOUNTED = 10;
+  PHYSFS_ERR_NOT_FOUND = 11;
+  PHYSFS_ERR_SYMLINK_FORBIDDEN = 12;
+  PHYSFS_ERR_NO_WRITE_DIR = 13;
+  PHYSFS_ERR_OPEN_FOR_READING = 14;
+  PHYSFS_ERR_OPEN_FOR_WRITING = 15;
+  PHYSFS_ERR_NOT_A_FILE = 16;
+  PHYSFS_ERR_READ_ONLY = 17;
+  PHYSFS_ERR_CORRUPT = 18;
+  PHYSFS_ERR_SYMLINK_LOOP = 19;
+  PHYSFS_ERR_IO = 20;
+  PHYSFS_ERR_PERMISSION = 21;
+  PHYSFS_ERR_NO_SPACE = 22;
+  PHYSFS_ERR_BAD_FILENAME = 23;
+  PHYSFS_ERR_BUSY = 24;
+  PHYSFS_ERR_DIR_NOT_EMPTY = 25;
+  PHYSFS_ERR_OS_ERROR = 26;
+  PHYSFS_ERR_DUPLICATE = 27;
+  PHYSFS_ERR_BAD_PASSWORD = 28;
+  PHYSFS_ERR_APP_CALLBACK = 29;
   SDL_WINDOWPOS_UNDEFINED = SDL_WINDOWPOS_UNDEFINED_MASK or 0;
   SDL_WINDOWPOS_CENTERED = SDL_WINDOWPOS_CENTERED_MASK or 0;
 
@@ -2994,6 +3035,24 @@ type
 
   { Pma_engine_node_type  }
   Pma_engine_node_type = ^ma_engine_node_type;
+
+  { PHYSFS_EnumerateCallbackResult  }
+  PHYSFS_EnumerateCallbackResult = Integer;
+
+  { PPHYSFS_EnumerateCallbackResult  }
+  PPHYSFS_EnumerateCallbackResult = ^PHYSFS_EnumerateCallbackResult;
+
+  { PHYSFS_FileType  }
+  PHYSFS_FileType = Integer;
+
+  { PPHYSFS_FileType  }
+  PPHYSFS_FileType = ^PHYSFS_FileType;
+
+  { PHYSFS_ErrorCode  }
+  PHYSFS_ErrorCode = Integer;
+
+  { PPHYSFS_ErrorCode  }
+  PPHYSFS_ErrorCode = ^PHYSFS_ErrorCode;
   // Forward declarations
 
   { PPUTF8Char  }
@@ -4081,6 +4140,30 @@ type
 
   { Pma_engine  }
   Pma_engine = ^ma_engine;
+
+  { PPHYSFS_File  }
+  PPHYSFS_File = ^PHYSFS_File;
+
+  { PPHYSFS_ArchiveInfo  }
+  PPHYSFS_ArchiveInfo = ^PHYSFS_ArchiveInfo;
+
+  { PPPHYSFS_ArchiveInfo  }
+  PPPHYSFS_ArchiveInfo = ^PPHYSFS_ArchiveInfo;
+
+  { PPHYSFS_Version  }
+  PPHYSFS_Version = ^PHYSFS_Version;
+
+  { PPHYSFS_Allocator  }
+  PPHYSFS_Allocator = ^PHYSFS_Allocator;
+
+  { PPHYSFS_Stat  }
+  PPHYSFS_Stat = ^PHYSFS_Stat;
+
+  { PPHYSFS_Io  }
+  PPHYSFS_Io = ^PHYSFS_Io;
+
+  { PPHYSFS_Archiver  }
+  PPHYSFS_Archiver = ^PHYSFS_Archiver;
 
   { int8_t  }
   int8_t = UTF8Char;
@@ -9172,6 +9255,150 @@ type
     monoExpansionMode: ma_mono_expansion_mode;
   end;
 
+  { PHYSFS_uint8  }
+  PHYSFS_uint8 = Byte;
+
+  { PHYSFS_sint8  }
+  PHYSFS_sint8 = UTF8Char;
+
+  { PHYSFS_uint16  }
+  PHYSFS_uint16 = Word;
+
+  { PPHYSFS_uint16  }
+  PPHYSFS_uint16 = ^PHYSFS_uint16;
+
+  { PHYSFS_sint16  }
+  PHYSFS_sint16 = Smallint;
+
+  { PPHYSFS_sint16  }
+  PPHYSFS_sint16 = ^PHYSFS_sint16;
+
+  { PHYSFS_uint32  }
+  PHYSFS_uint32 = Cardinal;
+
+  { PPHYSFS_uint32  }
+  PPHYSFS_uint32 = ^PHYSFS_uint32;
+
+  { PHYSFS_sint32  }
+  PHYSFS_sint32 = Integer;
+
+  { PPHYSFS_sint32  }
+  PPHYSFS_sint32 = ^PHYSFS_sint32;
+
+  { PHYSFS_sint64  }
+  PHYSFS_sint64 = Int64;
+
+  { PPHYSFS_sint64  }
+  PPHYSFS_sint64 = ^PHYSFS_sint64;
+
+  { PHYSFS_uint64  }
+  PHYSFS_uint64 = UInt64;
+
+  { PPHYSFS_uint64  }
+  PPHYSFS_uint64 = ^PHYSFS_uint64;
+
+  { PHYSFS_compile_time_assert_uint8IsOneByte  }
+  PHYSFS_compile_time_assert_uint8IsOneByte = array [0..0] of Integer;
+
+  { PHYSFS_compile_time_assert_sint8IsOneByte  }
+  PHYSFS_compile_time_assert_sint8IsOneByte = array [0..0] of Integer;
+
+  { PHYSFS_compile_time_assert_uint16IsTwoBytes  }
+  PHYSFS_compile_time_assert_uint16IsTwoBytes = array [0..0] of Integer;
+
+  { PHYSFS_compile_time_assert_sint16IsTwoBytes  }
+  PHYSFS_compile_time_assert_sint16IsTwoBytes = array [0..0] of Integer;
+
+  { PHYSFS_compile_time_assert_uint32IsFourBytes  }
+  PHYSFS_compile_time_assert_uint32IsFourBytes = array [0..0] of Integer;
+
+  { PHYSFS_compile_time_assert_sint32IsFourBytes  }
+  PHYSFS_compile_time_assert_sint32IsFourBytes = array [0..0] of Integer;
+
+  { PHYSFS_compile_time_assert_uint64IsEightBytes  }
+  PHYSFS_compile_time_assert_uint64IsEightBytes = array [0..0] of Integer;
+
+  { PHYSFS_compile_time_assert_sint64IsEightBytes  }
+  PHYSFS_compile_time_assert_sint64IsEightBytes = array [0..0] of Integer;
+
+  { PHYSFS_File  }
+  PHYSFS_File = record
+    opaque: Pointer;
+  end;
+
+  { PHYSFS_ArchiveInfo  }
+  PHYSFS_ArchiveInfo = record
+    extension: PUTF8Char;
+    description: PUTF8Char;
+    author: PUTF8Char;
+    url: PUTF8Char;
+    supportsSymlinks: Integer;
+  end;
+
+  { PHYSFS_Version  }
+  PHYSFS_Version = record
+    major: PHYSFS_uint8;
+    minor: PHYSFS_uint8;
+    patch: PHYSFS_uint8;
+  end;
+
+  { PHYSFS_Allocator  }
+  PHYSFS_Allocator = record
+    Init: function(): Integer; cdecl;
+    Deinit: procedure(); cdecl;
+    Malloc: function(p1: PHYSFS_uint64): Pointer; cdecl;
+    Realloc: function(p1: Pointer; p2: PHYSFS_uint64): Pointer; cdecl;
+    Free: procedure(p1: Pointer); cdecl;
+  end;
+
+  { PHYSFS_StringCallback  }
+  PHYSFS_StringCallback = procedure(data: Pointer; const str: PUTF8Char); cdecl;
+
+  { PHYSFS_EnumFilesCallback  }
+  PHYSFS_EnumFilesCallback = procedure(data: Pointer; const origdir: PUTF8Char; const fname: PUTF8Char); cdecl;
+
+  { PHYSFS_EnumerateCallback  }
+  PHYSFS_EnumerateCallback = function(data: Pointer; const origdir: PUTF8Char; const fname: PUTF8Char): PHYSFS_EnumerateCallbackResult; cdecl;
+
+  { PHYSFS_Stat  }
+  PHYSFS_Stat = record
+    filesize: PHYSFS_sint64;
+    modtime: PHYSFS_sint64;
+    createtime: PHYSFS_sint64;
+    accesstime: PHYSFS_sint64;
+    filetype: PHYSFS_FileType;
+    readonly: Integer;
+  end;
+
+  { PHYSFS_Io  }
+  PHYSFS_Io = record
+    version: PHYSFS_uint32;
+    opaque: Pointer;
+    read: function(io: PPHYSFS_Io; buf: Pointer; len: PHYSFS_uint64): PHYSFS_sint64; cdecl;
+    write: function(io: PPHYSFS_Io; const buffer: Pointer; len: PHYSFS_uint64): PHYSFS_sint64; cdecl;
+    seek: function(io: PPHYSFS_Io; offset: PHYSFS_uint64): Integer; cdecl;
+    tell: function(io: PPHYSFS_Io): PHYSFS_sint64; cdecl;
+    length: function(io: PPHYSFS_Io): PHYSFS_sint64; cdecl;
+    duplicate: function(io: PPHYSFS_Io): PPHYSFS_Io; cdecl;
+    flush: function(io: PPHYSFS_Io): Integer; cdecl;
+    destroy: procedure(io: PPHYSFS_Io); cdecl;
+  end;
+
+  { PHYSFS_Archiver  }
+  PHYSFS_Archiver = record
+    version: PHYSFS_uint32;
+    info: PHYSFS_ArchiveInfo;
+    openArchive: function(io: PPHYSFS_Io; const name: PUTF8Char; forWrite: Integer; claimed: PInteger): Pointer; cdecl;
+    enumerate: function(opaque: Pointer; const dirname: PUTF8Char; cb: PHYSFS_EnumerateCallback; const origdir: PUTF8Char; callbackdata: Pointer): PHYSFS_EnumerateCallbackResult; cdecl;
+    openRead: function(opaque: Pointer; const fnm: PUTF8Char): PPHYSFS_Io; cdecl;
+    openWrite: function(opaque: Pointer; const filename: PUTF8Char): PPHYSFS_Io; cdecl;
+    openAppend: function(opaque: Pointer; const filename: PUTF8Char): PPHYSFS_Io; cdecl;
+    remove: function(opaque: Pointer; const filename: PUTF8Char): Integer; cdecl;
+    mkdir: function(opaque: Pointer; const filename: PUTF8Char): Integer; cdecl;
+    stat: function(opaque: Pointer; const fn: PUTF8Char; stat: PPHYSFS_Stat): Integer; cdecl;
+    closeArchive: procedure(opaque: Pointer); cdecl;
+  end;
+
   { SDL_qsort_compare  }
   SDL_qsort_compare = function(const p1: Pointer; const p2: Pointer): Integer; cdecl;
 
@@ -9189,6 +9416,9 @@ type
 
   { nk_combobox_callback_item_getter  }
   nk_combobox_callback_item_getter = procedure(p1: Pointer; p2: Integer; p3: PPUTF8Char); cdecl;
+
+  { PHYSFS_mountMemory_del  }
+  PHYSFS_mountMemory_del = procedure(p1: Pointer); cdecl;
 
 var
   ma_aligned_free: procedure(p: Pointer; const pAllocationCallbacks: Pma_allocation_callbacks); cdecl;
@@ -10534,6 +10764,114 @@ var
   nk_window_set_size: procedure(p1: Pnk_context; const name: PUTF8Char; p3: nk_vec2); cdecl;
   nk_window_show: procedure(p1: Pnk_context; const name: PUTF8Char; p3: nk_show_states); cdecl;
   nk_window_show_if: procedure(p1: Pnk_context; const name: PUTF8Char; p3: nk_show_states; cond: Integer); cdecl;
+  PHYSFS_addToSearchPath: function(const newDir: PUTF8Char; appendToPath: Integer): Integer; cdecl;
+  PHYSFS_caseFold: function(const from: PHYSFS_uint32; _to: PPHYSFS_uint32): Integer; cdecl;
+  PHYSFS_close: function(handle: PPHYSFS_File): Integer; cdecl;
+  PHYSFS_deinit: function(): Integer; cdecl;
+  PHYSFS_delete: function(const filename: PUTF8Char): Integer; cdecl;
+  PHYSFS_deregisterArchiver: function(const ext: PUTF8Char): Integer; cdecl;
+  PHYSFS_enumerate: function(const dir: PUTF8Char; c: PHYSFS_EnumerateCallback; d: Pointer): Integer; cdecl;
+  PHYSFS_enumerateFiles: function(const dir: PUTF8Char): PPUTF8Char; cdecl;
+  PHYSFS_enumerateFilesCallback: procedure(const dir: PUTF8Char; c: PHYSFS_EnumFilesCallback; d: Pointer); cdecl;
+  PHYSFS_eof: function(handle: PPHYSFS_File): Integer; cdecl;
+  PHYSFS_exists: function(const fname: PUTF8Char): Integer; cdecl;
+  PHYSFS_fileLength: function(handle: PPHYSFS_File): PHYSFS_sint64; cdecl;
+  PHYSFS_flush: function(handle: PPHYSFS_File): Integer; cdecl;
+  PHYSFS_freeList: procedure(listVar: Pointer); cdecl;
+  PHYSFS_getAllocator: function(): PPHYSFS_Allocator; cdecl;
+  PHYSFS_getBaseDir: function(): PUTF8Char; cdecl;
+  PHYSFS_getCdRomDirs: function(): PPUTF8Char; cdecl;
+  PHYSFS_getCdRomDirsCallback: procedure(c: PHYSFS_StringCallback; d: Pointer); cdecl;
+  PHYSFS_getDirSeparator: function(): PUTF8Char; cdecl;
+  PHYSFS_getErrorByCode: function(code: PHYSFS_ErrorCode): PUTF8Char; cdecl;
+  PHYSFS_getLastError: function(): PUTF8Char; cdecl;
+  PHYSFS_getLastErrorCode: function(): PHYSFS_ErrorCode; cdecl;
+  PHYSFS_getLastModTime: function(const filename: PUTF8Char): PHYSFS_sint64; cdecl;
+  PHYSFS_getLinkedVersion: procedure(ver: PPHYSFS_Version); cdecl;
+  PHYSFS_getMountPoint: function(const dir: PUTF8Char): PUTF8Char; cdecl;
+  PHYSFS_getPrefDir: function(const org: PUTF8Char; const app: PUTF8Char): PUTF8Char; cdecl;
+  PHYSFS_getRealDir: function(const filename: PUTF8Char): PUTF8Char; cdecl;
+  PHYSFS_getSearchPath: function(): PPUTF8Char; cdecl;
+  PHYSFS_getSearchPathCallback: procedure(c: PHYSFS_StringCallback; d: Pointer); cdecl;
+  PHYSFS_getUserDir: function(): PUTF8Char; cdecl;
+  PHYSFS_getWriteDir: function(): PUTF8Char; cdecl;
+  PHYSFS_init: function(const argv0: PUTF8Char): Integer; cdecl;
+  PHYSFS_isDirectory: function(const fname: PUTF8Char): Integer; cdecl;
+  PHYSFS_isInit: function(): Integer; cdecl;
+  PHYSFS_isSymbolicLink: function(const fname: PUTF8Char): Integer; cdecl;
+  PHYSFS_mkdir: function(const dirName: PUTF8Char): Integer; cdecl;
+  PHYSFS_mount: function(const newDir: PUTF8Char; const mountPoint: PUTF8Char; appendToPath: Integer): Integer; cdecl;
+  PHYSFS_mountHandle: function(_file: PPHYSFS_File; const newDir: PUTF8Char; const mountPoint: PUTF8Char; appendToPath: Integer): Integer; cdecl;
+  PHYSFS_mountIo: function(io: PPHYSFS_Io; const newDir: PUTF8Char; const mountPoint: PUTF8Char; appendToPath: Integer): Integer; cdecl;
+  PHYSFS_mountMemory: function(const buf: Pointer; len: PHYSFS_uint64; del: PHYSFS_mountMemory_del; const newDir: PUTF8Char; const mountPoint: PUTF8Char; appendToPath: Integer): Integer; cdecl;
+  PHYSFS_openAppend: function(const filename: PUTF8Char): PPHYSFS_File; cdecl;
+  PHYSFS_openRead: function(const filename: PUTF8Char): PPHYSFS_File; cdecl;
+  PHYSFS_openWrite: function(const filename: PUTF8Char): PPHYSFS_File; cdecl;
+  PHYSFS_permitSymbolicLinks: procedure(allow: Integer); cdecl;
+  PHYSFS_read: function(handle: PPHYSFS_File; buffer: Pointer; objSize: PHYSFS_uint32; objCount: PHYSFS_uint32): PHYSFS_sint64; cdecl;
+  PHYSFS_readBytes: function(handle: PPHYSFS_File; buffer: Pointer; len: PHYSFS_uint64): PHYSFS_sint64; cdecl;
+  PHYSFS_readSBE16: function(_file: PPHYSFS_File; val: PPHYSFS_sint16): Integer; cdecl;
+  PHYSFS_readSBE32: function(_file: PPHYSFS_File; val: PPHYSFS_sint32): Integer; cdecl;
+  PHYSFS_readSBE64: function(_file: PPHYSFS_File; val: PPHYSFS_sint64): Integer; cdecl;
+  PHYSFS_readSLE16: function(_file: PPHYSFS_File; val: PPHYSFS_sint16): Integer; cdecl;
+  PHYSFS_readSLE32: function(_file: PPHYSFS_File; val: PPHYSFS_sint32): Integer; cdecl;
+  PHYSFS_readSLE64: function(_file: PPHYSFS_File; val: PPHYSFS_sint64): Integer; cdecl;
+  PHYSFS_readUBE16: function(_file: PPHYSFS_File; val: PPHYSFS_uint16): Integer; cdecl;
+  PHYSFS_readUBE32: function(_file: PPHYSFS_File; val: PPHYSFS_uint32): Integer; cdecl;
+  PHYSFS_readUBE64: function(_file: PPHYSFS_File; val: PPHYSFS_uint64): Integer; cdecl;
+  PHYSFS_readULE16: function(_file: PPHYSFS_File; val: PPHYSFS_uint16): Integer; cdecl;
+  PHYSFS_readULE32: function(_file: PPHYSFS_File; val: PPHYSFS_uint32): Integer; cdecl;
+  PHYSFS_readULE64: function(_file: PPHYSFS_File; val: PPHYSFS_uint64): Integer; cdecl;
+  PHYSFS_registerArchiver: function(const archiver: PPHYSFS_Archiver): Integer; cdecl;
+  PHYSFS_removeFromSearchPath: function(const oldDir: PUTF8Char): Integer; cdecl;
+  PHYSFS_seek: function(handle: PPHYSFS_File; pos: PHYSFS_uint64): Integer; cdecl;
+  PHYSFS_setAllocator: function(const allocator: PPHYSFS_Allocator): Integer; cdecl;
+  PHYSFS_setBuffer: function(handle: PPHYSFS_File; bufsize: PHYSFS_uint64): Integer; cdecl;
+  PHYSFS_setErrorCode: procedure(code: PHYSFS_ErrorCode); cdecl;
+  PHYSFS_setRoot: function(const archive: PUTF8Char; const subdir: PUTF8Char): Integer; cdecl;
+  PHYSFS_setSaneConfig: function(const organization: PUTF8Char; const appName: PUTF8Char; const archiveExt: PUTF8Char; includeCdRoms: Integer; archivesFirst: Integer): Integer; cdecl;
+  PHYSFS_setWriteDir: function(const newDir: PUTF8Char): Integer; cdecl;
+  PHYSFS_stat_: function(const fname: PUTF8Char; stat: PPHYSFS_Stat): Integer; cdecl;
+  PHYSFS_supportedArchiveTypes: function(): PPPHYSFS_ArchiveInfo; cdecl;
+  PHYSFS_swapSBE16: function(val: PHYSFS_sint16): PHYSFS_sint16; cdecl;
+  PHYSFS_swapSBE32: function(val: PHYSFS_sint32): PHYSFS_sint32; cdecl;
+  PHYSFS_swapSBE64: function(val: PHYSFS_sint64): PHYSFS_sint64; cdecl;
+  PHYSFS_swapSLE16: function(val: PHYSFS_sint16): PHYSFS_sint16; cdecl;
+  PHYSFS_swapSLE32: function(val: PHYSFS_sint32): PHYSFS_sint32; cdecl;
+  PHYSFS_swapSLE64: function(val: PHYSFS_sint64): PHYSFS_sint64; cdecl;
+  PHYSFS_swapUBE16: function(val: PHYSFS_uint16): PHYSFS_uint16; cdecl;
+  PHYSFS_swapUBE32: function(val: PHYSFS_uint32): PHYSFS_uint32; cdecl;
+  PHYSFS_swapUBE64: function(val: PHYSFS_uint64): PHYSFS_uint64; cdecl;
+  PHYSFS_swapULE16: function(val: PHYSFS_uint16): PHYSFS_uint16; cdecl;
+  PHYSFS_swapULE32: function(val: PHYSFS_uint32): PHYSFS_uint32; cdecl;
+  PHYSFS_swapULE64: function(val: PHYSFS_uint64): PHYSFS_uint64; cdecl;
+  PHYSFS_symbolicLinksPermitted: function(): Integer; cdecl;
+  PHYSFS_tell: function(handle: PPHYSFS_File): PHYSFS_sint64; cdecl;
+  PHYSFS_ucs4stricmp: function(const str1: PPHYSFS_uint32; const str2: PPHYSFS_uint32): Integer; cdecl;
+  PHYSFS_unmount: function(const oldDir: PUTF8Char): Integer; cdecl;
+  PHYSFS_utf16stricmp: function(const str1: PPHYSFS_uint16; const str2: PPHYSFS_uint16): Integer; cdecl;
+  PHYSFS_utf8FromLatin1: procedure(const src: PUTF8Char; dst: PUTF8Char; len: PHYSFS_uint64); cdecl;
+  PHYSFS_utf8FromUcs2: procedure(const src: PPHYSFS_uint16; dst: PUTF8Char; len: PHYSFS_uint64); cdecl;
+  PHYSFS_utf8FromUcs4: procedure(const src: PPHYSFS_uint32; dst: PUTF8Char; len: PHYSFS_uint64); cdecl;
+  PHYSFS_utf8FromUtf16: procedure(const src: PPHYSFS_uint16; dst: PUTF8Char; len: PHYSFS_uint64); cdecl;
+  PHYSFS_utf8stricmp: function(const str1: PUTF8Char; const str2: PUTF8Char): Integer; cdecl;
+  PHYSFS_utf8ToUcs2: procedure(const src: PUTF8Char; dst: PPHYSFS_uint16; len: PHYSFS_uint64); cdecl;
+  PHYSFS_utf8ToUcs4: procedure(const src: PUTF8Char; dst: PPHYSFS_uint32; len: PHYSFS_uint64); cdecl;
+  PHYSFS_utf8ToUtf16: procedure(const src: PUTF8Char; dst: PPHYSFS_uint16; len: PHYSFS_uint64); cdecl;
+  PHYSFS_write: function(handle: PPHYSFS_File; const buffer: Pointer; objSize: PHYSFS_uint32; objCount: PHYSFS_uint32): PHYSFS_sint64; cdecl;
+  PHYSFS_writeBytes: function(handle: PPHYSFS_File; const buffer: Pointer; len: PHYSFS_uint64): PHYSFS_sint64; cdecl;
+  PHYSFS_writeSBE16: function(_file: PPHYSFS_File; val: PHYSFS_sint16): Integer; cdecl;
+  PHYSFS_writeSBE32: function(_file: PPHYSFS_File; val: PHYSFS_sint32): Integer; cdecl;
+  PHYSFS_writeSBE64: function(_file: PPHYSFS_File; val: PHYSFS_sint64): Integer; cdecl;
+  PHYSFS_writeSLE16: function(_file: PPHYSFS_File; val: PHYSFS_sint16): Integer; cdecl;
+  PHYSFS_writeSLE32: function(_file: PPHYSFS_File; val: PHYSFS_sint32): Integer; cdecl;
+  PHYSFS_writeSLE64: function(_file: PPHYSFS_File; val: PHYSFS_sint64): Integer; cdecl;
+  PHYSFS_writeUBE16: function(_file: PPHYSFS_File; val: PHYSFS_uint16): Integer; cdecl;
+  PHYSFS_writeUBE32: function(_file: PPHYSFS_File; val: PHYSFS_uint32): Integer; cdecl;
+  PHYSFS_writeUBE64: function(_file: PPHYSFS_File; val: PHYSFS_uint64): Integer; cdecl;
+  PHYSFS_writeULE16: function(_file: PPHYSFS_File; val: PHYSFS_uint16): Integer; cdecl;
+  PHYSFS_writeULE32: function(_file: PPHYSFS_File; val: PHYSFS_uint32): Integer; cdecl;
+  PHYSFS_writeULE64: function(_file: PPHYSFS_File; val: PHYSFS_uint64): Integer; cdecl;
   plm_audio_create_with_buffer: function(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_audio_t; cdecl;
   plm_audio_decode: function(self: Pplm_audio_t): Pplm_samples_t; cdecl;
   plm_audio_destroy: procedure(self: Pplm_audio_t); cdecl;
@@ -12895,6 +13233,114 @@ begin
   nk_window_set_size := GetProcAddress(LDllHandle, 'nk_window_set_size');
   nk_window_show := GetProcAddress(LDllHandle, 'nk_window_show');
   nk_window_show_if := GetProcAddress(LDllHandle, 'nk_window_show_if');
+  PHYSFS_addToSearchPath := GetProcAddress(LDllHandle, 'PHYSFS_addToSearchPath');
+  PHYSFS_caseFold := GetProcAddress(LDllHandle, 'PHYSFS_caseFold');
+  PHYSFS_close := GetProcAddress(LDllHandle, 'PHYSFS_close');
+  PHYSFS_deinit := GetProcAddress(LDllHandle, 'PHYSFS_deinit');
+  PHYSFS_delete := GetProcAddress(LDllHandle, 'PHYSFS_delete');
+  PHYSFS_deregisterArchiver := GetProcAddress(LDllHandle, 'PHYSFS_deregisterArchiver');
+  PHYSFS_enumerate := GetProcAddress(LDllHandle, 'PHYSFS_enumerate');
+  PHYSFS_enumerateFiles := GetProcAddress(LDllHandle, 'PHYSFS_enumerateFiles');
+  PHYSFS_enumerateFilesCallback := GetProcAddress(LDllHandle, 'PHYSFS_enumerateFilesCallback');
+  PHYSFS_eof := GetProcAddress(LDllHandle, 'PHYSFS_eof');
+  PHYSFS_exists := GetProcAddress(LDllHandle, 'PHYSFS_exists');
+  PHYSFS_fileLength := GetProcAddress(LDllHandle, 'PHYSFS_fileLength');
+  PHYSFS_flush := GetProcAddress(LDllHandle, 'PHYSFS_flush');
+  PHYSFS_freeList := GetProcAddress(LDllHandle, 'PHYSFS_freeList');
+  PHYSFS_getAllocator := GetProcAddress(LDllHandle, 'PHYSFS_getAllocator');
+  PHYSFS_getBaseDir := GetProcAddress(LDllHandle, 'PHYSFS_getBaseDir');
+  PHYSFS_getCdRomDirs := GetProcAddress(LDllHandle, 'PHYSFS_getCdRomDirs');
+  PHYSFS_getCdRomDirsCallback := GetProcAddress(LDllHandle, 'PHYSFS_getCdRomDirsCallback');
+  PHYSFS_getDirSeparator := GetProcAddress(LDllHandle, 'PHYSFS_getDirSeparator');
+  PHYSFS_getErrorByCode := GetProcAddress(LDllHandle, 'PHYSFS_getErrorByCode');
+  PHYSFS_getLastError := GetProcAddress(LDllHandle, 'PHYSFS_getLastError');
+  PHYSFS_getLastErrorCode := GetProcAddress(LDllHandle, 'PHYSFS_getLastErrorCode');
+  PHYSFS_getLastModTime := GetProcAddress(LDllHandle, 'PHYSFS_getLastModTime');
+  PHYSFS_getLinkedVersion := GetProcAddress(LDllHandle, 'PHYSFS_getLinkedVersion');
+  PHYSFS_getMountPoint := GetProcAddress(LDllHandle, 'PHYSFS_getMountPoint');
+  PHYSFS_getPrefDir := GetProcAddress(LDllHandle, 'PHYSFS_getPrefDir');
+  PHYSFS_getRealDir := GetProcAddress(LDllHandle, 'PHYSFS_getRealDir');
+  PHYSFS_getSearchPath := GetProcAddress(LDllHandle, 'PHYSFS_getSearchPath');
+  PHYSFS_getSearchPathCallback := GetProcAddress(LDllHandle, 'PHYSFS_getSearchPathCallback');
+  PHYSFS_getUserDir := GetProcAddress(LDllHandle, 'PHYSFS_getUserDir');
+  PHYSFS_getWriteDir := GetProcAddress(LDllHandle, 'PHYSFS_getWriteDir');
+  PHYSFS_init := GetProcAddress(LDllHandle, 'PHYSFS_init');
+  PHYSFS_isDirectory := GetProcAddress(LDllHandle, 'PHYSFS_isDirectory');
+  PHYSFS_isInit := GetProcAddress(LDllHandle, 'PHYSFS_isInit');
+  PHYSFS_isSymbolicLink := GetProcAddress(LDllHandle, 'PHYSFS_isSymbolicLink');
+  PHYSFS_mkdir := GetProcAddress(LDllHandle, 'PHYSFS_mkdir');
+  PHYSFS_mount := GetProcAddress(LDllHandle, 'PHYSFS_mount');
+  PHYSFS_mountHandle := GetProcAddress(LDllHandle, 'PHYSFS_mountHandle');
+  PHYSFS_mountIo := GetProcAddress(LDllHandle, 'PHYSFS_mountIo');
+  PHYSFS_mountMemory := GetProcAddress(LDllHandle, 'PHYSFS_mountMemory');
+  PHYSFS_openAppend := GetProcAddress(LDllHandle, 'PHYSFS_openAppend');
+  PHYSFS_openRead := GetProcAddress(LDllHandle, 'PHYSFS_openRead');
+  PHYSFS_openWrite := GetProcAddress(LDllHandle, 'PHYSFS_openWrite');
+  PHYSFS_permitSymbolicLinks := GetProcAddress(LDllHandle, 'PHYSFS_permitSymbolicLinks');
+  PHYSFS_read := GetProcAddress(LDllHandle, 'PHYSFS_read');
+  PHYSFS_readBytes := GetProcAddress(LDllHandle, 'PHYSFS_readBytes');
+  PHYSFS_readSBE16 := GetProcAddress(LDllHandle, 'PHYSFS_readSBE16');
+  PHYSFS_readSBE32 := GetProcAddress(LDllHandle, 'PHYSFS_readSBE32');
+  PHYSFS_readSBE64 := GetProcAddress(LDllHandle, 'PHYSFS_readSBE64');
+  PHYSFS_readSLE16 := GetProcAddress(LDllHandle, 'PHYSFS_readSLE16');
+  PHYSFS_readSLE32 := GetProcAddress(LDllHandle, 'PHYSFS_readSLE32');
+  PHYSFS_readSLE64 := GetProcAddress(LDllHandle, 'PHYSFS_readSLE64');
+  PHYSFS_readUBE16 := GetProcAddress(LDllHandle, 'PHYSFS_readUBE16');
+  PHYSFS_readUBE32 := GetProcAddress(LDllHandle, 'PHYSFS_readUBE32');
+  PHYSFS_readUBE64 := GetProcAddress(LDllHandle, 'PHYSFS_readUBE64');
+  PHYSFS_readULE16 := GetProcAddress(LDllHandle, 'PHYSFS_readULE16');
+  PHYSFS_readULE32 := GetProcAddress(LDllHandle, 'PHYSFS_readULE32');
+  PHYSFS_readULE64 := GetProcAddress(LDllHandle, 'PHYSFS_readULE64');
+  PHYSFS_registerArchiver := GetProcAddress(LDllHandle, 'PHYSFS_registerArchiver');
+  PHYSFS_removeFromSearchPath := GetProcAddress(LDllHandle, 'PHYSFS_removeFromSearchPath');
+  PHYSFS_seek := GetProcAddress(LDllHandle, 'PHYSFS_seek');
+  PHYSFS_setAllocator := GetProcAddress(LDllHandle, 'PHYSFS_setAllocator');
+  PHYSFS_setBuffer := GetProcAddress(LDllHandle, 'PHYSFS_setBuffer');
+  PHYSFS_setErrorCode := GetProcAddress(LDllHandle, 'PHYSFS_setErrorCode');
+  PHYSFS_setRoot := GetProcAddress(LDllHandle, 'PHYSFS_setRoot');
+  PHYSFS_setSaneConfig := GetProcAddress(LDllHandle, 'PHYSFS_setSaneConfig');
+  PHYSFS_setWriteDir := GetProcAddress(LDllHandle, 'PHYSFS_setWriteDir');
+  PHYSFS_stat_ := GetProcAddress(LDllHandle, 'PHYSFS_stat');
+  PHYSFS_supportedArchiveTypes := GetProcAddress(LDllHandle, 'PHYSFS_supportedArchiveTypes');
+  PHYSFS_swapSBE16 := GetProcAddress(LDllHandle, 'PHYSFS_swapSBE16');
+  PHYSFS_swapSBE32 := GetProcAddress(LDllHandle, 'PHYSFS_swapSBE32');
+  PHYSFS_swapSBE64 := GetProcAddress(LDllHandle, 'PHYSFS_swapSBE64');
+  PHYSFS_swapSLE16 := GetProcAddress(LDllHandle, 'PHYSFS_swapSLE16');
+  PHYSFS_swapSLE32 := GetProcAddress(LDllHandle, 'PHYSFS_swapSLE32');
+  PHYSFS_swapSLE64 := GetProcAddress(LDllHandle, 'PHYSFS_swapSLE64');
+  PHYSFS_swapUBE16 := GetProcAddress(LDllHandle, 'PHYSFS_swapUBE16');
+  PHYSFS_swapUBE32 := GetProcAddress(LDllHandle, 'PHYSFS_swapUBE32');
+  PHYSFS_swapUBE64 := GetProcAddress(LDllHandle, 'PHYSFS_swapUBE64');
+  PHYSFS_swapULE16 := GetProcAddress(LDllHandle, 'PHYSFS_swapULE16');
+  PHYSFS_swapULE32 := GetProcAddress(LDllHandle, 'PHYSFS_swapULE32');
+  PHYSFS_swapULE64 := GetProcAddress(LDllHandle, 'PHYSFS_swapULE64');
+  PHYSFS_symbolicLinksPermitted := GetProcAddress(LDllHandle, 'PHYSFS_symbolicLinksPermitted');
+  PHYSFS_tell := GetProcAddress(LDllHandle, 'PHYSFS_tell');
+  PHYSFS_ucs4stricmp := GetProcAddress(LDllHandle, 'PHYSFS_ucs4stricmp');
+  PHYSFS_unmount := GetProcAddress(LDllHandle, 'PHYSFS_unmount');
+  PHYSFS_utf16stricmp := GetProcAddress(LDllHandle, 'PHYSFS_utf16stricmp');
+  PHYSFS_utf8FromLatin1 := GetProcAddress(LDllHandle, 'PHYSFS_utf8FromLatin1');
+  PHYSFS_utf8FromUcs2 := GetProcAddress(LDllHandle, 'PHYSFS_utf8FromUcs2');
+  PHYSFS_utf8FromUcs4 := GetProcAddress(LDllHandle, 'PHYSFS_utf8FromUcs4');
+  PHYSFS_utf8FromUtf16 := GetProcAddress(LDllHandle, 'PHYSFS_utf8FromUtf16');
+  PHYSFS_utf8stricmp := GetProcAddress(LDllHandle, 'PHYSFS_utf8stricmp');
+  PHYSFS_utf8ToUcs2 := GetProcAddress(LDllHandle, 'PHYSFS_utf8ToUcs2');
+  PHYSFS_utf8ToUcs4 := GetProcAddress(LDllHandle, 'PHYSFS_utf8ToUcs4');
+  PHYSFS_utf8ToUtf16 := GetProcAddress(LDllHandle, 'PHYSFS_utf8ToUtf16');
+  PHYSFS_write := GetProcAddress(LDllHandle, 'PHYSFS_write');
+  PHYSFS_writeBytes := GetProcAddress(LDllHandle, 'PHYSFS_writeBytes');
+  PHYSFS_writeSBE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeSBE16');
+  PHYSFS_writeSBE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeSBE32');
+  PHYSFS_writeSBE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeSBE64');
+  PHYSFS_writeSLE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeSLE16');
+  PHYSFS_writeSLE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeSLE32');
+  PHYSFS_writeSLE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeSLE64');
+  PHYSFS_writeUBE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeUBE16');
+  PHYSFS_writeUBE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeUBE32');
+  PHYSFS_writeUBE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeUBE64');
+  PHYSFS_writeULE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE16');
+  PHYSFS_writeULE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE32');
+  PHYSFS_writeULE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE64');
   plm_audio_create_with_buffer := GetProcAddress(LDllHandle, 'plm_audio_create_with_buffer');
   plm_audio_decode := GetProcAddress(LDllHandle, 'plm_audio_decode');
   plm_audio_destroy := GetProcAddress(LDllHandle, 'plm_audio_destroy');
