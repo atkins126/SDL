@@ -4287,6 +4287,9 @@ type
   { Punz64_file_pos_s  }
   Punz64_file_pos_s = ^unz64_file_pos_s;
 
+  { Psdlsurface_context  }
+  Psdlsurface_context = ^sdlsurface_context;
+
   { int8_t  }
   int8_t = UTF8Char;
 
@@ -9874,6 +9877,15 @@ type
   { Punz64_file_pos  }
   Punz64_file_pos = ^unz64_file_pos;
 
+  { sdlsurface_context  }
+  sdlsurface_context = record
+    ctx: nk_context;
+    scissors: nk_rect;
+    fb: PSDL_Surface;
+    font_tex: PSDL_Surface;
+    atlas: nk_font_atlas;
+  end;
+
   { SDL_qsort_compare  }
   SDL_qsort_compare = function(const p1: Pointer; const p2: Pointer): Integer; cdecl;
 
@@ -11055,6 +11067,10 @@ var
   nk_rgba_hex: function(const rgb: PUTF8Char): nk_color; cdecl;
   nk_rgba_iv: function(const rgba: PInteger): nk_color; cdecl;
   nk_rgba_u32: function(p1: nk_uint): nk_color; cdecl;
+  nk_sdl_handle_event: function(ctx: Pnk_context; evt: PSDL_Event): Integer; cdecl;
+  nk_sdlsurface_init: function(fb: PSDL_Surface; fontSize: Single): Psdlsurface_context; cdecl;
+  nk_sdlsurface_render: procedure(const sdlsurface: Psdlsurface_context; const clear: nk_color; const enable_clear: Byte); cdecl;
+  nk_sdlsurface_shutdown: procedure(sdlsurface: Psdlsurface_context); cdecl;
   nk_select_image_label: function(p1: Pnk_context; p2: nk_image; const p3: PUTF8Char; align: nk_flags; value: nk_bool): nk_bool; cdecl;
   nk_select_image_text: function(p1: Pnk_context; p2: nk_image; const p3: PUTF8Char; p4: Integer; align: nk_flags; value: nk_bool): nk_bool; cdecl;
   nk_select_label: function(p1: Pnk_context; const p2: PUTF8Char; align: nk_flags; value: nk_bool): nk_bool; cdecl;
@@ -13575,6 +13591,10 @@ begin
   nk_rgba_hex := GetProcAddress(LDllHandle, 'nk_rgba_hex');
   nk_rgba_iv := GetProcAddress(LDllHandle, 'nk_rgba_iv');
   nk_rgba_u32 := GetProcAddress(LDllHandle, 'nk_rgba_u32');
+  nk_sdl_handle_event := GetProcAddress(LDllHandle, 'nk_sdl_handle_event');
+  nk_sdlsurface_init := GetProcAddress(LDllHandle, 'nk_sdlsurface_init');
+  nk_sdlsurface_render := GetProcAddress(LDllHandle, 'nk_sdlsurface_render');
+  nk_sdlsurface_shutdown := GetProcAddress(LDllHandle, 'nk_sdlsurface_shutdown');
   nk_select_image_label := GetProcAddress(LDllHandle, 'nk_select_image_label');
   nk_select_image_text := GetProcAddress(LDllHandle, 'nk_select_image_text');
   nk_select_label := GetProcAddress(LDllHandle, 'nk_select_label');
