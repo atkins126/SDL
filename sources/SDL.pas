@@ -3138,8 +3138,8 @@ type
   { PPDouble  }
   PPDouble = ^PDouble;
 
-  { PNativeUInt  }
-  PNativeUInt = ^NativeUInt;
+  { PUInt8  }
+  PUInt8 = ^UInt8;
 
   { PWideChar  }
   PWideChar = ^WideChar;
@@ -3147,8 +3147,8 @@ type
   { PPointer  }
   PPointer = ^Pointer;
 
-  { PUInt8  }
-  PUInt8 = ^UInt8;
+  { PNativeUInt  }
+  PNativeUInt = ^NativeUInt;
 
   { P_SDL_iconv_t  }
   P_SDL_iconv_t = Pointer;
@@ -9896,87 +9896,6 @@ type
   PHYSFS_mountMemory_del = procedure(p1: Pointer); cdecl;
 
 var
-  adler32: function(adler: uLong; const buf: PBytef; len: uInt): uLong; cdecl;
-  adler32_combine: function(p1: uLong; p2: uLong; p3: Integer): uLong; cdecl;
-  adler32_z: function(adler: uLong; const buf: PBytef; len: z_size_t): uLong; cdecl;
-  call_zopen64: function(const pfilefunc: Pzlib_filefunc64_32_def; const filename: Pointer; mode: Integer): voidpf; cdecl;
-  call_zseek64: function(const pfilefunc: Pzlib_filefunc64_32_def; filestream: voidpf; offset: ZPOS64_T; origin: Integer): Integer; cdecl;
-  call_ztell64: function(const pfilefunc: Pzlib_filefunc64_32_def; filestream: voidpf): ZPOS64_T; cdecl;
-  compress: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: uLong): Integer; cdecl;
-  compress2: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: uLong; level: Integer): Integer; cdecl;
-  compressBound: function(sourceLen: uLong): uLong; cdecl;
-  crc32: function(crc: uLong; const buf: PBytef; len: uInt): uLong; cdecl;
-  crc32_combine: function(p1: uLong; p2: uLong; p3: Integer): uLong; cdecl;
-  crc32_z: function(adler: uLong; const buf: PBytef; len: z_size_t): uLong; cdecl;
-  deflate: function(strm: z_streamp; flush: Integer): Integer; cdecl;
-  deflateBound: function(strm: z_streamp; sourceLen: uLong): uLong; cdecl;
-  deflateCopy: function(dest: z_streamp; source: z_streamp): Integer; cdecl;
-  deflateEnd: function(strm: z_streamp): Integer; cdecl;
-  deflateGetDictionary: function(strm: z_streamp; dictionary: PBytef; dictLength: PuInt): Integer; cdecl;
-  deflateInit_: function(strm: z_streamp; level: Integer; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
-  deflateInit2_: function(strm: z_streamp; level: Integer; method: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
-  deflateParams: function(strm: z_streamp; level: Integer; strategy: Integer): Integer; cdecl;
-  deflatePending: function(strm: z_streamp; pending: PCardinal; bits: PInteger): Integer; cdecl;
-  deflatePrime: function(strm: z_streamp; bits: Integer; value: Integer): Integer; cdecl;
-  deflateReset: function(strm: z_streamp): Integer; cdecl;
-  deflateResetKeep: function(p1: z_streamp): Integer; cdecl;
-  deflateSetDictionary: function(strm: z_streamp; const dictionary: PBytef; dictLength: uInt): Integer; cdecl;
-  deflateSetHeader: function(strm: z_streamp; head: gz_headerp): Integer; cdecl;
-  deflateTune: function(strm: z_streamp; good_length: Integer; max_lazy: Integer; nice_length: Integer; max_chain: Integer): Integer; cdecl;
-  fill_fopen_filefunc: procedure(pzlib_filefunc_def: Pzlib_filefunc_def); cdecl;
-  fill_fopen64_filefunc: procedure(pzlib_filefunc_def: Pzlib_filefunc64_def); cdecl;
-  fill_zlib_filefunc64_32_def_from_filefunc32: procedure(p_filefunc64_32: Pzlib_filefunc64_32_def; const p_filefunc32: Pzlib_filefunc_def); cdecl;
-  get_crc_table: function(): Pz_crc_t; cdecl;
-  gzbuffer: function(_file: gzFile; size: Cardinal): Integer; cdecl;
-  gzclearerr: procedure(_file: gzFile); cdecl;
-  gzclose: function(_file: gzFile): Integer; cdecl;
-  gzclose_r: function(_file: gzFile): Integer; cdecl;
-  gzclose_w: function(_file: gzFile): Integer; cdecl;
-  gzdirect: function(_file: gzFile): Integer; cdecl;
-  gzdopen: function(fd: Integer; const mode: PUTF8Char): gzFile; cdecl;
-  gzeof: function(_file: gzFile): Integer; cdecl;
-  gzerror: function(_file: gzFile; errnum: PInteger): PUTF8Char; cdecl;
-  gzflush: function(_file: gzFile; flush: Integer): Integer; cdecl;
-  gzfread: function(buf: voidp; size: z_size_t; nitems: z_size_t; _file: gzFile): z_size_t; cdecl;
-  gzfwrite: function(buf: voidpc; size: z_size_t; nitems: z_size_t; _file: gzFile): z_size_t; cdecl;
-  gzgetc: function(_file: gzFile): Integer; cdecl;
-  gzgetc_: function(_file: gzFile): Integer; cdecl;
-  gzgets: function(_file: gzFile; buf: PUTF8Char; len: Integer): PUTF8Char; cdecl;
-  gzoffset: function(p1: gzFile): Integer; cdecl;
-  gzopen: function(const p1: PUTF8Char; const p2: PUTF8Char): gzFile; cdecl;
-  gzopen_w: function(const path: PWideChar; const mode: PUTF8Char): gzFile; cdecl;
-  gzprintf: function(_file: gzFile; const format: PUTF8Char): Integer varargs; cdecl;
-  gzputc: function(_file: gzFile; c: Integer): Integer; cdecl;
-  gzputs: function(_file: gzFile; const s: PUTF8Char): Integer; cdecl;
-  gzread: function(_file: gzFile; buf: voidp; len: Cardinal): Integer; cdecl;
-  gzrewind: function(_file: gzFile): Integer; cdecl;
-  gzseek: function(p1: gzFile; p2: Integer; p3: Integer): Integer; cdecl;
-  gzsetparams: function(_file: gzFile; level: Integer; strategy: Integer): Integer; cdecl;
-  gztell: function(p1: gzFile): Integer; cdecl;
-  gzungetc: function(c: Integer; _file: gzFile): Integer; cdecl;
-  gzvprintf: function(_file: gzFile; const format: PUTF8Char; va: Pointer): Integer; cdecl;
-  gzwrite: function(_file: gzFile; buf: voidpc; len: Cardinal): Integer; cdecl;
-  inflate: function(strm: z_streamp; flush: Integer): Integer; cdecl;
-  inflateBack: function(strm: z_streamp; _in: in_func; in_desc: Pointer; _out: out_func; out_desc: Pointer): Integer; cdecl;
-  inflateBackEnd: function(strm: z_streamp): Integer; cdecl;
-  inflateBackInit_: function(strm: z_streamp; windowBits: Integer; window: PByte; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
-  inflateCodesUsed: function(p1: z_streamp): Cardinal; cdecl;
-  inflateCopy: function(dest: z_streamp; source: z_streamp): Integer; cdecl;
-  inflateEnd: function(strm: z_streamp): Integer; cdecl;
-  inflateGetDictionary: function(strm: z_streamp; dictionary: PBytef; dictLength: PuInt): Integer; cdecl;
-  inflateGetHeader: function(strm: z_streamp; head: gz_headerp): Integer; cdecl;
-  inflateInit_: function(strm: z_streamp; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
-  inflateInit2_: function(strm: z_streamp; windowBits: Integer; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
-  inflateMark: function(strm: z_streamp): Integer; cdecl;
-  inflatePrime: function(strm: z_streamp; bits: Integer; value: Integer): Integer; cdecl;
-  inflateReset: function(strm: z_streamp): Integer; cdecl;
-  inflateReset2: function(strm: z_streamp; windowBits: Integer): Integer; cdecl;
-  inflateResetKeep: function(p1: z_streamp): Integer; cdecl;
-  inflateSetDictionary: function(strm: z_streamp; const dictionary: PBytef; dictLength: uInt): Integer; cdecl;
-  inflateSync: function(strm: z_streamp): Integer; cdecl;
-  inflateSyncPoint: function(p1: z_streamp): Integer; cdecl;
-  inflateUndermine: function(p1: z_streamp; p2: Integer): Integer; cdecl;
-  inflateValidate: function(p1: z_streamp; p2: Integer): Integer; cdecl;
   ma_aligned_free: procedure(p: Pointer; const pAllocationCallbacks: Pma_allocation_callbacks); cdecl;
   ma_aligned_malloc: function(sz: NativeUInt; alignment: NativeUInt; const pAllocationCallbacks: Pma_allocation_callbacks): Pointer; cdecl;
   ma_apply_volume_factor_f32: procedure(pSamples: PSingle; sampleCount: ma_uint64; factor: Single); cdecl;
@@ -12420,8 +12339,6 @@ var
   stbtt_Rasterize: procedure(result: Pstbtt__bitmap; flatness_in_pixels: Single; vertices: Pstbtt_vertex; num_verts: Integer; scale_x: Single; scale_y: Single; shift_x: Single; shift_y: Single; x_off: Integer; y_off: Integer; invert: Integer; userdata: Pointer); cdecl;
   stbtt_ScaleForMappingEmToPixels: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
   stbtt_ScaleForPixelHeight: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
-  uncompress: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: uLong): Integer; cdecl;
-  uncompress2: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: PuLong): Integer; cdecl;
   unzClose: function(_file: unzFile): Integer; cdecl;
   unzCloseCurrentFile: function(_file: unzFile): Integer; cdecl;
   unzeof: function(_file: unzFile): Integer; cdecl;
@@ -12455,7 +12372,6 @@ var
   unzStringFileNameCompare: function(const fileName1: PUTF8Char; const fileName2: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
   unztell: function(_file: unzFile): Integer; cdecl;
   unztell64: function(_file: unzFile): ZPOS64_T; cdecl;
-  zError: function(p1: Integer): PUTF8Char; cdecl;
   zipClose: function(_file: zipFile; const global_comment: PUTF8Char): Integer; cdecl;
   zipCloseFileInZip: function(_file: zipFile): Integer; cdecl;
   zipCloseFileInZipRaw: function(_file: zipFile; uncompressed_size: uLong; crc32: uLong): Integer; cdecl;
@@ -12474,8 +12390,6 @@ var
   zipOpenNewFileInZip64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; zip64: Integer): Integer; cdecl;
   zipRemoveExtraInfoBlock: function(pData: PUTF8Char; dataLen: PInteger; sHeader: Smallint): Integer; cdecl;
   zipWriteInFileInZip: function(_file: zipFile; const buf: Pointer; len: Cardinal): Integer; cdecl;
-  zlibCompileFlags: function(): uLong; cdecl;
-  zlibVersion: function(): PUTF8Char; cdecl;
 
 implementation
 
@@ -12502,87 +12416,6 @@ begin
 
   LDllHandle := SafeLoadLibrary(LDllName);
 
-  adler32 := GetProcAddress(LDllHandle, 'adler32');
-  adler32_combine := GetProcAddress(LDllHandle, 'adler32_combine');
-  adler32_z := GetProcAddress(LDllHandle, 'adler32_z');
-  call_zopen64 := GetProcAddress(LDllHandle, 'call_zopen64');
-  call_zseek64 := GetProcAddress(LDllHandle, 'call_zseek64');
-  call_ztell64 := GetProcAddress(LDllHandle, 'call_ztell64');
-  compress := GetProcAddress(LDllHandle, 'compress');
-  compress2 := GetProcAddress(LDllHandle, 'compress2');
-  compressBound := GetProcAddress(LDllHandle, 'compressBound');
-  crc32 := GetProcAddress(LDllHandle, 'crc32');
-  crc32_combine := GetProcAddress(LDllHandle, 'crc32_combine');
-  crc32_z := GetProcAddress(LDllHandle, 'crc32_z');
-  deflate := GetProcAddress(LDllHandle, 'deflate');
-  deflateBound := GetProcAddress(LDllHandle, 'deflateBound');
-  deflateCopy := GetProcAddress(LDllHandle, 'deflateCopy');
-  deflateEnd := GetProcAddress(LDllHandle, 'deflateEnd');
-  deflateGetDictionary := GetProcAddress(LDllHandle, 'deflateGetDictionary');
-  deflateInit_ := GetProcAddress(LDllHandle, 'deflateInit');
-  deflateInit2_ := GetProcAddress(LDllHandle, 'deflateInit2');
-  deflateParams := GetProcAddress(LDllHandle, 'deflateParams');
-  deflatePending := GetProcAddress(LDllHandle, 'deflatePending');
-  deflatePrime := GetProcAddress(LDllHandle, 'deflatePrime');
-  deflateReset := GetProcAddress(LDllHandle, 'deflateReset');
-  deflateResetKeep := GetProcAddress(LDllHandle, 'deflateResetKeep');
-  deflateSetDictionary := GetProcAddress(LDllHandle, 'deflateSetDictionary');
-  deflateSetHeader := GetProcAddress(LDllHandle, 'deflateSetHeader');
-  deflateTune := GetProcAddress(LDllHandle, 'deflateTune');
-  fill_fopen_filefunc := GetProcAddress(LDllHandle, 'fill_fopen_filefunc');
-  fill_fopen64_filefunc := GetProcAddress(LDllHandle, 'fill_fopen64_filefunc');
-  fill_zlib_filefunc64_32_def_from_filefunc32 := GetProcAddress(LDllHandle, 'fill_zlib_filefunc64_32_def_from_filefunc32');
-  get_crc_table := GetProcAddress(LDllHandle, 'get_crc_table');
-  gzbuffer := GetProcAddress(LDllHandle, 'gzbuffer');
-  gzclearerr := GetProcAddress(LDllHandle, 'gzclearerr');
-  gzclose := GetProcAddress(LDllHandle, 'gzclose');
-  gzclose_r := GetProcAddress(LDllHandle, 'gzclose_r');
-  gzclose_w := GetProcAddress(LDllHandle, 'gzclose_w');
-  gzdirect := GetProcAddress(LDllHandle, 'gzdirect');
-  gzdopen := GetProcAddress(LDllHandle, 'gzdopen');
-  gzeof := GetProcAddress(LDllHandle, 'gzeof');
-  gzerror := GetProcAddress(LDllHandle, 'gzerror');
-  gzflush := GetProcAddress(LDllHandle, 'gzflush');
-  gzfread := GetProcAddress(LDllHandle, 'gzfread');
-  gzfwrite := GetProcAddress(LDllHandle, 'gzfwrite');
-  gzgetc := GetProcAddress(LDllHandle, 'gzgetc');
-  gzgetc_ := GetProcAddress(LDllHandle, 'gzgetc');
-  gzgets := GetProcAddress(LDllHandle, 'gzgets');
-  gzoffset := GetProcAddress(LDllHandle, 'gzoffset');
-  gzopen := GetProcAddress(LDllHandle, 'gzopen');
-  gzopen_w := GetProcAddress(LDllHandle, 'gzopen_w');
-  gzprintf := GetProcAddress(LDllHandle, 'gzprintf');
-  gzputc := GetProcAddress(LDllHandle, 'gzputc');
-  gzputs := GetProcAddress(LDllHandle, 'gzputs');
-  gzread := GetProcAddress(LDllHandle, 'gzread');
-  gzrewind := GetProcAddress(LDllHandle, 'gzrewind');
-  gzseek := GetProcAddress(LDllHandle, 'gzseek');
-  gzsetparams := GetProcAddress(LDllHandle, 'gzsetparams');
-  gztell := GetProcAddress(LDllHandle, 'gztell');
-  gzungetc := GetProcAddress(LDllHandle, 'gzungetc');
-  gzvprintf := GetProcAddress(LDllHandle, 'gzvprintf');
-  gzwrite := GetProcAddress(LDllHandle, 'gzwrite');
-  inflate := GetProcAddress(LDllHandle, 'inflate');
-  inflateBack := GetProcAddress(LDllHandle, 'inflateBack');
-  inflateBackEnd := GetProcAddress(LDllHandle, 'inflateBackEnd');
-  inflateBackInit_ := GetProcAddress(LDllHandle, 'inflateBackInit');
-  inflateCodesUsed := GetProcAddress(LDllHandle, 'inflateCodesUsed');
-  inflateCopy := GetProcAddress(LDllHandle, 'inflateCopy');
-  inflateEnd := GetProcAddress(LDllHandle, 'inflateEnd');
-  inflateGetDictionary := GetProcAddress(LDllHandle, 'inflateGetDictionary');
-  inflateGetHeader := GetProcAddress(LDllHandle, 'inflateGetHeader');
-  inflateInit_ := GetProcAddress(LDllHandle, 'inflateInit');
-  inflateInit2_ := GetProcAddress(LDllHandle, 'inflateInit2');
-  inflateMark := GetProcAddress(LDllHandle, 'inflateMark');
-  inflatePrime := GetProcAddress(LDllHandle, 'inflatePrime');
-  inflateReset := GetProcAddress(LDllHandle, 'inflateReset');
-  inflateReset2 := GetProcAddress(LDllHandle, 'inflateReset2');
-  inflateResetKeep := GetProcAddress(LDllHandle, 'inflateResetKeep');
-  inflateSetDictionary := GetProcAddress(LDllHandle, 'inflateSetDictionary');
-  inflateSync := GetProcAddress(LDllHandle, 'inflateSync');
-  inflateSyncPoint := GetProcAddress(LDllHandle, 'inflateSyncPoint');
-  inflateUndermine := GetProcAddress(LDllHandle, 'inflateUndermine');
-  inflateValidate := GetProcAddress(LDllHandle, 'inflateValidate');
   ma_aligned_free := GetProcAddress(LDllHandle, 'ma_aligned_free');
   ma_aligned_malloc := GetProcAddress(LDllHandle, 'ma_aligned_malloc');
   ma_apply_volume_factor_f32 := GetProcAddress(LDllHandle, 'ma_apply_volume_factor_f32');
@@ -15026,8 +14859,6 @@ begin
   stbtt_Rasterize := GetProcAddress(LDllHandle, 'stbtt_Rasterize');
   stbtt_ScaleForMappingEmToPixels := GetProcAddress(LDllHandle, 'stbtt_ScaleForMappingEmToPixels');
   stbtt_ScaleForPixelHeight := GetProcAddress(LDllHandle, 'stbtt_ScaleForPixelHeight');
-  uncompress := GetProcAddress(LDllHandle, 'uncompress');
-  uncompress2 := GetProcAddress(LDllHandle, 'uncompress2');
   unzClose := GetProcAddress(LDllHandle, 'unzClose');
   unzCloseCurrentFile := GetProcAddress(LDllHandle, 'unzCloseCurrentFile');
   unzeof := GetProcAddress(LDllHandle, 'unzeof');
@@ -15061,7 +14892,6 @@ begin
   unzStringFileNameCompare := GetProcAddress(LDllHandle, 'unzStringFileNameCompare');
   unztell := GetProcAddress(LDllHandle, 'unztell');
   unztell64 := GetProcAddress(LDllHandle, 'unztell64');
-  zError := GetProcAddress(LDllHandle, 'zError');
   zipClose := GetProcAddress(LDllHandle, 'zipClose');
   zipCloseFileInZip := GetProcAddress(LDllHandle, 'zipCloseFileInZip');
   zipCloseFileInZipRaw := GetProcAddress(LDllHandle, 'zipCloseFileInZipRaw');
@@ -15080,8 +14910,6 @@ begin
   zipOpenNewFileInZip64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip64');
   zipRemoveExtraInfoBlock := GetProcAddress(LDllHandle, 'zipRemoveExtraInfoBlock');
   zipWriteInFileInZip := GetProcAddress(LDllHandle, 'zipWriteInFileInZip');
-  zlibCompileFlags := GetProcAddress(LDllHandle, 'zlibCompileFlags');
-  zlibVersion := GetProcAddress(LDllHandle, 'zlibVersion');
 end;
 
 procedure UnloadDLL;
