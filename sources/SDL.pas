@@ -20,6 +20,7 @@
    - stb_truetype (https://github.com/nothings/stb)
    - miniaudio (https://github.com/mackron/miniaudio)
    - physfs (https://github.com/icculus/physfs)
+   - minizip (https://github.com/madler/zlib)
    
  Minimum Requirements:
    - Windows 10+ (64 bits)
@@ -719,6 +720,73 @@ const
   PHYSFS_VER_MAJOR = 3;
   PHYSFS_VER_MINOR = 1;
   PHYSFS_VER_PATCH = 0;
+  MAX_MEM_LEVEL = 9;
+  MAX_WBITS = 15;
+  ZLIB_VERSION = '1.2.11';
+  ZLIB_VERNUM = $12b0;
+  ZLIB_VER_MAJOR = 1;
+  ZLIB_VER_MINOR = 2;
+  ZLIB_VER_REVISION = 11;
+  ZLIB_VER_SUBREVISION = 0;
+  Z_NO_FLUSH = 0;
+  Z_PARTIAL_FLUSH = 1;
+  Z_SYNC_FLUSH = 2;
+  Z_FULL_FLUSH = 3;
+  Z_FINISH = 4;
+  Z_BLOCK = 5;
+  Z_TREES = 6;
+  Z_OK = 0;
+  Z_STREAM_END = 1;
+  Z_NEED_DICT = 2;
+  Z_ERRNO = (-1);
+  Z_STREAM_ERROR = (-2);
+  Z_DATA_ERROR = (-3);
+  Z_MEM_ERROR = (-4);
+  Z_BUF_ERROR = (-5);
+  Z_VERSION_ERROR = (-6);
+  Z_NO_COMPRESSION = 0;
+  Z_BEST_SPEED = 1;
+  Z_BEST_COMPRESSION = 9;
+  Z_DEFAULT_COMPRESSION = (-1);
+  Z_FILTERED = 1;
+  Z_HUFFMAN_ONLY = 2;
+  Z_RLE = 3;
+  Z_FIXED = 4;
+  Z_DEFAULT_STRATEGY = 0;
+  Z_BINARY = 0;
+  Z_TEXT = 1;
+  Z_ASCII = Z_TEXT;
+  Z_UNKNOWN = 2;
+  Z_DEFLATED = 8;
+  Z_NULL = 0;
+  MAXU32 = $ffffffff;
+  ZLIB_FILEFUNC_SEEK_CUR = (1);
+  ZLIB_FILEFUNC_SEEK_END = (2);
+  ZLIB_FILEFUNC_SEEK_SET = (0);
+  ZLIB_FILEFUNC_MODE_READ = (1);
+  ZLIB_FILEFUNC_MODE_WRITE = (2);
+  ZLIB_FILEFUNC_MODE_READWRITEFILTER = (3);
+  ZLIB_FILEFUNC_MODE_EXISTING = (4);
+  ZLIB_FILEFUNC_MODE_CREATE = (8);
+  Z_BZIP2ED = 12;
+  ZIP_OK = (0);
+  ZIP_EOF = (0);
+  ZIP_ERRNO = (Z_ERRNO);
+  ZIP_PARAMERROR = (-102);
+  ZIP_BADZIPFILE = (-103);
+  ZIP_INTERNALERROR = (-104);
+  DEF_MEM_LEVEL = 8;
+  APPEND_STATUS_CREATE = (0);
+  APPEND_STATUS_CREATEAFTER = (1);
+  APPEND_STATUS_ADDINZIP = (2);
+  UNZ_OK = (0);
+  UNZ_END_OF_LIST_OF_FILE = (-100);
+  UNZ_ERRNO = (Z_ERRNO);
+  UNZ_EOF = (0);
+  UNZ_PARAMERROR = (-102);
+  UNZ_BADZIPFILE = (-103);
+  UNZ_INTERNALERROR = (-104);
+  UNZ_CRCERROR = (-105);
   SDL_FALSE = 0;
   SDL_TRUE = 1;
   SDL_ASSERTION_RETRY = 0;
@@ -3058,6 +3126,9 @@ type
   { PPUTF8Char  }
   PPUTF8Char = ^PUTF8Char;
 
+  { PPByte  }
+  PPByte = ^PByte;
+
   { PPInteger  }
   PPInteger = ^PInteger;
 
@@ -3156,6 +3227,12 @@ type
 
   { PPnk_style_slide  }
   PPnk_style_slide = ^Pnk_style_slide;
+
+  { Pinternal_state  }
+  Pinternal_state = Pointer;
+
+  { PPinternal_state  }
+  PPinternal_state = ^Pinternal_state;
 
   { PSDL_AssertData  }
   PSDL_AssertData = ^SDL_AssertData;
@@ -4164,6 +4241,51 @@ type
 
   { PPHYSFS_Archiver  }
   PPHYSFS_Archiver = ^PHYSFS_Archiver;
+
+  { Pz_stream_s  }
+  Pz_stream_s = ^z_stream_s;
+
+  { Pgz_header_s  }
+  Pgz_header_s = ^gz_header_s;
+
+  { PgzFile_s  }
+  PgzFile_s = ^gzFile_s;
+
+  { Pzlib_filefunc_def_s  }
+  Pzlib_filefunc_def_s = ^zlib_filefunc_def_s;
+
+  { Pzlib_filefunc64_def_s  }
+  Pzlib_filefunc64_def_s = ^zlib_filefunc64_def_s;
+
+  { Pzlib_filefunc64_32_def_s  }
+  Pzlib_filefunc64_32_def_s = ^zlib_filefunc64_32_def_s;
+
+  { Ptm_zip_s  }
+  Ptm_zip_s = ^tm_zip_s;
+
+  { Pzip_fileinfo  }
+  Pzip_fileinfo = ^zip_fileinfo;
+
+  { Ptm_unz_s  }
+  Ptm_unz_s = ^tm_unz_s;
+
+  { Punz_global_info64_s  }
+  Punz_global_info64_s = ^unz_global_info64_s;
+
+  { Punz_global_info_s  }
+  Punz_global_info_s = ^unz_global_info_s;
+
+  { Punz_file_info64_s  }
+  Punz_file_info64_s = ^unz_file_info64_s;
+
+  { Punz_file_info_s  }
+  Punz_file_info_s = ^unz_file_info_s;
+
+  { Punz_file_pos_s  }
+  Punz_file_pos_s = ^unz_file_pos_s;
+
+  { Punz64_file_pos_s  }
+  Punz64_file_pos_s = ^unz64_file_pos_s;
 
   { int8_t  }
   int8_t = UTF8Char;
@@ -9399,6 +9521,359 @@ type
     closeArchive: procedure(opaque: Pointer); cdecl;
   end;
 
+  { z_size_t  }
+  z_size_t = NativeUInt;
+
+  { uInt  }
+  uInt = Cardinal;
+
+  { PuInt  }
+  PuInt = ^uInt;
+
+  { uLong  }
+  uLong = Cardinal;
+
+  { PuLong  }
+  PuLong = ^uLong;
+
+  { Bytef  }
+  Bytef = Byte;
+
+  { PBytef  }
+  PBytef = ^Bytef;
+
+  { charf  }
+  charf = UTF8Char;
+
+  { intf  }
+  intf = Integer;
+
+  { uIntf  }
+  uIntf = uInt;
+
+  { uLongf  }
+  uLongf = uLong;
+
+  { PuLongf  }
+  PuLongf = ^uLongf;
+
+  { voidpc  }
+  voidpc = Pointer;
+
+  { voidpf  }
+  voidpf = Pointer;
+
+  { voidp  }
+  voidp = Pointer;
+
+  { z_crc_t  }
+  z_crc_t = Cardinal;
+
+  { Pz_crc_t  }
+  Pz_crc_t = ^z_crc_t;
+
+  { alloc_func  }
+  alloc_func = function(opaque: voidpf; items: uInt; size: uInt): voidpf; cdecl;
+
+  { free_func  }
+  free_func = procedure(opaque: voidpf; address: voidpf); cdecl;
+
+  { z_stream_s  }
+  z_stream_s = record
+    next_in: PBytef;
+    avail_in: uInt;
+    total_in: uLong;
+    next_out: PBytef;
+    avail_out: uInt;
+    total_out: uLong;
+    msg: PUTF8Char;
+    state: Pinternal_state;
+    zalloc: alloc_func;
+    zfree: free_func;
+    opaque: voidpf;
+    data_type: Integer;
+    adler: uLong;
+    reserved: uLong;
+  end;
+
+  { Pz_stream  }
+  Pz_stream = ^z_stream;
+
+  { z_stream  }
+  z_stream = z_stream_s;
+
+  { z_streamp  }
+  z_streamp = Pz_stream;
+
+  { gz_header_s  }
+  gz_header_s = record
+    text: Integer;
+    time: uLong;
+    xflags: Integer;
+    os: Integer;
+    extra: PBytef;
+    extra_len: uInt;
+    extra_max: uInt;
+    name: PBytef;
+    name_max: uInt;
+    comment: PBytef;
+    comm_max: uInt;
+    hcrc: Integer;
+    done: Integer;
+  end;
+
+  { Pgz_header  }
+  Pgz_header = ^gz_header;
+
+  { gz_header  }
+  gz_header = gz_header_s;
+
+  { gz_headerp  }
+  gz_headerp = Pgz_header;
+
+  { in_func  }
+  in_func = function(p1: Pointer; p2: PPByte): Cardinal; cdecl;
+
+  { out_func  }
+  out_func = function(p1: Pointer; p2: PByte; p3: Cardinal): Integer; cdecl;
+
+  { gzFile  }
+  gzFile = PgzFile_s;
+
+  { gzFile_s  }
+  gzFile_s = record
+    have: Cardinal;
+    next: PByte;
+    pos: Int64;
+  end;
+
+  { ZPOS64_T  }
+  ZPOS64_T = UInt64;
+
+  { open_file_func  }
+  open_file_func = function(opaque: voidpf; const filename: PUTF8Char; mode: Integer): voidpf; cdecl;
+
+  { read_file_func  }
+  read_file_func = function(opaque: voidpf; stream: voidpf; buf: Pointer; size: uLong): uLong; cdecl;
+
+  { write_file_func  }
+  write_file_func = function(opaque: voidpf; stream: voidpf; const buf: Pointer; size: uLong): uLong; cdecl;
+
+  { close_file_func  }
+  close_file_func = function(opaque: voidpf; stream: voidpf): Integer; cdecl;
+
+  { testerror_file_func  }
+  testerror_file_func = function(opaque: voidpf; stream: voidpf): Integer; cdecl;
+
+  { tell_file_func  }
+  tell_file_func = function(opaque: voidpf; stream: voidpf): Integer; cdecl;
+
+  { seek_file_func  }
+  seek_file_func = function(opaque: voidpf; stream: voidpf; offset: uLong; origin: Integer): Integer; cdecl;
+
+  { zlib_filefunc_def_s  }
+  zlib_filefunc_def_s = record
+    zopen_file: open_file_func;
+    zread_file: read_file_func;
+    zwrite_file: write_file_func;
+    ztell_file: tell_file_func;
+    zseek_file: seek_file_func;
+    zclose_file: close_file_func;
+    zerror_file: testerror_file_func;
+    opaque: voidpf;
+  end;
+
+  { zlib_filefunc_def  }
+  zlib_filefunc_def = zlib_filefunc_def_s;
+
+  { Pzlib_filefunc_def  }
+  Pzlib_filefunc_def = ^zlib_filefunc_def;
+
+  { tell64_file_func  }
+  tell64_file_func = function(opaque: voidpf; stream: voidpf): ZPOS64_T; cdecl;
+
+  { seek64_file_func  }
+  seek64_file_func = function(opaque: voidpf; stream: voidpf; offset: ZPOS64_T; origin: Integer): Integer; cdecl;
+
+  { open64_file_func  }
+  open64_file_func = function(opaque: voidpf; const filename: Pointer; mode: Integer): voidpf; cdecl;
+
+  { zlib_filefunc64_def_s  }
+  zlib_filefunc64_def_s = record
+    zopen64_file: open64_file_func;
+    zread_file: read_file_func;
+    zwrite_file: write_file_func;
+    ztell64_file: tell64_file_func;
+    zseek64_file: seek64_file_func;
+    zclose_file: close_file_func;
+    zerror_file: testerror_file_func;
+    opaque: voidpf;
+  end;
+
+  { zlib_filefunc64_def  }
+  zlib_filefunc64_def = zlib_filefunc64_def_s;
+
+  { Pzlib_filefunc64_def  }
+  Pzlib_filefunc64_def = ^zlib_filefunc64_def;
+
+  { zlib_filefunc64_32_def_s  }
+  zlib_filefunc64_32_def_s = record
+    zfile_func64: zlib_filefunc64_def;
+    zopen32_file: open_file_func;
+    ztell32_file: tell_file_func;
+    zseek32_file: seek_file_func;
+  end;
+
+  { zlib_filefunc64_32_def  }
+  zlib_filefunc64_32_def = zlib_filefunc64_32_def_s;
+
+  { Pzlib_filefunc64_32_def  }
+  Pzlib_filefunc64_32_def = ^zlib_filefunc64_32_def;
+
+  { zipFile  }
+  zipFile = voidp;
+
+  { tm_zip_s  }
+  tm_zip_s = record
+    tm_sec: uInt;
+    tm_min: uInt;
+    tm_hour: uInt;
+    tm_mday: uInt;
+    tm_mon: uInt;
+    tm_year: uInt;
+  end;
+
+  { tm_zip  }
+  tm_zip = tm_zip_s;
+
+  { zip_fileinfo  }
+  zip_fileinfo = record
+    tmz_date: tm_zip;
+    dosDate: uLong;
+    internal_fa: uLong;
+    external_fa: uLong;
+  end;
+
+  { zipcharpc  }
+  zipcharpc = PUTF8Char;
+
+  { Pzipcharpc  }
+  Pzipcharpc = ^zipcharpc;
+
+  { unzFile  }
+  unzFile = voidp;
+
+  { tm_unz_s  }
+  tm_unz_s = record
+    tm_sec: uInt;
+    tm_min: uInt;
+    tm_hour: uInt;
+    tm_mday: uInt;
+    tm_mon: uInt;
+    tm_year: uInt;
+  end;
+
+  { tm_unz  }
+  tm_unz = tm_unz_s;
+
+  { unz_global_info64_s  }
+  unz_global_info64_s = record
+    number_entry: ZPOS64_T;
+    size_comment: uLong;
+  end;
+
+  { unz_global_info64  }
+  unz_global_info64 = unz_global_info64_s;
+
+  { Punz_global_info64  }
+  Punz_global_info64 = ^unz_global_info64;
+
+  { unz_global_info_s  }
+  unz_global_info_s = record
+    number_entry: uLong;
+    size_comment: uLong;
+  end;
+
+  { unz_global_info  }
+  unz_global_info = unz_global_info_s;
+
+  { Punz_global_info  }
+  Punz_global_info = ^unz_global_info;
+
+  { unz_file_info64_s  }
+  unz_file_info64_s = record
+    version: uLong;
+    version_needed: uLong;
+    flag: uLong;
+    compression_method: uLong;
+    dosDate: uLong;
+    crc: uLong;
+    compressed_size: ZPOS64_T;
+    uncompressed_size: ZPOS64_T;
+    size_filename: uLong;
+    size_file_extra: uLong;
+    size_file_comment: uLong;
+    disk_num_start: uLong;
+    internal_fa: uLong;
+    external_fa: uLong;
+    tmu_date: tm_unz;
+  end;
+
+  { unz_file_info64  }
+  unz_file_info64 = unz_file_info64_s;
+
+  { Punz_file_info64  }
+  Punz_file_info64 = ^unz_file_info64;
+
+  { unz_file_info_s  }
+  unz_file_info_s = record
+    version: uLong;
+    version_needed: uLong;
+    flag: uLong;
+    compression_method: uLong;
+    dosDate: uLong;
+    crc: uLong;
+    compressed_size: uLong;
+    uncompressed_size: uLong;
+    size_filename: uLong;
+    size_file_extra: uLong;
+    size_file_comment: uLong;
+    disk_num_start: uLong;
+    internal_fa: uLong;
+    external_fa: uLong;
+    tmu_date: tm_unz;
+  end;
+
+  { unz_file_info  }
+  unz_file_info = unz_file_info_s;
+
+  { Punz_file_info  }
+  Punz_file_info = ^unz_file_info;
+
+  { unz_file_pos_s  }
+  unz_file_pos_s = record
+    pos_in_zip_directory: uLong;
+    num_of_file: uLong;
+  end;
+
+  { unz_file_pos  }
+  unz_file_pos = unz_file_pos_s;
+
+  { Punz_file_pos  }
+  Punz_file_pos = ^unz_file_pos;
+
+  { unz64_file_pos_s  }
+  unz64_file_pos_s = record
+    pos_in_zip_directory: ZPOS64_T;
+    num_of_file: ZPOS64_T;
+  end;
+
+  { unz64_file_pos  }
+  unz64_file_pos = unz64_file_pos_s;
+
+  { Punz64_file_pos  }
+  Punz64_file_pos = ^unz64_file_pos;
+
   { SDL_qsort_compare  }
   SDL_qsort_compare = function(const p1: Pointer; const p2: Pointer): Integer; cdecl;
 
@@ -9421,6 +9896,87 @@ type
   PHYSFS_mountMemory_del = procedure(p1: Pointer); cdecl;
 
 var
+  adler32: function(adler: uLong; const buf: PBytef; len: uInt): uLong; cdecl;
+  adler32_combine: function(p1: uLong; p2: uLong; p3: Integer): uLong; cdecl;
+  adler32_z: function(adler: uLong; const buf: PBytef; len: z_size_t): uLong; cdecl;
+  call_zopen64: function(const pfilefunc: Pzlib_filefunc64_32_def; const filename: Pointer; mode: Integer): voidpf; cdecl;
+  call_zseek64: function(const pfilefunc: Pzlib_filefunc64_32_def; filestream: voidpf; offset: ZPOS64_T; origin: Integer): Integer; cdecl;
+  call_ztell64: function(const pfilefunc: Pzlib_filefunc64_32_def; filestream: voidpf): ZPOS64_T; cdecl;
+  compress: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: uLong): Integer; cdecl;
+  compress2: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: uLong; level: Integer): Integer; cdecl;
+  compressBound: function(sourceLen: uLong): uLong; cdecl;
+  crc32: function(crc: uLong; const buf: PBytef; len: uInt): uLong; cdecl;
+  crc32_combine: function(p1: uLong; p2: uLong; p3: Integer): uLong; cdecl;
+  crc32_z: function(adler: uLong; const buf: PBytef; len: z_size_t): uLong; cdecl;
+  deflate: function(strm: z_streamp; flush: Integer): Integer; cdecl;
+  deflateBound: function(strm: z_streamp; sourceLen: uLong): uLong; cdecl;
+  deflateCopy: function(dest: z_streamp; source: z_streamp): Integer; cdecl;
+  deflateEnd: function(strm: z_streamp): Integer; cdecl;
+  deflateGetDictionary: function(strm: z_streamp; dictionary: PBytef; dictLength: PuInt): Integer; cdecl;
+  deflateInit_: function(strm: z_streamp; level: Integer; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
+  deflateInit2_: function(strm: z_streamp; level: Integer; method: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
+  deflateParams: function(strm: z_streamp; level: Integer; strategy: Integer): Integer; cdecl;
+  deflatePending: function(strm: z_streamp; pending: PCardinal; bits: PInteger): Integer; cdecl;
+  deflatePrime: function(strm: z_streamp; bits: Integer; value: Integer): Integer; cdecl;
+  deflateReset: function(strm: z_streamp): Integer; cdecl;
+  deflateResetKeep: function(p1: z_streamp): Integer; cdecl;
+  deflateSetDictionary: function(strm: z_streamp; const dictionary: PBytef; dictLength: uInt): Integer; cdecl;
+  deflateSetHeader: function(strm: z_streamp; head: gz_headerp): Integer; cdecl;
+  deflateTune: function(strm: z_streamp; good_length: Integer; max_lazy: Integer; nice_length: Integer; max_chain: Integer): Integer; cdecl;
+  fill_fopen_filefunc: procedure(pzlib_filefunc_def: Pzlib_filefunc_def); cdecl;
+  fill_fopen64_filefunc: procedure(pzlib_filefunc_def: Pzlib_filefunc64_def); cdecl;
+  fill_zlib_filefunc64_32_def_from_filefunc32: procedure(p_filefunc64_32: Pzlib_filefunc64_32_def; const p_filefunc32: Pzlib_filefunc_def); cdecl;
+  get_crc_table: function(): Pz_crc_t; cdecl;
+  gzbuffer: function(_file: gzFile; size: Cardinal): Integer; cdecl;
+  gzclearerr: procedure(_file: gzFile); cdecl;
+  gzclose: function(_file: gzFile): Integer; cdecl;
+  gzclose_r: function(_file: gzFile): Integer; cdecl;
+  gzclose_w: function(_file: gzFile): Integer; cdecl;
+  gzdirect: function(_file: gzFile): Integer; cdecl;
+  gzdopen: function(fd: Integer; const mode: PUTF8Char): gzFile; cdecl;
+  gzeof: function(_file: gzFile): Integer; cdecl;
+  gzerror: function(_file: gzFile; errnum: PInteger): PUTF8Char; cdecl;
+  gzflush: function(_file: gzFile; flush: Integer): Integer; cdecl;
+  gzfread: function(buf: voidp; size: z_size_t; nitems: z_size_t; _file: gzFile): z_size_t; cdecl;
+  gzfwrite: function(buf: voidpc; size: z_size_t; nitems: z_size_t; _file: gzFile): z_size_t; cdecl;
+  gzgetc: function(_file: gzFile): Integer; cdecl;
+  gzgetc_: function(_file: gzFile): Integer; cdecl;
+  gzgets: function(_file: gzFile; buf: PUTF8Char; len: Integer): PUTF8Char; cdecl;
+  gzoffset: function(p1: gzFile): Integer; cdecl;
+  gzopen: function(const p1: PUTF8Char; const p2: PUTF8Char): gzFile; cdecl;
+  gzopen_w: function(const path: PWideChar; const mode: PUTF8Char): gzFile; cdecl;
+  gzprintf: function(_file: gzFile; const format: PUTF8Char): Integer varargs; cdecl;
+  gzputc: function(_file: gzFile; c: Integer): Integer; cdecl;
+  gzputs: function(_file: gzFile; const s: PUTF8Char): Integer; cdecl;
+  gzread: function(_file: gzFile; buf: voidp; len: Cardinal): Integer; cdecl;
+  gzrewind: function(_file: gzFile): Integer; cdecl;
+  gzseek: function(p1: gzFile; p2: Integer; p3: Integer): Integer; cdecl;
+  gzsetparams: function(_file: gzFile; level: Integer; strategy: Integer): Integer; cdecl;
+  gztell: function(p1: gzFile): Integer; cdecl;
+  gzungetc: function(c: Integer; _file: gzFile): Integer; cdecl;
+  gzvprintf: function(_file: gzFile; const format: PUTF8Char; va: Pointer): Integer; cdecl;
+  gzwrite: function(_file: gzFile; buf: voidpc; len: Cardinal): Integer; cdecl;
+  inflate: function(strm: z_streamp; flush: Integer): Integer; cdecl;
+  inflateBack: function(strm: z_streamp; _in: in_func; in_desc: Pointer; _out: out_func; out_desc: Pointer): Integer; cdecl;
+  inflateBackEnd: function(strm: z_streamp): Integer; cdecl;
+  inflateBackInit_: function(strm: z_streamp; windowBits: Integer; window: PByte; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
+  inflateCodesUsed: function(p1: z_streamp): Cardinal; cdecl;
+  inflateCopy: function(dest: z_streamp; source: z_streamp): Integer; cdecl;
+  inflateEnd: function(strm: z_streamp): Integer; cdecl;
+  inflateGetDictionary: function(strm: z_streamp; dictionary: PBytef; dictLength: PuInt): Integer; cdecl;
+  inflateGetHeader: function(strm: z_streamp; head: gz_headerp): Integer; cdecl;
+  inflateInit_: function(strm: z_streamp; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
+  inflateInit2_: function(strm: z_streamp; windowBits: Integer; const version: PUTF8Char; stream_size: Integer): Integer; cdecl;
+  inflateMark: function(strm: z_streamp): Integer; cdecl;
+  inflatePrime: function(strm: z_streamp; bits: Integer; value: Integer): Integer; cdecl;
+  inflateReset: function(strm: z_streamp): Integer; cdecl;
+  inflateReset2: function(strm: z_streamp; windowBits: Integer): Integer; cdecl;
+  inflateResetKeep: function(p1: z_streamp): Integer; cdecl;
+  inflateSetDictionary: function(strm: z_streamp; const dictionary: PBytef; dictLength: uInt): Integer; cdecl;
+  inflateSync: function(strm: z_streamp): Integer; cdecl;
+  inflateSyncPoint: function(p1: z_streamp): Integer; cdecl;
+  inflateUndermine: function(p1: z_streamp; p2: Integer): Integer; cdecl;
+  inflateValidate: function(p1: z_streamp; p2: Integer): Integer; cdecl;
   ma_aligned_free: procedure(p: Pointer; const pAllocationCallbacks: Pma_allocation_callbacks); cdecl;
   ma_aligned_malloc: function(sz: NativeUInt; alignment: NativeUInt; const pAllocationCallbacks: Pma_allocation_callbacks): Pointer; cdecl;
   ma_apply_volume_factor_f32: procedure(pSamples: PSingle; sampleCount: ma_uint64; factor: Single); cdecl;
@@ -11864,6 +12420,62 @@ var
   stbtt_Rasterize: procedure(result: Pstbtt__bitmap; flatness_in_pixels: Single; vertices: Pstbtt_vertex; num_verts: Integer; scale_x: Single; scale_y: Single; shift_x: Single; shift_y: Single; x_off: Integer; y_off: Integer; invert: Integer; userdata: Pointer); cdecl;
   stbtt_ScaleForMappingEmToPixels: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
   stbtt_ScaleForPixelHeight: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
+  uncompress: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: uLong): Integer; cdecl;
+  uncompress2: function(dest: PBytef; destLen: PuLongf; const source: PBytef; sourceLen: PuLong): Integer; cdecl;
+  unzClose: function(_file: unzFile): Integer; cdecl;
+  unzCloseCurrentFile: function(_file: unzFile): Integer; cdecl;
+  unzeof: function(_file: unzFile): Integer; cdecl;
+  unzGetCurrentFileInfo: function(_file: unzFile; pfile_info: Punz_file_info; szFileName: PUTF8Char; fileNameBufferSize: uLong; extraField: Pointer; extraFieldBufferSize: uLong; szComment: PUTF8Char; commentBufferSize: uLong): Integer; cdecl;
+  unzGetCurrentFileInfo64: function(_file: unzFile; pfile_info: Punz_file_info64; szFileName: PUTF8Char; fileNameBufferSize: uLong; extraField: Pointer; extraFieldBufferSize: uLong; szComment: PUTF8Char; commentBufferSize: uLong): Integer; cdecl;
+  unzGetCurrentFileZStreamPos64: function(_file: unzFile): ZPOS64_T; cdecl;
+  unzGetFilePos: function(_file: unzFile; file_pos: Punz_file_pos): Integer; cdecl;
+  unzGetFilePos64: function(_file: unzFile; file_pos: Punz64_file_pos): Integer; cdecl;
+  unzGetGlobalComment: function(_file: unzFile; szComment: PUTF8Char; uSizeBuf: uLong): Integer; cdecl;
+  unzGetGlobalInfo: function(_file: unzFile; pglobal_info: Punz_global_info): Integer; cdecl;
+  unzGetGlobalInfo64: function(_file: unzFile; pglobal_info: Punz_global_info64): Integer; cdecl;
+  unzGetLocalExtrafield: function(_file: unzFile; buf: voidp; len: Cardinal): Integer; cdecl;
+  unzGetOffset: function(_file: unzFile): uLong; cdecl;
+  unzGetOffset64: function(_file: unzFile): ZPOS64_T; cdecl;
+  unzGoToFilePos: function(_file: unzFile; file_pos: Punz_file_pos): Integer; cdecl;
+  unzGoToFilePos64: function(_file: unzFile; const file_pos: Punz64_file_pos): Integer; cdecl;
+  unzGoToFirstFile: function(_file: unzFile): Integer; cdecl;
+  unzGoToNextFile: function(_file: unzFile): Integer; cdecl;
+  unzLocateFile: function(_file: unzFile; const szFileName: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
+  unzOpen: function(const path: PUTF8Char): unzFile; cdecl;
+  unzOpen2: function(const path: PUTF8Char; pzlib_filefunc_def: Pzlib_filefunc_def): unzFile; cdecl;
+  unzOpen2_64: function(const path: Pointer; pzlib_filefunc_def: Pzlib_filefunc64_def): unzFile; cdecl;
+  unzOpen64: function(const path: Pointer): unzFile; cdecl;
+  unzOpenCurrentFile: function(_file: unzFile): Integer; cdecl;
+  unzOpenCurrentFile2: function(_file: unzFile; method: PInteger; level: PInteger; raw: Integer): Integer; cdecl;
+  unzOpenCurrentFile3: function(_file: unzFile; method: PInteger; level: PInteger; raw: Integer; const password: PUTF8Char): Integer; cdecl;
+  unzOpenCurrentFilePassword: function(_file: unzFile; const password: PUTF8Char): Integer; cdecl;
+  unzReadCurrentFile: function(_file: unzFile; buf: voidp; len: Cardinal): Integer; cdecl;
+  unzSetOffset: function(_file: unzFile; pos: uLong): Integer; cdecl;
+  unzSetOffset64: function(_file: unzFile; pos: ZPOS64_T): Integer; cdecl;
+  unzStringFileNameCompare: function(const fileName1: PUTF8Char; const fileName2: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
+  unztell: function(_file: unzFile): Integer; cdecl;
+  unztell64: function(_file: unzFile): ZPOS64_T; cdecl;
+  zError: function(p1: Integer): PUTF8Char; cdecl;
+  zipClose: function(_file: zipFile; const global_comment: PUTF8Char): Integer; cdecl;
+  zipCloseFileInZip: function(_file: zipFile): Integer; cdecl;
+  zipCloseFileInZipRaw: function(_file: zipFile; uncompressed_size: uLong; crc32: uLong): Integer; cdecl;
+  zipCloseFileInZipRaw64: function(_file: zipFile; uncompressed_size: ZPOS64_T; crc32: uLong): Integer; cdecl;
+  zipOpen: function(const pathname: PUTF8Char; append: Integer): zipFile; cdecl;
+  zipOpen2: function(const pathname: PUTF8Char; append: Integer; globalcomment: Pzipcharpc; pzlib_filefunc_def: Pzlib_filefunc_def): zipFile; cdecl;
+  zipOpen2_64: function(const pathname: Pointer; append: Integer; globalcomment: Pzipcharpc; pzlib_filefunc_def: Pzlib_filefunc64_def): zipFile; cdecl;
+  zipOpen64: function(const pathname: Pointer; append: Integer): zipFile; cdecl;
+  zipOpenNewFileInZip: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer): Integer; cdecl;
+  zipOpenNewFileInZip2: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer): Integer; cdecl;
+  zipOpenNewFileInZip2_64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; zip64: Integer): Integer; cdecl;
+  zipOpenNewFileInZip3: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong): Integer; cdecl;
+  zipOpenNewFileInZip3_64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; zip64: Integer): Integer; cdecl;
+  zipOpenNewFileInZip4: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; versionMadeBy: uLong; flagBase: uLong): Integer; cdecl;
+  zipOpenNewFileInZip4_64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; versionMadeBy: uLong; flagBase: uLong; zip64: Integer): Integer; cdecl;
+  zipOpenNewFileInZip64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; zip64: Integer): Integer; cdecl;
+  zipRemoveExtraInfoBlock: function(pData: PUTF8Char; dataLen: PInteger; sHeader: Smallint): Integer; cdecl;
+  zipWriteInFileInZip: function(_file: zipFile; const buf: Pointer; len: Cardinal): Integer; cdecl;
+  zlibCompileFlags: function(): uLong; cdecl;
+  zlibVersion: function(): PUTF8Char; cdecl;
 
 implementation
 
@@ -11890,6 +12502,87 @@ begin
 
   LDllHandle := SafeLoadLibrary(LDllName);
 
+  adler32 := GetProcAddress(LDllHandle, 'adler32');
+  adler32_combine := GetProcAddress(LDllHandle, 'adler32_combine');
+  adler32_z := GetProcAddress(LDllHandle, 'adler32_z');
+  call_zopen64 := GetProcAddress(LDllHandle, 'call_zopen64');
+  call_zseek64 := GetProcAddress(LDllHandle, 'call_zseek64');
+  call_ztell64 := GetProcAddress(LDllHandle, 'call_ztell64');
+  compress := GetProcAddress(LDllHandle, 'compress');
+  compress2 := GetProcAddress(LDllHandle, 'compress2');
+  compressBound := GetProcAddress(LDllHandle, 'compressBound');
+  crc32 := GetProcAddress(LDllHandle, 'crc32');
+  crc32_combine := GetProcAddress(LDllHandle, 'crc32_combine');
+  crc32_z := GetProcAddress(LDllHandle, 'crc32_z');
+  deflate := GetProcAddress(LDllHandle, 'deflate');
+  deflateBound := GetProcAddress(LDllHandle, 'deflateBound');
+  deflateCopy := GetProcAddress(LDllHandle, 'deflateCopy');
+  deflateEnd := GetProcAddress(LDllHandle, 'deflateEnd');
+  deflateGetDictionary := GetProcAddress(LDllHandle, 'deflateGetDictionary');
+  deflateInit_ := GetProcAddress(LDllHandle, 'deflateInit');
+  deflateInit2_ := GetProcAddress(LDllHandle, 'deflateInit2');
+  deflateParams := GetProcAddress(LDllHandle, 'deflateParams');
+  deflatePending := GetProcAddress(LDllHandle, 'deflatePending');
+  deflatePrime := GetProcAddress(LDllHandle, 'deflatePrime');
+  deflateReset := GetProcAddress(LDllHandle, 'deflateReset');
+  deflateResetKeep := GetProcAddress(LDllHandle, 'deflateResetKeep');
+  deflateSetDictionary := GetProcAddress(LDllHandle, 'deflateSetDictionary');
+  deflateSetHeader := GetProcAddress(LDllHandle, 'deflateSetHeader');
+  deflateTune := GetProcAddress(LDllHandle, 'deflateTune');
+  fill_fopen_filefunc := GetProcAddress(LDllHandle, 'fill_fopen_filefunc');
+  fill_fopen64_filefunc := GetProcAddress(LDllHandle, 'fill_fopen64_filefunc');
+  fill_zlib_filefunc64_32_def_from_filefunc32 := GetProcAddress(LDllHandle, 'fill_zlib_filefunc64_32_def_from_filefunc32');
+  get_crc_table := GetProcAddress(LDllHandle, 'get_crc_table');
+  gzbuffer := GetProcAddress(LDllHandle, 'gzbuffer');
+  gzclearerr := GetProcAddress(LDllHandle, 'gzclearerr');
+  gzclose := GetProcAddress(LDllHandle, 'gzclose');
+  gzclose_r := GetProcAddress(LDllHandle, 'gzclose_r');
+  gzclose_w := GetProcAddress(LDllHandle, 'gzclose_w');
+  gzdirect := GetProcAddress(LDllHandle, 'gzdirect');
+  gzdopen := GetProcAddress(LDllHandle, 'gzdopen');
+  gzeof := GetProcAddress(LDllHandle, 'gzeof');
+  gzerror := GetProcAddress(LDllHandle, 'gzerror');
+  gzflush := GetProcAddress(LDllHandle, 'gzflush');
+  gzfread := GetProcAddress(LDllHandle, 'gzfread');
+  gzfwrite := GetProcAddress(LDllHandle, 'gzfwrite');
+  gzgetc := GetProcAddress(LDllHandle, 'gzgetc');
+  gzgetc_ := GetProcAddress(LDllHandle, 'gzgetc');
+  gzgets := GetProcAddress(LDllHandle, 'gzgets');
+  gzoffset := GetProcAddress(LDllHandle, 'gzoffset');
+  gzopen := GetProcAddress(LDllHandle, 'gzopen');
+  gzopen_w := GetProcAddress(LDllHandle, 'gzopen_w');
+  gzprintf := GetProcAddress(LDllHandle, 'gzprintf');
+  gzputc := GetProcAddress(LDllHandle, 'gzputc');
+  gzputs := GetProcAddress(LDllHandle, 'gzputs');
+  gzread := GetProcAddress(LDllHandle, 'gzread');
+  gzrewind := GetProcAddress(LDllHandle, 'gzrewind');
+  gzseek := GetProcAddress(LDllHandle, 'gzseek');
+  gzsetparams := GetProcAddress(LDllHandle, 'gzsetparams');
+  gztell := GetProcAddress(LDllHandle, 'gztell');
+  gzungetc := GetProcAddress(LDllHandle, 'gzungetc');
+  gzvprintf := GetProcAddress(LDllHandle, 'gzvprintf');
+  gzwrite := GetProcAddress(LDllHandle, 'gzwrite');
+  inflate := GetProcAddress(LDllHandle, 'inflate');
+  inflateBack := GetProcAddress(LDllHandle, 'inflateBack');
+  inflateBackEnd := GetProcAddress(LDllHandle, 'inflateBackEnd');
+  inflateBackInit_ := GetProcAddress(LDllHandle, 'inflateBackInit');
+  inflateCodesUsed := GetProcAddress(LDllHandle, 'inflateCodesUsed');
+  inflateCopy := GetProcAddress(LDllHandle, 'inflateCopy');
+  inflateEnd := GetProcAddress(LDllHandle, 'inflateEnd');
+  inflateGetDictionary := GetProcAddress(LDllHandle, 'inflateGetDictionary');
+  inflateGetHeader := GetProcAddress(LDllHandle, 'inflateGetHeader');
+  inflateInit_ := GetProcAddress(LDllHandle, 'inflateInit');
+  inflateInit2_ := GetProcAddress(LDllHandle, 'inflateInit2');
+  inflateMark := GetProcAddress(LDllHandle, 'inflateMark');
+  inflatePrime := GetProcAddress(LDllHandle, 'inflatePrime');
+  inflateReset := GetProcAddress(LDllHandle, 'inflateReset');
+  inflateReset2 := GetProcAddress(LDllHandle, 'inflateReset2');
+  inflateResetKeep := GetProcAddress(LDllHandle, 'inflateResetKeep');
+  inflateSetDictionary := GetProcAddress(LDllHandle, 'inflateSetDictionary');
+  inflateSync := GetProcAddress(LDllHandle, 'inflateSync');
+  inflateSyncPoint := GetProcAddress(LDllHandle, 'inflateSyncPoint');
+  inflateUndermine := GetProcAddress(LDllHandle, 'inflateUndermine');
+  inflateValidate := GetProcAddress(LDllHandle, 'inflateValidate');
   ma_aligned_free := GetProcAddress(LDllHandle, 'ma_aligned_free');
   ma_aligned_malloc := GetProcAddress(LDllHandle, 'ma_aligned_malloc');
   ma_apply_volume_factor_f32 := GetProcAddress(LDllHandle, 'ma_apply_volume_factor_f32');
@@ -14333,6 +15026,62 @@ begin
   stbtt_Rasterize := GetProcAddress(LDllHandle, 'stbtt_Rasterize');
   stbtt_ScaleForMappingEmToPixels := GetProcAddress(LDllHandle, 'stbtt_ScaleForMappingEmToPixels');
   stbtt_ScaleForPixelHeight := GetProcAddress(LDllHandle, 'stbtt_ScaleForPixelHeight');
+  uncompress := GetProcAddress(LDllHandle, 'uncompress');
+  uncompress2 := GetProcAddress(LDllHandle, 'uncompress2');
+  unzClose := GetProcAddress(LDllHandle, 'unzClose');
+  unzCloseCurrentFile := GetProcAddress(LDllHandle, 'unzCloseCurrentFile');
+  unzeof := GetProcAddress(LDllHandle, 'unzeof');
+  unzGetCurrentFileInfo := GetProcAddress(LDllHandle, 'unzGetCurrentFileInfo');
+  unzGetCurrentFileInfo64 := GetProcAddress(LDllHandle, 'unzGetCurrentFileInfo64');
+  unzGetCurrentFileZStreamPos64 := GetProcAddress(LDllHandle, 'unzGetCurrentFileZStreamPos64');
+  unzGetFilePos := GetProcAddress(LDllHandle, 'unzGetFilePos');
+  unzGetFilePos64 := GetProcAddress(LDllHandle, 'unzGetFilePos64');
+  unzGetGlobalComment := GetProcAddress(LDllHandle, 'unzGetGlobalComment');
+  unzGetGlobalInfo := GetProcAddress(LDllHandle, 'unzGetGlobalInfo');
+  unzGetGlobalInfo64 := GetProcAddress(LDllHandle, 'unzGetGlobalInfo64');
+  unzGetLocalExtrafield := GetProcAddress(LDllHandle, 'unzGetLocalExtrafield');
+  unzGetOffset := GetProcAddress(LDllHandle, 'unzGetOffset');
+  unzGetOffset64 := GetProcAddress(LDllHandle, 'unzGetOffset64');
+  unzGoToFilePos := GetProcAddress(LDllHandle, 'unzGoToFilePos');
+  unzGoToFilePos64 := GetProcAddress(LDllHandle, 'unzGoToFilePos64');
+  unzGoToFirstFile := GetProcAddress(LDllHandle, 'unzGoToFirstFile');
+  unzGoToNextFile := GetProcAddress(LDllHandle, 'unzGoToNextFile');
+  unzLocateFile := GetProcAddress(LDllHandle, 'unzLocateFile');
+  unzOpen := GetProcAddress(LDllHandle, 'unzOpen');
+  unzOpen2 := GetProcAddress(LDllHandle, 'unzOpen2');
+  unzOpen2_64 := GetProcAddress(LDllHandle, 'unzOpen2_64');
+  unzOpen64 := GetProcAddress(LDllHandle, 'unzOpen64');
+  unzOpenCurrentFile := GetProcAddress(LDllHandle, 'unzOpenCurrentFile');
+  unzOpenCurrentFile2 := GetProcAddress(LDllHandle, 'unzOpenCurrentFile2');
+  unzOpenCurrentFile3 := GetProcAddress(LDllHandle, 'unzOpenCurrentFile3');
+  unzOpenCurrentFilePassword := GetProcAddress(LDllHandle, 'unzOpenCurrentFilePassword');
+  unzReadCurrentFile := GetProcAddress(LDllHandle, 'unzReadCurrentFile');
+  unzSetOffset := GetProcAddress(LDllHandle, 'unzSetOffset');
+  unzSetOffset64 := GetProcAddress(LDllHandle, 'unzSetOffset64');
+  unzStringFileNameCompare := GetProcAddress(LDllHandle, 'unzStringFileNameCompare');
+  unztell := GetProcAddress(LDllHandle, 'unztell');
+  unztell64 := GetProcAddress(LDllHandle, 'unztell64');
+  zError := GetProcAddress(LDllHandle, 'zError');
+  zipClose := GetProcAddress(LDllHandle, 'zipClose');
+  zipCloseFileInZip := GetProcAddress(LDllHandle, 'zipCloseFileInZip');
+  zipCloseFileInZipRaw := GetProcAddress(LDllHandle, 'zipCloseFileInZipRaw');
+  zipCloseFileInZipRaw64 := GetProcAddress(LDllHandle, 'zipCloseFileInZipRaw64');
+  zipOpen := GetProcAddress(LDllHandle, 'zipOpen');
+  zipOpen2 := GetProcAddress(LDllHandle, 'zipOpen2');
+  zipOpen2_64 := GetProcAddress(LDllHandle, 'zipOpen2_64');
+  zipOpen64 := GetProcAddress(LDllHandle, 'zipOpen64');
+  zipOpenNewFileInZip := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip');
+  zipOpenNewFileInZip2 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip2');
+  zipOpenNewFileInZip2_64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip2_64');
+  zipOpenNewFileInZip3 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip3');
+  zipOpenNewFileInZip3_64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip3_64');
+  zipOpenNewFileInZip4 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip4');
+  zipOpenNewFileInZip4_64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip4_64');
+  zipOpenNewFileInZip64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip64');
+  zipRemoveExtraInfoBlock := GetProcAddress(LDllHandle, 'zipRemoveExtraInfoBlock');
+  zipWriteInFileInZip := GetProcAddress(LDllHandle, 'zipWriteInFileInZip');
+  zlibCompileFlags := GetProcAddress(LDllHandle, 'zlibCompileFlags');
+  zlibVersion := GetProcAddress(LDllHandle, 'zlibVersion');
 end;
 
 procedure UnloadDLL;

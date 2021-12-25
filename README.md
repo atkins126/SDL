@@ -13,6 +13,8 @@ Pascal bindings that allow you to use **SDL** and other useful libraries with <a
 - **stb_truetype** (https://github.com/nothings/stb)
 - **miniaudio** (https://github.com/mackron/miniaudio)
 - **physfs** (https://github.com/icculus/physfs)
+- **minizip** (https://github.com/madler/zlib)
+
 ### Minimum Requirements 
 - Windows 10+ (64 bits)
 - <a href="https://www.embarcadero.com/products/delphi/starter" target="_blank">Delphi Community Edition</a> (Win64 platform only)
@@ -34,7 +36,7 @@ You simply add `SDL` to your uses section and everything will be linked in and r
 <h5 align="center">
 
 Made with :heart: in Delphi 11
-</h6>
+</h5>
 
 
 
