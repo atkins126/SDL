@@ -1,4 +1,4 @@
-
+﻿
 {==============================================================================
   ____  ____  _     
  / ___||  _ \| |    
@@ -13,6 +13,7 @@
 
  Inclued:
    - SDL (https://github.com/libsdl-org/SDL)
+   - SDL2_gfx (https://github.com/Semphriss/SDL2_gfx)
    - pl_mpeg (https://github.com/phoboslab/pl_mpeg)
    - Nuklear (https://github.com/Immediate-Mode-UI/Nuklear)
    - stb_image (https://github.com/nothings/stb)
@@ -21,7 +22,7 @@
    - miniaudio (https://github.com/mackron/miniaudio)
    - physfs (https://github.com/icculus/physfs)
    - minizip (https://github.com/madler/zlib)
-   
+      
  Minimum Requirements:
    - Windows 10+ (64 bits)
    - Delphi Community Edition (Win64 platform only)
@@ -787,6 +788,16 @@ const
   UNZ_BADZIPFILE = (-103);
   UNZ_INTERNALERROR = (-104);
   UNZ_CRCERROR = (-105);
+  FPS_UPPER_LIMIT = 200;
+  FPS_LOWER_LIMIT = 1;
+  FPS_DEFAULT = 30;
+  M_PI = 3.1415926535897932384626433832795;
+  SDL2_GFXPRIMITIVES_MAJOR = 1;
+  SDL2_GFXPRIMITIVES_MINOR = 0;
+  SDL2_GFXPRIMITIVES_MICRO = 4;
+  GFX_FONTDATAMAX = (8*256);
+  SMOOTHING_OFF = 0;
+  SMOOTHING_ON = 1;
   SDL_FALSE = 0;
   SDL_TRUE = 1;
   SDL_ASSERTION_RETRY = 0;
@@ -4289,6 +4300,9 @@ type
 
   { Psdlsurface_context  }
   Psdlsurface_context = ^sdlsurface_context;
+
+  { PFPSmanager  }
+  PFPSmanager = ^FPSmanager;
 
   { int8_t  }
   int8_t = UTF8Char;
@@ -9886,6 +9900,15 @@ type
     atlas: nk_font_atlas;
   end;
 
+  { FPSmanager  }
+  FPSmanager = record
+    framecount: Uint32;
+    rateticks: Single;
+    baseticks: Uint32;
+    lastticks: Uint32;
+    rate: Uint32;
+  end;
+
   { SDL_qsort_compare  }
   SDL_qsort_compare = function(const p1: Pointer; const p2: Pointer): Integer; cdecl;
 
@@ -9908,6 +9931,50 @@ type
   PHYSFS_mountMemory_del = procedure(p1: Pointer); cdecl;
 
 var
+  aaArcRGBA: function(renderer: PSDL_Renderer; cx: Single; cy: Single; rx: Single; ry: Single; start: Single; _end: Single; thick: Single; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaBezierRGBA: function(renderer: PSDL_Renderer; x: PDouble; y: PDouble; n: Integer; s: Integer; thick: Single; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aacircleColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  aacircleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaellipseColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; color: Uint32): Integer; cdecl;
+  aaellipseRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledEllipseRGBA: function(renderer: PSDL_Renderer; cx: Single; cy: Single; rx: Single; ry: Single; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledPieRGBA: function(renderer: PSDL_Renderer; cx: Single; cy: Single; rx: Single; ry: Single; start: Single; _end: Single; chord: Uint32; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledPolyBezierRGBA: function(renderer: PSDL_Renderer; x: PDouble; y: PDouble; n: Integer; s: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledPolygonRGBA: function(renderer: PSDL_Renderer; const vx: PDouble; const vy: PDouble; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aalineColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  aalineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aapolygonColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; color: Uint32): Integer; cdecl;
+  aapolygonRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aatrigonColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; color: Uint32): Integer; cdecl;
+  aatrigonRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  arcColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
+  arcRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  bezierColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; s: Integer; color: Uint32): Integer; cdecl;
+  bezierRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; s: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  boxColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  boxRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  characterColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; c: UTF8Char; color: Uint32): Integer; cdecl;
+  characterRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; c: UTF8Char; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  circleColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  circleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  ellipseColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; color: Uint32): Integer; cdecl;
+  ellipseRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledCircleColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; r: Sint16; color: Uint32): Integer; cdecl;
+  filledCircleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledEllipseColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; color: Uint32): Integer; cdecl;
+  filledEllipseRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledPieColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
+  filledPieRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledPolygonColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; color: Uint32): Integer; cdecl;
+  filledPolygonRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledTrigonColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; color: Uint32): Integer; cdecl;
+  filledTrigonRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  gfxPrimitivesSetFont: procedure(const fontdata: Pointer; cw: Uint32; ch: Uint32); cdecl;
+  gfxPrimitivesSetFontRotation: procedure(rotation: Uint32); cdecl;
+  hlineColor: function(renderer: PSDL_Renderer; x1: Sint16; x2: Sint16; y: Sint16; color: Uint32): Integer; cdecl;
+  hlineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; x2: Sint16; y: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  lineColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  lineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   ma_aligned_free: procedure(p: Pointer; const pAllocationCallbacks: Pma_allocation_callbacks); cdecl;
   ma_aligned_malloc: function(sz: NativeUInt; alignment: NativeUInt; const pAllocationCallbacks: Pma_allocation_callbacks): Pointer; cdecl;
   ma_apply_volume_factor_f32: procedure(pSamples: PSingle; sampleCount: ma_uint64; factor: Single); cdecl;
@@ -11363,6 +11430,10 @@ var
   PHYSFS_writeULE16: function(_file: PPHYSFS_File; val: PHYSFS_uint16): Integer; cdecl;
   PHYSFS_writeULE32: function(_file: PPHYSFS_File; val: PHYSFS_uint32): Integer; cdecl;
   PHYSFS_writeULE64: function(_file: PPHYSFS_File; val: PHYSFS_uint64): Integer; cdecl;
+  pieColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
+  pieRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  pixelColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; color: Uint32): Integer; cdecl;
+  pixelRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   plm_audio_create_with_buffer: function(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_audio_t; cdecl;
   plm_audio_decode: function(self: Pplm_audio_t): Pplm_samples_t; cdecl;
   plm_audio_destroy: procedure(self: Pplm_audio_t); cdecl;
@@ -11446,6 +11517,19 @@ var
   plm_video_rewind: procedure(self: Pplm_video_t); cdecl;
   plm_video_set_no_delay: procedure(self: Pplm_video_t; no_delay: Integer); cdecl;
   plm_video_set_time: procedure(self: Pplm_video_t; time: Double); cdecl;
+  polygonColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; color: Uint32): Integer; cdecl;
+  polygonRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  rectangleColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  rectangleRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  rotateSurface90Degrees: function(src: PSDL_Surface; numClockwiseTurns: Integer): PSDL_Surface; cdecl;
+  rotozoomSurface: function(src: PSDL_Surface; angle: Double; zoom: Double; smooth: Integer): PSDL_Surface; cdecl;
+  rotozoomSurfaceSize: procedure(width: Integer; height: Integer; angle: Double; zoom: Double; dstwidth: PInteger; dstheight: PInteger); cdecl;
+  rotozoomSurfaceSizeXY: procedure(width: Integer; height: Integer; angle: Double; zoomx: Double; zoomy: Double; dstwidth: PInteger; dstheight: PInteger); cdecl;
+  rotozoomSurfaceXY: function(src: PSDL_Surface; angle: Double; zoomx: Double; zoomy: Double; smooth: Integer): PSDL_Surface; cdecl;
+  roundedBoxColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  roundedBoxRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  roundedRectangleColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  roundedRectangleRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   SDL_abs: function(x: Integer): Integer; cdecl;
   SDL_acos: function(x: Double): Double; cdecl;
   SDL_acosf: function(x: Single): Single; cdecl;
@@ -11559,6 +11643,7 @@ var
   SDL_FlushEvents: procedure(minType: Uint32; maxType: Uint32); cdecl;
   SDL_fmod: function(x: Double; y: Double): Double; cdecl;
   SDL_fmodf: function(x: Single; y: Single): Single; cdecl;
+  SDL_framerateDelay: function(manager: PFPSmanager): Uint32; cdecl;
   SDL_free: procedure(mem: Pointer); cdecl;
   SDL_FreeAudioStream: procedure(stream: PSDL_AudioStream); cdecl;
   SDL_FreeCursor: procedure(cursor: PSDL_Cursor); cdecl;
@@ -11650,6 +11735,8 @@ var
   SDL_GetError: function(): PUTF8Char; cdecl;
   SDL_GetErrorMsg: function(errstr: PUTF8Char; maxlen: Integer): PUTF8Char; cdecl;
   SDL_GetEventFilter: function(filter: PSDL_EventFilter; userdata: PPointer): SDL_bool; cdecl;
+  SDL_getFramecount: function(manager: PFPSmanager): Integer; cdecl;
+  SDL_getFramerate: function(manager: PFPSmanager): Integer; cdecl;
   SDL_GetGlobalMouseState: function(x: PInteger; y: PInteger): Uint32; cdecl;
   SDL_GetGrabbedWindow: function(): PSDL_Window; cdecl;
   SDL_GetHint: function(const name: PUTF8Char): PUTF8Char; cdecl;
@@ -11829,7 +11916,38 @@ var
   SDL_iconv_close: function(cd: SDL_iconv_t): Integer; cdecl;
   SDL_iconv_open: function(const tocode: PUTF8Char; const fromcode: PUTF8Char): SDL_iconv_t; cdecl;
   SDL_iconv_string: function(const tocode: PUTF8Char; const fromcode: PUTF8Char; const inbuf: PUTF8Char; inbytesleft: NativeUInt): PUTF8Char; cdecl;
+  SDL_imageFilterAbsDiff: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterAdd: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterAddByte: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterAddByteToHalf: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterAddUint: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Cardinal): Integer; cdecl;
+  SDL_imageFilterBinarizeUsingThreshold: function(Src1: PByte; Dest: PByte; length: Cardinal; T: Byte): Integer; cdecl;
+  SDL_imageFilterBitAnd: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterBitNegation: function(Src1: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterBitOr: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterClipToRange: function(Src1: PByte; Dest: PByte; length: Cardinal; Tmin: Byte; Tmax: Byte): Integer; cdecl;
+  SDL_imageFilterDiv: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMean: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMMXdetect: function(): Integer; cdecl;
+  SDL_imageFilterMMXoff: procedure(); cdecl;
+  SDL_imageFilterMMXon: procedure(); cdecl;
+  SDL_imageFilterMult: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMultByByte: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterMultDivby2: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMultDivby4: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMultNor: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterNormalizeLinear: function(Src: PByte; Dest: PByte; length: Cardinal; Cmin: Integer; Cmax: Integer; Nmin: Integer; Nmax: Integer): Integer; cdecl;
+  SDL_imageFilterShiftLeft: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftLeftByte: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftLeftUint: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftRight: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftRightAndMultByByte: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte; C: Byte): Integer; cdecl;
+  SDL_imageFilterShiftRightUint: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterSub: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterSubByte: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterSubUint: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Cardinal): Integer; cdecl;
   SDL_Init: function(flags: Uint32): Integer; cdecl;
+  SDL_initFramerate: procedure(manager: PFPSmanager); cdecl;
   SDL_InitSubSystem: function(flags: Uint32): Integer; cdecl;
   SDL_IntersectRect: function(const A: PSDL_Rect; const B: PSDL_Rect; result: PSDL_Rect): SDL_bool; cdecl;
   SDL_IntersectRectAndLine: function(const rect: PSDL_Rect; X1: PInteger; Y1: PInteger; X2: PInteger; Y2: PInteger): SDL_bool; cdecl;
@@ -12095,6 +12213,7 @@ var
   SDL_setenv: function(const name: PUTF8Char; const value: PUTF8Char; overwrite: Integer): Integer; cdecl;
   SDL_SetError: function(const fmt: PUTF8Char): Integer varargs; cdecl;
   SDL_SetEventFilter: procedure(filter: SDL_EventFilter; userdata: Pointer); cdecl;
+  SDL_setFramerate: function(manager: PFPSmanager; rate: Uint32): Integer; cdecl;
   SDL_SetHint: function(const name: PUTF8Char; const value: PUTF8Char): SDL_bool; cdecl;
   SDL_SetHintWithPriority: function(const name: PUTF8Char; const value: PUTF8Char; priority: SDL_HintPriority): SDL_bool; cdecl;
   SDL_SetMainReady: procedure(); cdecl;
@@ -12242,6 +12361,7 @@ var
   SDL_WriteLE32: function(dst: PSDL_RWops; value: Uint32): NativeUInt; cdecl;
   SDL_WriteLE64: function(dst: PSDL_RWops; value: Uint64): NativeUInt; cdecl;
   SDL_WriteU8: function(dst: PSDL_RWops; value: Uint8): NativeUInt; cdecl;
+  shrinkSurface: function(src: PSDL_Surface; factorx: Integer; factory: Integer): PSDL_Surface; cdecl;
   stbi_convert_iphone_png_to_rgb: procedure(flag_true_if_should_convert: Integer); cdecl;
   stbi_convert_iphone_png_to_rgb_thread: procedure(flag_true_if_should_convert: Integer); cdecl;
   stbi_failure_reason: function(): PUTF8Char; cdecl;
@@ -12355,6 +12475,16 @@ var
   stbtt_Rasterize: procedure(result: Pstbtt__bitmap; flatness_in_pixels: Single; vertices: Pstbtt_vertex; num_verts: Integer; scale_x: Single; scale_y: Single; shift_x: Single; shift_y: Single; x_off: Integer; y_off: Integer; invert: Integer; userdata: Pointer); cdecl;
   stbtt_ScaleForMappingEmToPixels: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
   stbtt_ScaleForPixelHeight: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
+  stringColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; const s: PUTF8Char; color: Uint32): Integer; cdecl;
+  stringRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; const s: PUTF8Char; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  texturedPolygon: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; texture: PSDL_Surface; texture_dx: Integer; texture_dy: Integer): Integer; cdecl;
+  thickArcRGBA: function(renderer: PSDL_Renderer; xc: Sint16; yc: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8; thick: Uint8): Integer; cdecl;
+  thickCircleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8; thick: Uint8): Integer; cdecl;
+  thickEllipseRGBA: function(renderer: PSDL_Renderer; xc: Sint16; yc: Sint16; xr: Sint16; yr: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8; thick: Uint8): Integer; cdecl;
+  thickLineColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; width: Uint8; color: Uint32): Integer; cdecl;
+  thickLineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; width: Uint8; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  trigonColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; color: Uint32): Integer; cdecl;
+  trigonRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   unzClose: function(_file: unzFile): Integer; cdecl;
   unzCloseCurrentFile: function(_file: unzFile): Integer; cdecl;
   unzeof: function(_file: unzFile): Integer; cdecl;
@@ -12388,6 +12518,8 @@ var
   unzStringFileNameCompare: function(const fileName1: PUTF8Char; const fileName2: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
   unztell: function(_file: unzFile): Integer; cdecl;
   unztell64: function(_file: unzFile): ZPOS64_T; cdecl;
+  vlineColor: function(renderer: PSDL_Renderer; x: Sint16; y1: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  vlineRGBA: function(renderer: PSDL_Renderer; x: Sint16; y1: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   zipClose: function(_file: zipFile; const global_comment: PUTF8Char): Integer; cdecl;
   zipCloseFileInZip: function(_file: zipFile): Integer; cdecl;
   zipCloseFileInZipRaw: function(_file: zipFile; uncompressed_size: uLong; crc32: uLong): Integer; cdecl;
@@ -12406,6 +12538,8 @@ var
   zipOpenNewFileInZip64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; zip64: Integer): Integer; cdecl;
   zipRemoveExtraInfoBlock: function(pData: PUTF8Char; dataLen: PInteger; sHeader: Smallint): Integer; cdecl;
   zipWriteInFileInZip: function(_file: zipFile; const buf: Pointer; len: Cardinal): Integer; cdecl;
+  zoomSurface: function(src: PSDL_Surface; zoomx: Double; zoomy: Double; smooth: Integer): PSDL_Surface; cdecl;
+  zoomSurfaceSize: procedure(width: Integer; height: Integer; zoomx: Double; zoomy: Double; dstwidth: PInteger; dstheight: PInteger); cdecl;
 
 implementation
 
@@ -12432,6 +12566,50 @@ begin
 
   LDllHandle := SafeLoadLibrary(LDllName);
 
+  aaArcRGBA := GetProcAddress(LDllHandle, 'aaArcRGBA');
+  aaBezierRGBA := GetProcAddress(LDllHandle, 'aaBezierRGBA');
+  aacircleColor := GetProcAddress(LDllHandle, 'aacircleColor');
+  aacircleRGBA := GetProcAddress(LDllHandle, 'aacircleRGBA');
+  aaellipseColor := GetProcAddress(LDllHandle, 'aaellipseColor');
+  aaellipseRGBA := GetProcAddress(LDllHandle, 'aaellipseRGBA');
+  aaFilledEllipseRGBA := GetProcAddress(LDllHandle, 'aaFilledEllipseRGBA');
+  aaFilledPieRGBA := GetProcAddress(LDllHandle, 'aaFilledPieRGBA');
+  aaFilledPolyBezierRGBA := GetProcAddress(LDllHandle, 'aaFilledPolyBezierRGBA');
+  aaFilledPolygonRGBA := GetProcAddress(LDllHandle, 'aaFilledPolygonRGBA');
+  aalineColor := GetProcAddress(LDllHandle, 'aalineColor');
+  aalineRGBA := GetProcAddress(LDllHandle, 'aalineRGBA');
+  aapolygonColor := GetProcAddress(LDllHandle, 'aapolygonColor');
+  aapolygonRGBA := GetProcAddress(LDllHandle, 'aapolygonRGBA');
+  aatrigonColor := GetProcAddress(LDllHandle, 'aatrigonColor');
+  aatrigonRGBA := GetProcAddress(LDllHandle, 'aatrigonRGBA');
+  arcColor := GetProcAddress(LDllHandle, 'arcColor');
+  arcRGBA := GetProcAddress(LDllHandle, 'arcRGBA');
+  bezierColor := GetProcAddress(LDllHandle, 'bezierColor');
+  bezierRGBA := GetProcAddress(LDllHandle, 'bezierRGBA');
+  boxColor := GetProcAddress(LDllHandle, 'boxColor');
+  boxRGBA := GetProcAddress(LDllHandle, 'boxRGBA');
+  characterColor := GetProcAddress(LDllHandle, 'characterColor');
+  characterRGBA := GetProcAddress(LDllHandle, 'characterRGBA');
+  circleColor := GetProcAddress(LDllHandle, 'circleColor');
+  circleRGBA := GetProcAddress(LDllHandle, 'circleRGBA');
+  ellipseColor := GetProcAddress(LDllHandle, 'ellipseColor');
+  ellipseRGBA := GetProcAddress(LDllHandle, 'ellipseRGBA');
+  filledCircleColor := GetProcAddress(LDllHandle, 'filledCircleColor');
+  filledCircleRGBA := GetProcAddress(LDllHandle, 'filledCircleRGBA');
+  filledEllipseColor := GetProcAddress(LDllHandle, 'filledEllipseColor');
+  filledEllipseRGBA := GetProcAddress(LDllHandle, 'filledEllipseRGBA');
+  filledPieColor := GetProcAddress(LDllHandle, 'filledPieColor');
+  filledPieRGBA := GetProcAddress(LDllHandle, 'filledPieRGBA');
+  filledPolygonColor := GetProcAddress(LDllHandle, 'filledPolygonColor');
+  filledPolygonRGBA := GetProcAddress(LDllHandle, 'filledPolygonRGBA');
+  filledTrigonColor := GetProcAddress(LDllHandle, 'filledTrigonColor');
+  filledTrigonRGBA := GetProcAddress(LDllHandle, 'filledTrigonRGBA');
+  gfxPrimitivesSetFont := GetProcAddress(LDllHandle, 'gfxPrimitivesSetFont');
+  gfxPrimitivesSetFontRotation := GetProcAddress(LDllHandle, 'gfxPrimitivesSetFontRotation');
+  hlineColor := GetProcAddress(LDllHandle, 'hlineColor');
+  hlineRGBA := GetProcAddress(LDllHandle, 'hlineRGBA');
+  lineColor := GetProcAddress(LDllHandle, 'lineColor');
+  lineRGBA := GetProcAddress(LDllHandle, 'lineRGBA');
   ma_aligned_free := GetProcAddress(LDllHandle, 'ma_aligned_free');
   ma_aligned_malloc := GetProcAddress(LDllHandle, 'ma_aligned_malloc');
   ma_apply_volume_factor_f32 := GetProcAddress(LDllHandle, 'ma_apply_volume_factor_f32');
@@ -13887,6 +14065,10 @@ begin
   PHYSFS_writeULE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE16');
   PHYSFS_writeULE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE32');
   PHYSFS_writeULE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE64');
+  pieColor := GetProcAddress(LDllHandle, 'pieColor');
+  pieRGBA := GetProcAddress(LDllHandle, 'pieRGBA');
+  pixelColor := GetProcAddress(LDllHandle, 'pixelColor');
+  pixelRGBA := GetProcAddress(LDllHandle, 'pixelRGBA');
   plm_audio_create_with_buffer := GetProcAddress(LDllHandle, 'plm_audio_create_with_buffer');
   plm_audio_decode := GetProcAddress(LDllHandle, 'plm_audio_decode');
   plm_audio_destroy := GetProcAddress(LDllHandle, 'plm_audio_destroy');
@@ -13970,6 +14152,19 @@ begin
   plm_video_rewind := GetProcAddress(LDllHandle, 'plm_video_rewind');
   plm_video_set_no_delay := GetProcAddress(LDllHandle, 'plm_video_set_no_delay');
   plm_video_set_time := GetProcAddress(LDllHandle, 'plm_video_set_time');
+  polygonColor := GetProcAddress(LDllHandle, 'polygonColor');
+  polygonRGBA := GetProcAddress(LDllHandle, 'polygonRGBA');
+  rectangleColor := GetProcAddress(LDllHandle, 'rectangleColor');
+  rectangleRGBA := GetProcAddress(LDllHandle, 'rectangleRGBA');
+  rotateSurface90Degrees := GetProcAddress(LDllHandle, 'rotateSurface90Degrees');
+  rotozoomSurface := GetProcAddress(LDllHandle, 'rotozoomSurface');
+  rotozoomSurfaceSize := GetProcAddress(LDllHandle, 'rotozoomSurfaceSize');
+  rotozoomSurfaceSizeXY := GetProcAddress(LDllHandle, 'rotozoomSurfaceSizeXY');
+  rotozoomSurfaceXY := GetProcAddress(LDllHandle, 'rotozoomSurfaceXY');
+  roundedBoxColor := GetProcAddress(LDllHandle, 'roundedBoxColor');
+  roundedBoxRGBA := GetProcAddress(LDllHandle, 'roundedBoxRGBA');
+  roundedRectangleColor := GetProcAddress(LDllHandle, 'roundedRectangleColor');
+  roundedRectangleRGBA := GetProcAddress(LDllHandle, 'roundedRectangleRGBA');
   SDL_abs := GetProcAddress(LDllHandle, 'SDL_abs');
   SDL_acos := GetProcAddress(LDllHandle, 'SDL_acos');
   SDL_acosf := GetProcAddress(LDllHandle, 'SDL_acosf');
@@ -14083,6 +14278,7 @@ begin
   SDL_FlushEvents := GetProcAddress(LDllHandle, 'SDL_FlushEvents');
   SDL_fmod := GetProcAddress(LDllHandle, 'SDL_fmod');
   SDL_fmodf := GetProcAddress(LDllHandle, 'SDL_fmodf');
+  SDL_framerateDelay := GetProcAddress(LDllHandle, 'SDL_framerateDelay');
   SDL_free := GetProcAddress(LDllHandle, 'SDL_free');
   SDL_FreeAudioStream := GetProcAddress(LDllHandle, 'SDL_FreeAudioStream');
   SDL_FreeCursor := GetProcAddress(LDllHandle, 'SDL_FreeCursor');
@@ -14174,6 +14370,8 @@ begin
   SDL_GetError := GetProcAddress(LDllHandle, 'SDL_GetError');
   SDL_GetErrorMsg := GetProcAddress(LDllHandle, 'SDL_GetErrorMsg');
   SDL_GetEventFilter := GetProcAddress(LDllHandle, 'SDL_GetEventFilter');
+  SDL_getFramecount := GetProcAddress(LDllHandle, 'SDL_getFramecount');
+  SDL_getFramerate := GetProcAddress(LDllHandle, 'SDL_getFramerate');
   SDL_GetGlobalMouseState := GetProcAddress(LDllHandle, 'SDL_GetGlobalMouseState');
   SDL_GetGrabbedWindow := GetProcAddress(LDllHandle, 'SDL_GetGrabbedWindow');
   SDL_GetHint := GetProcAddress(LDllHandle, 'SDL_GetHint');
@@ -14353,7 +14551,38 @@ begin
   SDL_iconv_close := GetProcAddress(LDllHandle, 'SDL_iconv_close');
   SDL_iconv_open := GetProcAddress(LDllHandle, 'SDL_iconv_open');
   SDL_iconv_string := GetProcAddress(LDllHandle, 'SDL_iconv_string');
+  SDL_imageFilterAbsDiff := GetProcAddress(LDllHandle, 'SDL_imageFilterAbsDiff');
+  SDL_imageFilterAdd := GetProcAddress(LDllHandle, 'SDL_imageFilterAdd');
+  SDL_imageFilterAddByte := GetProcAddress(LDllHandle, 'SDL_imageFilterAddByte');
+  SDL_imageFilterAddByteToHalf := GetProcAddress(LDllHandle, 'SDL_imageFilterAddByteToHalf');
+  SDL_imageFilterAddUint := GetProcAddress(LDllHandle, 'SDL_imageFilterAddUint');
+  SDL_imageFilterBinarizeUsingThreshold := GetProcAddress(LDllHandle, 'SDL_imageFilterBinarizeUsingThreshold');
+  SDL_imageFilterBitAnd := GetProcAddress(LDllHandle, 'SDL_imageFilterBitAnd');
+  SDL_imageFilterBitNegation := GetProcAddress(LDllHandle, 'SDL_imageFilterBitNegation');
+  SDL_imageFilterBitOr := GetProcAddress(LDllHandle, 'SDL_imageFilterBitOr');
+  SDL_imageFilterClipToRange := GetProcAddress(LDllHandle, 'SDL_imageFilterClipToRange');
+  SDL_imageFilterDiv := GetProcAddress(LDllHandle, 'SDL_imageFilterDiv');
+  SDL_imageFilterMean := GetProcAddress(LDllHandle, 'SDL_imageFilterMean');
+  SDL_imageFilterMMXdetect := GetProcAddress(LDllHandle, 'SDL_imageFilterMMXdetect');
+  SDL_imageFilterMMXoff := GetProcAddress(LDllHandle, 'SDL_imageFilterMMXoff');
+  SDL_imageFilterMMXon := GetProcAddress(LDllHandle, 'SDL_imageFilterMMXon');
+  SDL_imageFilterMult := GetProcAddress(LDllHandle, 'SDL_imageFilterMult');
+  SDL_imageFilterMultByByte := GetProcAddress(LDllHandle, 'SDL_imageFilterMultByByte');
+  SDL_imageFilterMultDivby2 := GetProcAddress(LDllHandle, 'SDL_imageFilterMultDivby2');
+  SDL_imageFilterMultDivby4 := GetProcAddress(LDllHandle, 'SDL_imageFilterMultDivby4');
+  SDL_imageFilterMultNor := GetProcAddress(LDllHandle, 'SDL_imageFilterMultNor');
+  SDL_imageFilterNormalizeLinear := GetProcAddress(LDllHandle, 'SDL_imageFilterNormalizeLinear');
+  SDL_imageFilterShiftLeft := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftLeft');
+  SDL_imageFilterShiftLeftByte := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftLeftByte');
+  SDL_imageFilterShiftLeftUint := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftLeftUint');
+  SDL_imageFilterShiftRight := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftRight');
+  SDL_imageFilterShiftRightAndMultByByte := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftRightAndMultByByte');
+  SDL_imageFilterShiftRightUint := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftRightUint');
+  SDL_imageFilterSub := GetProcAddress(LDllHandle, 'SDL_imageFilterSub');
+  SDL_imageFilterSubByte := GetProcAddress(LDllHandle, 'SDL_imageFilterSubByte');
+  SDL_imageFilterSubUint := GetProcAddress(LDllHandle, 'SDL_imageFilterSubUint');
   SDL_Init := GetProcAddress(LDllHandle, 'SDL_Init');
+  SDL_initFramerate := GetProcAddress(LDllHandle, 'SDL_initFramerate');
   SDL_InitSubSystem := GetProcAddress(LDllHandle, 'SDL_InitSubSystem');
   SDL_IntersectRect := GetProcAddress(LDllHandle, 'SDL_IntersectRect');
   SDL_IntersectRectAndLine := GetProcAddress(LDllHandle, 'SDL_IntersectRectAndLine');
@@ -14619,6 +14848,7 @@ begin
   SDL_setenv := GetProcAddress(LDllHandle, 'SDL_setenv');
   SDL_SetError := GetProcAddress(LDllHandle, 'SDL_SetError');
   SDL_SetEventFilter := GetProcAddress(LDllHandle, 'SDL_SetEventFilter');
+  SDL_setFramerate := GetProcAddress(LDllHandle, 'SDL_setFramerate');
   SDL_SetHint := GetProcAddress(LDllHandle, 'SDL_SetHint');
   SDL_SetHintWithPriority := GetProcAddress(LDllHandle, 'SDL_SetHintWithPriority');
   SDL_SetMainReady := GetProcAddress(LDllHandle, 'SDL_SetMainReady');
@@ -14766,6 +14996,7 @@ begin
   SDL_WriteLE32 := GetProcAddress(LDllHandle, 'SDL_WriteLE32');
   SDL_WriteLE64 := GetProcAddress(LDllHandle, 'SDL_WriteLE64');
   SDL_WriteU8 := GetProcAddress(LDllHandle, 'SDL_WriteU8');
+  shrinkSurface := GetProcAddress(LDllHandle, 'shrinkSurface');
   stbi_convert_iphone_png_to_rgb := GetProcAddress(LDllHandle, 'stbi_convert_iphone_png_to_rgb');
   stbi_convert_iphone_png_to_rgb_thread := GetProcAddress(LDllHandle, 'stbi_convert_iphone_png_to_rgb_thread');
   stbi_failure_reason := GetProcAddress(LDllHandle, 'stbi_failure_reason');
@@ -14879,6 +15110,16 @@ begin
   stbtt_Rasterize := GetProcAddress(LDllHandle, 'stbtt_Rasterize');
   stbtt_ScaleForMappingEmToPixels := GetProcAddress(LDllHandle, 'stbtt_ScaleForMappingEmToPixels');
   stbtt_ScaleForPixelHeight := GetProcAddress(LDllHandle, 'stbtt_ScaleForPixelHeight');
+  stringColor := GetProcAddress(LDllHandle, 'stringColor');
+  stringRGBA := GetProcAddress(LDllHandle, 'stringRGBA');
+  texturedPolygon := GetProcAddress(LDllHandle, 'texturedPolygon');
+  thickArcRGBA := GetProcAddress(LDllHandle, 'thickArcRGBA');
+  thickCircleRGBA := GetProcAddress(LDllHandle, 'thickCircleRGBA');
+  thickEllipseRGBA := GetProcAddress(LDllHandle, 'thickEllipseRGBA');
+  thickLineColor := GetProcAddress(LDllHandle, 'thickLineColor');
+  thickLineRGBA := GetProcAddress(LDllHandle, 'thickLineRGBA');
+  trigonColor := GetProcAddress(LDllHandle, 'trigonColor');
+  trigonRGBA := GetProcAddress(LDllHandle, 'trigonRGBA');
   unzClose := GetProcAddress(LDllHandle, 'unzClose');
   unzCloseCurrentFile := GetProcAddress(LDllHandle, 'unzCloseCurrentFile');
   unzeof := GetProcAddress(LDllHandle, 'unzeof');
@@ -14912,6 +15153,8 @@ begin
   unzStringFileNameCompare := GetProcAddress(LDllHandle, 'unzStringFileNameCompare');
   unztell := GetProcAddress(LDllHandle, 'unztell');
   unztell64 := GetProcAddress(LDllHandle, 'unztell64');
+  vlineColor := GetProcAddress(LDllHandle, 'vlineColor');
+  vlineRGBA := GetProcAddress(LDllHandle, 'vlineRGBA');
   zipClose := GetProcAddress(LDllHandle, 'zipClose');
   zipCloseFileInZip := GetProcAddress(LDllHandle, 'zipCloseFileInZip');
   zipCloseFileInZipRaw := GetProcAddress(LDllHandle, 'zipCloseFileInZipRaw');
@@ -14930,6 +15173,8 @@ begin
   zipOpenNewFileInZip64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip64');
   zipRemoveExtraInfoBlock := GetProcAddress(LDllHandle, 'zipRemoveExtraInfoBlock');
   zipWriteInFileInZip := GetProcAddress(LDllHandle, 'zipWriteInFileInZip');
+  zoomSurface := GetProcAddress(LDllHandle, 'zoomSurface');
+  zoomSurfaceSize := GetProcAddress(LDllHandle, 'zoomSurfaceSize');
 end;
 
 procedure UnloadDLL;

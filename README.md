@@ -6,6 +6,7 @@ Pascal bindings that allow you to use **SDL** and other useful libraries with <a
 
 ### Included
 - **SDL** (https://github.com/libsdl-org/SDL)
+- **SDL2_gfx** (https://github.com/Semphriss/SDL2_gfx)
 - **pl_mpeg** (https://github.com/phoboslab/pl_mpeg)
 - **Nuklear** (https://github.com/Immediate-Mode-UI/Nuklear)
 - **stb_image** (https://github.com/nothings/stb)
