@@ -15,6 +15,7 @@ Pascal bindings that allow you to use **SDL** and other useful libraries with <a
 - **miniaudio** (https://github.com/mackron/miniaudio)
 - **physfs** (https://github.com/icculus/physfs)
 - **minizip** (https://github.com/madler/zlib)
+- **enet** (https://github.com/lsalzman/enet)
 
 ### Minimum Requirements 
 - Windows 10+ (64 bits)
