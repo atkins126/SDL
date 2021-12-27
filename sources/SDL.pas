@@ -93,6 +93,7 @@ interface
 
 uses
   Winapi.WinSock2;
+
 const
   NK_INCLUDE_DEFAULT_ALLOCATOR = 1;
   NK_INCLUDE_FONT_BAKING = 1;
