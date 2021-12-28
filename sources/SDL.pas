@@ -13,6 +13,7 @@
 
  Inclued:
    - SDL (https://github.com/libsdl-org/SDL)
+   - SDL2_gfx (https://github.com/Semphriss/SDL2_gfx)
    - pl_mpeg (https://github.com/phoboslab/pl_mpeg)
    - Nuklear (https://github.com/Immediate-Mode-UI/Nuklear)
    - stb_image (https://github.com/nothings/stb)
@@ -20,7 +21,9 @@
    - stb_truetype (https://github.com/nothings/stb)
    - miniaudio (https://github.com/mackron/miniaudio)
    - physfs (https://github.com/icculus/physfs)
-   
+   - minizip (https://github.com/madler/zlib)
+   - enet (https://github.com/lsalzman/enet)
+      
  Minimum Requirements:
    - Windows 10+ (64 bits)
    - Delphi Community Edition (Win64 platform only)
@@ -87,6 +90,9 @@
 unit SDL;
 
 interface
+
+uses
+  Winapi.WinSock2;
 
 const
   NK_INCLUDE_DEFAULT_ALLOCATOR = 1;
@@ -719,6 +725,91 @@ const
   PHYSFS_VER_MAJOR = 3;
   PHYSFS_VER_MINOR = 1;
   PHYSFS_VER_PATCH = 0;
+  MAX_MEM_LEVEL = 9;
+  MAX_WBITS = 15;
+  ZLIB_VERSION = '1.2.11';
+  ZLIB_VERNUM = $12b0;
+  ZLIB_VER_MAJOR = 1;
+  ZLIB_VER_MINOR = 2;
+  ZLIB_VER_REVISION = 11;
+  ZLIB_VER_SUBREVISION = 0;
+  Z_NO_FLUSH = 0;
+  Z_PARTIAL_FLUSH = 1;
+  Z_SYNC_FLUSH = 2;
+  Z_FULL_FLUSH = 3;
+  Z_FINISH = 4;
+  Z_BLOCK = 5;
+  Z_TREES = 6;
+  Z_OK = 0;
+  Z_STREAM_END = 1;
+  Z_NEED_DICT = 2;
+  Z_ERRNO = (-1);
+  Z_STREAM_ERROR = (-2);
+  Z_DATA_ERROR = (-3);
+  Z_MEM_ERROR = (-4);
+  Z_BUF_ERROR = (-5);
+  Z_VERSION_ERROR = (-6);
+  Z_NO_COMPRESSION = 0;
+  Z_BEST_SPEED = 1;
+  Z_BEST_COMPRESSION = 9;
+  Z_DEFAULT_COMPRESSION = (-1);
+  Z_FILTERED = 1;
+  Z_HUFFMAN_ONLY = 2;
+  Z_RLE = 3;
+  Z_FIXED = 4;
+  Z_DEFAULT_STRATEGY = 0;
+  Z_BINARY = 0;
+  Z_TEXT = 1;
+  Z_ASCII = Z_TEXT;
+  Z_UNKNOWN = 2;
+  Z_DEFLATED = 8;
+  Z_NULL = 0;
+  MAXU32 = $ffffffff;
+  ZLIB_FILEFUNC_SEEK_CUR = (1);
+  ZLIB_FILEFUNC_SEEK_END = (2);
+  ZLIB_FILEFUNC_SEEK_SET = (0);
+  ZLIB_FILEFUNC_MODE_READ = (1);
+  ZLIB_FILEFUNC_MODE_WRITE = (2);
+  ZLIB_FILEFUNC_MODE_READWRITEFILTER = (3);
+  ZLIB_FILEFUNC_MODE_EXISTING = (4);
+  ZLIB_FILEFUNC_MODE_CREATE = (8);
+  Z_BZIP2ED = 12;
+  ZIP_OK = (0);
+  ZIP_EOF = (0);
+  ZIP_ERRNO = (Z_ERRNO);
+  ZIP_PARAMERROR = (-102);
+  ZIP_BADZIPFILE = (-103);
+  ZIP_INTERNALERROR = (-104);
+  DEF_MEM_LEVEL = 8;
+  APPEND_STATUS_CREATE = (0);
+  APPEND_STATUS_CREATEAFTER = (1);
+  APPEND_STATUS_ADDINZIP = (2);
+  UNZ_OK = (0);
+  UNZ_END_OF_LIST_OF_FILE = (-100);
+  UNZ_ERRNO = (Z_ERRNO);
+  UNZ_EOF = (0);
+  UNZ_PARAMERROR = (-102);
+  UNZ_BADZIPFILE = (-103);
+  UNZ_INTERNALERROR = (-104);
+  UNZ_CRCERROR = (-105);
+  FPS_UPPER_LIMIT = 200;
+  FPS_LOWER_LIMIT = 1;
+  FPS_DEFAULT = 30;
+  M_PI = 3.1415926535897932384626433832795;
+  SDL2_GFXPRIMITIVES_MAJOR = 1;
+  SDL2_GFXPRIMITIVES_MINOR = 0;
+  SDL2_GFXPRIMITIVES_MICRO = 4;
+  GFX_FONTDATAMAX = (8*256);
+  SMOOTHING_OFF = 0;
+  SMOOTHING_ON = 1;
+  INVALID_SOCKET = ( not 0);
+  ENET_SOCKET_NULL = INVALID_SOCKET;
+  ENET_VERSION_MAJOR = 1;
+  ENET_VERSION_MINOR = 3;
+  ENET_VERSION_PATCH = 17;
+  ENET_HOST_ANY = 0;
+  ENET_HOST_BROADCAST_ = $FFFFFFFF;
+  ENET_PORT_ANY = 0;
   SDL_FALSE = 0;
   SDL_TRUE = 1;
   SDL_ASSERTION_RETRY = 0;
@@ -2197,6 +2288,102 @@ const
   PHYSFS_ERR_DUPLICATE = 27;
   PHYSFS_ERR_BAD_PASSWORD = 28;
   PHYSFS_ERR_APP_CALLBACK = 29;
+  ENET_PROTOCOL_MINIMUM_MTU = 576;
+  ENET_PROTOCOL_MAXIMUM_MTU = 4096;
+  ENET_PROTOCOL_MAXIMUM_PACKET_COMMANDS = 32;
+  ENET_PROTOCOL_MINIMUM_WINDOW_SIZE = 4096;
+  ENET_PROTOCOL_MAXIMUM_WINDOW_SIZE = 65536;
+  ENET_PROTOCOL_MINIMUM_CHANNEL_COUNT = 1;
+  ENET_PROTOCOL_MAXIMUM_CHANNEL_COUNT = 255;
+  ENET_PROTOCOL_MAXIMUM_PEER_ID = 4095;
+  ENET_PROTOCOL_MAXIMUM_FRAGMENT_COUNT = 1048576;
+  ENET_PROTOCOL_COMMAND_NONE = 0;
+  ENET_PROTOCOL_COMMAND_ACKNOWLEDGE = 1;
+  ENET_PROTOCOL_COMMAND_CONNECT = 2;
+  ENET_PROTOCOL_COMMAND_VERIFY_CONNECT = 3;
+  ENET_PROTOCOL_COMMAND_DISCONNECT = 4;
+  ENET_PROTOCOL_COMMAND_PING = 5;
+  ENET_PROTOCOL_COMMAND_SEND_RELIABLE = 6;
+  ENET_PROTOCOL_COMMAND_SEND_UNRELIABLE = 7;
+  ENET_PROTOCOL_COMMAND_SEND_FRAGMENT = 8;
+  ENET_PROTOCOL_COMMAND_SEND_UNSEQUENCED = 9;
+  ENET_PROTOCOL_COMMAND_BANDWIDTH_LIMIT = 10;
+  ENET_PROTOCOL_COMMAND_THROTTLE_CONFIGURE = 11;
+  ENET_PROTOCOL_COMMAND_SEND_UNRELIABLE_FRAGMENT = 12;
+  ENET_PROTOCOL_COMMAND_COUNT = 13;
+  ENET_PROTOCOL_COMMAND_MASK = 15;
+  ENET_PROTOCOL_COMMAND_FLAG_ACKNOWLEDGE = 128;
+  ENET_PROTOCOL_COMMAND_FLAG_UNSEQUENCED = 64;
+  ENET_PROTOCOL_HEADER_FLAG_COMPRESSED = 16384;
+  ENET_PROTOCOL_HEADER_FLAG_SENT_TIME = 32768;
+  ENET_PROTOCOL_HEADER_FLAG_MASK = 49152;
+  ENET_PROTOCOL_HEADER_SESSION_MASK = 12288;
+  ENET_PROTOCOL_HEADER_SESSION_SHIFT = 12;
+  ENET_SOCKET_TYPE_STREAM = 1;
+  ENET_SOCKET_TYPE_DATAGRAM = 2;
+  ENET_SOCKET_WAIT_NONE = 0;
+  ENET_SOCKET_WAIT_SEND = 1;
+  ENET_SOCKET_WAIT_RECEIVE = 2;
+  ENET_SOCKET_WAIT_INTERRUPT = 4;
+  ENET_SOCKOPT_NONBLOCK = 1;
+  ENET_SOCKOPT_BROADCAST = 2;
+  ENET_SOCKOPT_RCVBUF = 3;
+  ENET_SOCKOPT_SNDBUF = 4;
+  ENET_SOCKOPT_REUSEADDR = 5;
+  ENET_SOCKOPT_RCVTIMEO = 6;
+  ENET_SOCKOPT_SNDTIMEO = 7;
+  ENET_SOCKOPT_ERROR = 8;
+  ENET_SOCKOPT_NODELAY = 9;
+  ENET_SOCKET_SHUTDOWN_READ = 0;
+  ENET_SOCKET_SHUTDOWN_WRITE = 1;
+  ENET_SOCKET_SHUTDOWN_READ_WRITE = 2;
+  ENET_PACKET_FLAG_RELIABLE = 1;
+  ENET_PACKET_FLAG_UNSEQUENCED = 2;
+  ENET_PACKET_FLAG_NO_ALLOCATE = 4;
+  ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT = 8;
+  ENET_PACKET_FLAG_SENT = 256;
+  ENET_PEER_STATE_DISCONNECTED = 0;
+  ENET_PEER_STATE_CONNECTING = 1;
+  ENET_PEER_STATE_ACKNOWLEDGING_CONNECT = 2;
+  ENET_PEER_STATE_CONNECTION_PENDING = 3;
+  ENET_PEER_STATE_CONNECTION_SUCCEEDED = 4;
+  ENET_PEER_STATE_CONNECTED = 5;
+  ENET_PEER_STATE_DISCONNECT_LATER = 6;
+  ENET_PEER_STATE_DISCONNECTING = 7;
+  ENET_PEER_STATE_ACKNOWLEDGING_DISCONNECT = 8;
+  ENET_PEER_STATE_ZOMBIE = 9;
+  ENET_HOST_RECEIVE_BUFFER_SIZE = 262144;
+  ENET_HOST_SEND_BUFFER_SIZE = 262144;
+  ENET_HOST_BANDWIDTH_THROTTLE_INTERVAL = 1000;
+  ENET_HOST_DEFAULT_MTU = 1400;
+  ENET_HOST_DEFAULT_MAXIMUM_PACKET_SIZE = 33554432;
+  ENET_HOST_DEFAULT_MAXIMUM_WAITING_DATA = 33554432;
+  ENET_PEER_DEFAULT_ROUND_TRIP_TIME = 500;
+  ENET_PEER_DEFAULT_PACKET_THROTTLE = 32;
+  ENET_PEER_PACKET_THROTTLE_SCALE = 32;
+  ENET_PEER_PACKET_THROTTLE_COUNTER = 7;
+  ENET_PEER_PACKET_THROTTLE_ACCELERATION = 2;
+  ENET_PEER_PACKET_THROTTLE_DECELERATION = 2;
+  ENET_PEER_PACKET_THROTTLE_INTERVAL = 5000;
+  ENET_PEER_PACKET_LOSS_SCALE = 65536;
+  ENET_PEER_PACKET_LOSS_INTERVAL = 10000;
+  ENET_PEER_WINDOW_SIZE_SCALE = 65536;
+  ENET_PEER_TIMEOUT_LIMIT = 32;
+  ENET_PEER_TIMEOUT_MINIMUM = 5000;
+  ENET_PEER_TIMEOUT_MAXIMUM = 30000;
+  ENET_PEER_PING_INTERVAL_ = 500;
+  ENET_PEER_UNSEQUENCED_WINDOWS = 64;
+  ENET_PEER_UNSEQUENCED_WINDOW_SIZE = 1024;
+  ENET_PEER_FREE_UNSEQUENCED_WINDOWS = 32;
+  ENET_PEER_RELIABLE_WINDOWS = 16;
+  ENET_PEER_RELIABLE_WINDOW_SIZE = 4096;
+  ENET_PEER_FREE_RELIABLE_WINDOWS = 8;
+  ENET_PEER_FLAG_NEEDS_DISPATCH = 1;
+  ENET_EVENT_TYPE_NONE = 0;
+  ENET_EVENT_TYPE_CONNECT = 1;
+  ENET_EVENT_TYPE_DISCONNECT = 2;
+  ENET_EVENT_TYPE_RECEIVE = 3;
+  ENET_BUFFER_MAXIMUM = (1+2*ENET_PROTOCOL_MAXIMUM_PACKET_COMMANDS);
   SDL_WINDOWPOS_UNDEFINED = SDL_WINDOWPOS_UNDEFINED_MASK or 0;
   SDL_WINDOWPOS_CENTERED = SDL_WINDOWPOS_CENTERED_MASK or 0;
 
@@ -3053,10 +3240,85 @@ type
 
   { PPHYSFS_ErrorCode  }
   PPHYSFS_ErrorCode = ^PHYSFS_ErrorCode;
+
+  { _anonymous_type_10  }
+  _anonymous_type_10 = Integer;
+
+  { P_anonymous_type_10  }
+  P_anonymous_type_10 = ^_anonymous_type_10;
+
+  { _ENetProtocolCommand  }
+  _ENetProtocolCommand = Integer;
+
+  { P_ENetProtocolCommand  }
+  P_ENetProtocolCommand = ^_ENetProtocolCommand;
+
+  { _ENetProtocolFlag  }
+  _ENetProtocolFlag = Integer;
+
+  { P_ENetProtocolFlag  }
+  P_ENetProtocolFlag = ^_ENetProtocolFlag;
+
+  { _ENetSocketType  }
+  _ENetSocketType = Integer;
+
+  { P_ENetSocketType  }
+  P_ENetSocketType = ^_ENetSocketType;
+
+  { _ENetSocketWait  }
+  _ENetSocketWait = Integer;
+
+  { P_ENetSocketWait  }
+  P_ENetSocketWait = ^_ENetSocketWait;
+
+  { _ENetSocketOption  }
+  _ENetSocketOption = Integer;
+
+  { P_ENetSocketOption  }
+  P_ENetSocketOption = ^_ENetSocketOption;
+
+  { _ENetSocketShutdown  }
+  _ENetSocketShutdown = Integer;
+
+  { P_ENetSocketShutdown  }
+  P_ENetSocketShutdown = ^_ENetSocketShutdown;
+
+  { _ENetPacketFlag  }
+  _ENetPacketFlag = Integer;
+
+  { P_ENetPacketFlag  }
+  P_ENetPacketFlag = ^_ENetPacketFlag;
+
+  { _ENetPeerState  }
+  _ENetPeerState = Integer;
+
+  { P_ENetPeerState  }
+  P_ENetPeerState = ^_ENetPeerState;
+
+  { _anonymous_type_11  }
+  _anonymous_type_11 = Integer;
+
+  { P_anonymous_type_11  }
+  P_anonymous_type_11 = ^_anonymous_type_11;
+
+  { _ENetPeerFlag  }
+  _ENetPeerFlag = Integer;
+
+  { P_ENetPeerFlag  }
+  P_ENetPeerFlag = ^_ENetPeerFlag;
+
+  { _ENetEventType  }
+  _ENetEventType = Integer;
+
+  { P_ENetEventType  }
+  P_ENetEventType = ^_ENetEventType;
   // Forward declarations
 
   { PPUTF8Char  }
   PPUTF8Char = ^PUTF8Char;
+
+  { PPByte  }
+  PPByte = ^PByte;
 
   { PPInteger  }
   PPInteger = ^PInteger;
@@ -3067,8 +3329,8 @@ type
   { PPDouble  }
   PPDouble = ^PDouble;
 
-  { PNativeUInt  }
-  PNativeUInt = ^NativeUInt;
+  { PUInt8  }
+  PUInt8 = ^UInt8;
 
   { PWideChar  }
   PWideChar = ^WideChar;
@@ -3076,8 +3338,8 @@ type
   { PPointer  }
   PPointer = ^Pointer;
 
-  { PUInt8  }
-  PUInt8 = ^UInt8;
+  { PNativeUInt  }
+  PNativeUInt = ^NativeUInt;
 
   { P_SDL_iconv_t  }
   P_SDL_iconv_t = Pointer;
@@ -3156,6 +3418,12 @@ type
 
   { PPnk_style_slide  }
   PPnk_style_slide = ^Pnk_style_slide;
+
+  { Pinternal_state  }
+  Pinternal_state = Pointer;
+
+  { PPinternal_state  }
+  PPinternal_state = ^Pinternal_state;
 
   { PSDL_AssertData  }
   PSDL_AssertData = ^SDL_AssertData;
@@ -4165,6 +4433,138 @@ type
   { PPHYSFS_Archiver  }
   PPHYSFS_Archiver = ^PHYSFS_Archiver;
 
+  { Pz_stream_s  }
+  Pz_stream_s = ^z_stream_s;
+
+  { Pgz_header_s  }
+  Pgz_header_s = ^gz_header_s;
+
+  { PgzFile_s  }
+  PgzFile_s = ^gzFile_s;
+
+  { Pzlib_filefunc_def_s  }
+  Pzlib_filefunc_def_s = ^zlib_filefunc_def_s;
+
+  { Pzlib_filefunc64_def_s  }
+  Pzlib_filefunc64_def_s = ^zlib_filefunc64_def_s;
+
+  { Pzlib_filefunc64_32_def_s  }
+  Pzlib_filefunc64_32_def_s = ^zlib_filefunc64_32_def_s;
+
+  { Ptm_zip_s  }
+  Ptm_zip_s = ^tm_zip_s;
+
+  { Pzip_fileinfo  }
+  Pzip_fileinfo = ^zip_fileinfo;
+
+  { Ptm_unz_s  }
+  Ptm_unz_s = ^tm_unz_s;
+
+  { Punz_global_info64_s  }
+  Punz_global_info64_s = ^unz_global_info64_s;
+
+  { Punz_global_info_s  }
+  Punz_global_info_s = ^unz_global_info_s;
+
+  { Punz_file_info64_s  }
+  Punz_file_info64_s = ^unz_file_info64_s;
+
+  { Punz_file_info_s  }
+  Punz_file_info_s = ^unz_file_info_s;
+
+  { Punz_file_pos_s  }
+  Punz_file_pos_s = ^unz_file_pos_s;
+
+  { Punz64_file_pos_s  }
+  Punz64_file_pos_s = ^unz64_file_pos_s;
+
+  { Psdlsurface_context  }
+  Psdlsurface_context = ^sdlsurface_context;
+
+  { PFPSmanager  }
+  PFPSmanager = ^FPSmanager;
+
+  { PENetBuffer  }
+  PENetBuffer = ^ENetBuffer;
+
+  { P_ENetProtocolHeader  }
+  P_ENetProtocolHeader = ^_ENetProtocolHeader;
+
+  { P_ENetProtocolCommandHeader  }
+  P_ENetProtocolCommandHeader = ^_ENetProtocolCommandHeader;
+
+  { P_ENetProtocolAcknowledge  }
+  P_ENetProtocolAcknowledge = ^_ENetProtocolAcknowledge;
+
+  { P_ENetProtocolConnect  }
+  P_ENetProtocolConnect = ^_ENetProtocolConnect;
+
+  { P_ENetProtocolVerifyConnect  }
+  P_ENetProtocolVerifyConnect = ^_ENetProtocolVerifyConnect;
+
+  { P_ENetProtocolBandwidthLimit  }
+  P_ENetProtocolBandwidthLimit = ^_ENetProtocolBandwidthLimit;
+
+  { P_ENetProtocolThrottleConfigure  }
+  P_ENetProtocolThrottleConfigure = ^_ENetProtocolThrottleConfigure;
+
+  { P_ENetProtocolDisconnect  }
+  P_ENetProtocolDisconnect = ^_ENetProtocolDisconnect;
+
+  { P_ENetProtocolPing  }
+  P_ENetProtocolPing = ^_ENetProtocolPing;
+
+  { P_ENetProtocolSendReliable  }
+  P_ENetProtocolSendReliable = ^_ENetProtocolSendReliable;
+
+  { P_ENetProtocolSendUnreliable  }
+  P_ENetProtocolSendUnreliable = ^_ENetProtocolSendUnreliable;
+
+  { P_ENetProtocolSendUnsequenced  }
+  P_ENetProtocolSendUnsequenced = ^_ENetProtocolSendUnsequenced;
+
+  { P_ENetProtocolSendFragment  }
+  P_ENetProtocolSendFragment = ^_ENetProtocolSendFragment;
+
+  { P_ENetListNode  }
+  P_ENetListNode = ^_ENetListNode;
+
+  { P_ENetList  }
+  P_ENetList = ^_ENetList;
+
+  { P_ENetCallbacks  }
+  P_ENetCallbacks = ^_ENetCallbacks;
+
+  { P_ENetAddress  }
+  P_ENetAddress = ^_ENetAddress;
+
+  { P_ENetPacket  }
+  P_ENetPacket = ^_ENetPacket;
+
+  { P_ENetAcknowledgement  }
+  P_ENetAcknowledgement = ^_ENetAcknowledgement;
+
+  { P_ENetOutgoingCommand  }
+  P_ENetOutgoingCommand = ^_ENetOutgoingCommand;
+
+  { P_ENetIncomingCommand  }
+  P_ENetIncomingCommand = ^_ENetIncomingCommand;
+
+  { P_ENetChannel  }
+  P_ENetChannel = ^_ENetChannel;
+
+  { P_ENetPeer  }
+  P_ENetPeer = ^_ENetPeer;
+
+  { P_ENetCompressor  }
+  P_ENetCompressor = ^_ENetCompressor;
+
+  { P_ENetHost  }
+  P_ENetHost = ^_ENetHost;
+
+  { P_ENetEvent  }
+  P_ENetEvent = ^_ENetEvent;
+
   { int8_t  }
   int8_t = UTF8Char;
 
@@ -4346,30 +4746,11 @@ type
   { pfnSDL_CurrentEndThread  }
   pfnSDL_CurrentEndThread = procedure(code: Cardinal); cdecl;
 
-  { _anonymous_type_10  }
-  _anonymous_type_10 = record
+  { _anonymous_type_12  }
+  _anonymous_type_12 = record
     data: Pointer;
     size: NativeUInt;
     left: NativeUInt;
-  end;
-
-  { P_anonymous_type_10  }
-  P_anonymous_type_10 = ^_anonymous_type_10;
-
-  { _anonymous_type_11  }
-  _anonymous_type_11 = record
-    append: SDL_bool;
-    h: Pointer;
-    buffer: _anonymous_type_10;
-  end;
-
-  { P_anonymous_type_11  }
-  P_anonymous_type_11 = ^_anonymous_type_11;
-
-  { _anonymous_type_12  }
-  _anonymous_type_12 = record
-    autoclose: SDL_bool;
-    fp: PPointer;
   end;
 
   { P_anonymous_type_12  }
@@ -4377,9 +4758,9 @@ type
 
   { _anonymous_type_13  }
   _anonymous_type_13 = record
-    base: PUint8;
-    here: PUint8;
-    stop: PUint8;
+    append: SDL_bool;
+    h: Pointer;
+    buffer: _anonymous_type_12;
   end;
 
   { P_anonymous_type_13  }
@@ -4387,8 +4768,8 @@ type
 
   { _anonymous_type_14  }
   _anonymous_type_14 = record
-    data1: Pointer;
-    data2: Pointer;
+    autoclose: SDL_bool;
+    fp: PPointer;
   end;
 
   { P_anonymous_type_14  }
@@ -4396,15 +4777,34 @@ type
 
   { _anonymous_type_15  }
   _anonymous_type_15 = record
-    case Integer of
-      0: (windowsio: _anonymous_type_11);
-      1: (stdio: _anonymous_type_12);
-      2: (mem: _anonymous_type_13);
-      3: (unknown: _anonymous_type_14);
+    base: PUint8;
+    here: PUint8;
+    stop: PUint8;
   end;
 
   { P_anonymous_type_15  }
   P_anonymous_type_15 = ^_anonymous_type_15;
+
+  { _anonymous_type_16  }
+  _anonymous_type_16 = record
+    data1: Pointer;
+    data2: Pointer;
+  end;
+
+  { P_anonymous_type_16  }
+  P_anonymous_type_16 = ^_anonymous_type_16;
+
+  { _anonymous_type_17  }
+  _anonymous_type_17 = record
+    case Integer of
+      0: (windowsio: _anonymous_type_13);
+      1: (stdio: _anonymous_type_14);
+      2: (mem: _anonymous_type_15);
+      3: (unknown: _anonymous_type_16);
+  end;
+
+  { P_anonymous_type_17  }
+  P_anonymous_type_17 = ^_anonymous_type_17;
 
   { SDL_RWops  }
   SDL_RWops = record
@@ -4414,7 +4814,7 @@ type
     write: function(context: PSDL_RWops; const ptr: Pointer; size: NativeUInt; num: NativeUInt): NativeUInt; cdecl;
     close: function(context: PSDL_RWops): Integer; cdecl;
     _type: Uint32;
-    hidden: _anonymous_type_15;
+    hidden: _anonymous_type_17;
   end;
 
   { SDL_AudioFormat  }
@@ -4613,30 +5013,30 @@ type
   { PPSDL_GameController  }
   PPSDL_GameController = ^PSDL_GameController;
 
-  { _anonymous_type_16  }
-  _anonymous_type_16 = record
+  { _anonymous_type_18  }
+  _anonymous_type_18 = record
     hat: Integer;
     hat_mask: Integer;
   end;
 
-  { P_anonymous_type_16  }
-  P_anonymous_type_16 = ^_anonymous_type_16;
+  { P_anonymous_type_18  }
+  P_anonymous_type_18 = ^_anonymous_type_18;
 
-  { _anonymous_type_17  }
-  _anonymous_type_17 = record
+  { _anonymous_type_19  }
+  _anonymous_type_19 = record
     case Integer of
       0: (button: Integer);
       1: (axis: Integer);
-      2: (hat: _anonymous_type_16);
+      2: (hat: _anonymous_type_18);
   end;
 
-  { P_anonymous_type_17  }
-  P_anonymous_type_17 = ^_anonymous_type_17;
+  { P_anonymous_type_19  }
+  P_anonymous_type_19 = ^_anonymous_type_19;
 
   { SDL_GameControllerButtonBind  }
   SDL_GameControllerButtonBind = record
     bindType: SDL_GameControllerBindType;
-    value: _anonymous_type_17;
+    value: _anonymous_type_19;
   end;
 
   { SDL_TouchID  }
@@ -7325,25 +7725,25 @@ type
     lpfNyquistFactor: Double;
   end;
 
-  { _anonymous_type_18  }
-  _anonymous_type_18 = record
+  { _anonymous_type_20  }
+  _anonymous_type_20 = record
     case Integer of
       0: (f32: PSingle);
       1: (s16: Pma_int16);
   end;
 
-  { P_anonymous_type_18  }
-  P_anonymous_type_18 = ^_anonymous_type_18;
+  { P_anonymous_type_20  }
+  P_anonymous_type_20 = ^_anonymous_type_20;
 
-  { _anonymous_type_19  }
-  _anonymous_type_19 = record
+  { _anonymous_type_21  }
+  _anonymous_type_21 = record
     case Integer of
       0: (f32: PSingle);
       1: (s16: Pma_int16);
   end;
 
-  { P_anonymous_type_19  }
-  P_anonymous_type_19 = ^_anonymous_type_19;
+  { P_anonymous_type_21  }
+  P_anonymous_type_21 = ^_anonymous_type_21;
 
   { ma_linear_resampler  }
   ma_linear_resampler = record
@@ -7352,8 +7752,8 @@ type
     inAdvanceFrac: ma_uint32;
     inTimeInt: ma_uint32;
     inTimeFrac: ma_uint32;
-    x0: _anonymous_type_18;
-    x1: _anonymous_type_19;
+    x0: _anonymous_type_20;
+    x1: _anonymous_type_21;
     lpf: ma_lpf;
     _pHeap: Pointer;
     _ownsHeap: ma_bool32;
@@ -7378,13 +7778,13 @@ type
     onGetExpectedOutputFrameCount: function(pUserData: Pointer; const pBackend: Pma_resampling_backend; inputFrameCount: ma_uint64; pOutputFrameCount: Pma_uint64): ma_result; cdecl;
   end;
 
-  { _anonymous_type_20  }
-  _anonymous_type_20 = record
+  { _anonymous_type_22  }
+  _anonymous_type_22 = record
     lpfOrder: ma_uint32;
   end;
 
-  { P_anonymous_type_20  }
-  P_anonymous_type_20 = ^_anonymous_type_20;
+  { P_anonymous_type_22  }
+  P_anonymous_type_22 = ^_anonymous_type_22;
 
   { ma_resampler_config  }
   ma_resampler_config = record
@@ -7395,17 +7795,17 @@ type
     algorithm: ma_resample_algorithm;
     pBackendVTable: Pma_resampling_backend_vtable;
     pBackendUserData: Pointer;
-    linear: _anonymous_type_20;
+    linear: _anonymous_type_22;
   end;
 
-  { _anonymous_type_21  }
-  _anonymous_type_21 = record
+  { _anonymous_type_23  }
+  _anonymous_type_23 = record
     case Integer of
       0: (linear: ma_linear_resampler);
   end;
 
-  { P_anonymous_type_21  }
-  P_anonymous_type_21 = ^_anonymous_type_21;
+  { P_anonymous_type_23  }
+  P_anonymous_type_23 = ^_anonymous_type_23;
 
   { ma_resampler  }
   ma_resampler = record
@@ -7416,7 +7816,7 @@ type
     channels: ma_uint32;
     sampleRateIn: ma_uint32;
     sampleRateOut: ma_uint32;
-    state: _anonymous_type_21;
+    state: _anonymous_type_23;
     _pHeap: Pointer;
     _ownsHeap: ma_bool32;
   end;
@@ -7432,15 +7832,15 @@ type
     ppWeights: PPSingle;
   end;
 
-  { _anonymous_type_22  }
-  _anonymous_type_22 = record
+  { _anonymous_type_24  }
+  _anonymous_type_24 = record
     case Integer of
       0: (f32: PPSingle);
       1: (s16: PPma_int32);
   end;
 
-  { P_anonymous_type_22  }
-  P_anonymous_type_22 = ^_anonymous_type_22;
+  { P_anonymous_type_24  }
+  P_anonymous_type_24 = ^_anonymous_type_24;
 
   { ma_channel_converter  }
   ma_channel_converter = record
@@ -7452,7 +7852,7 @@ type
     pChannelMapIn: Pma_channel;
     pChannelMapOut: Pma_channel;
     pShuffleTable: Pma_uint8;
-    weights: _anonymous_type_22;
+    weights: _anonymous_type_24;
     _pHeap: Pointer;
     _ownsHeap: ma_bool32;
   end;
@@ -7540,16 +7940,16 @@ type
       1: (counterD: Double);
   end;
 
-  { _anonymous_type_23  }
-  _anonymous_type_23 = record
+  { _anonymous_type_25  }
+  _anonymous_type_25 = record
     case Integer of
       0: (i: Integer);
       1: (s: array [0..255] of UTF8Char);
       2: (p: Pointer);
   end;
 
-  { P_anonymous_type_23  }
-  P_anonymous_type_23 = ^_anonymous_type_23;
+  { P_anonymous_type_25  }
+  P_anonymous_type_25 = ^_anonymous_type_25;
 
   { Pma_device_id  }
   Pma_device_id = ^ma_device_id;
@@ -7570,20 +7970,20 @@ type
       10: (aaudio: ma_int32);
       11: (opensl: ma_uint32);
       12: (webaudio: array [0..31] of UTF8Char);
-      13: (custom: _anonymous_type_23);
+      13: (custom: _anonymous_type_25);
       14: (nullbackend: Integer);
   end;
 
-  { _anonymous_type_24  }
-  _anonymous_type_24 = record
+  { _anonymous_type_26  }
+  _anonymous_type_26 = record
     format: ma_format;
     channels: ma_uint32;
     sampleRate: ma_uint32;
     flags: ma_uint32;
   end;
 
-  { P_anonymous_type_24  }
-  P_anonymous_type_24 = ^_anonymous_type_24;
+  { P_anonymous_type_26  }
+  P_anonymous_type_26 = ^_anonymous_type_26;
 
   { ma_device_info  }
   ma_device_info = record
@@ -7591,41 +7991,17 @@ type
     name: array [0..255] of UTF8Char;
     isDefault: ma_bool32;
     nativeDataFormatCount: ma_uint32;
-    nativeDataFormats: array [0..63] of _anonymous_type_24;
+    nativeDataFormats: array [0..63] of _anonymous_type_26;
   end;
-
-  { _anonymous_type_25  }
-  _anonymous_type_25 = record
-    pDeviceID: Pma_device_id;
-    format: ma_format;
-    channels: ma_uint32;
-    pChannelMap: Pma_channel;
-    channelMixMode: ma_channel_mix_mode;
-    shareMode: ma_share_mode;
-  end;
-
-  { P_anonymous_type_25  }
-  P_anonymous_type_25 = ^_anonymous_type_25;
-
-  { _anonymous_type_26  }
-  _anonymous_type_26 = record
-    pDeviceID: Pma_device_id;
-    format: ma_format;
-    channels: ma_uint32;
-    pChannelMap: Pma_channel;
-    channelMixMode: ma_channel_mix_mode;
-    shareMode: ma_share_mode;
-  end;
-
-  { P_anonymous_type_26  }
-  P_anonymous_type_26 = ^_anonymous_type_26;
 
   { _anonymous_type_27  }
   _anonymous_type_27 = record
-    noAutoConvertSRC: ma_bool8;
-    noDefaultQualitySRC: ma_bool8;
-    noAutoStreamRouting: ma_bool8;
-    noHardwareOffloading: ma_bool8;
+    pDeviceID: Pma_device_id;
+    format: ma_format;
+    channels: ma_uint32;
+    pChannelMap: Pma_channel;
+    channelMixMode: ma_channel_mix_mode;
+    shareMode: ma_share_mode;
   end;
 
   { P_anonymous_type_27  }
@@ -7633,10 +8009,12 @@ type
 
   { _anonymous_type_28  }
   _anonymous_type_28 = record
-    noMMap: ma_bool32;
-    noAutoFormat: ma_bool32;
-    noAutoChannels: ma_bool32;
-    noAutoResample: ma_bool32;
+    pDeviceID: Pma_device_id;
+    format: ma_format;
+    channels: ma_uint32;
+    pChannelMap: Pma_channel;
+    channelMixMode: ma_channel_mix_mode;
+    shareMode: ma_share_mode;
   end;
 
   { P_anonymous_type_28  }
@@ -7644,8 +8022,10 @@ type
 
   { _anonymous_type_29  }
   _anonymous_type_29 = record
-    pStreamNamePlayback: PUTF8Char;
-    pStreamNameCapture: PUTF8Char;
+    noAutoConvertSRC: ma_bool8;
+    noDefaultQualitySRC: ma_bool8;
+    noAutoStreamRouting: ma_bool8;
+    noHardwareOffloading: ma_bool8;
   end;
 
   { P_anonymous_type_29  }
@@ -7653,7 +8033,10 @@ type
 
   { _anonymous_type_30  }
   _anonymous_type_30 = record
-    allowNominalSampleRateChange: ma_bool32;
+    noMMap: ma_bool32;
+    noAutoFormat: ma_bool32;
+    noAutoChannels: ma_bool32;
+    noAutoResample: ma_bool32;
   end;
 
   { P_anonymous_type_30  }
@@ -7661,8 +8044,8 @@ type
 
   { _anonymous_type_31  }
   _anonymous_type_31 = record
-    streamType: ma_opensl_stream_type;
-    recordingPreset: ma_opensl_recording_preset;
+    pStreamNamePlayback: PUTF8Char;
+    pStreamNameCapture: PUTF8Char;
   end;
 
   { P_anonymous_type_31  }
@@ -7670,13 +8053,30 @@ type
 
   { _anonymous_type_32  }
   _anonymous_type_32 = record
+    allowNominalSampleRateChange: ma_bool32;
+  end;
+
+  { P_anonymous_type_32  }
+  P_anonymous_type_32 = ^_anonymous_type_32;
+
+  { _anonymous_type_33  }
+  _anonymous_type_33 = record
+    streamType: ma_opensl_stream_type;
+    recordingPreset: ma_opensl_recording_preset;
+  end;
+
+  { P_anonymous_type_33  }
+  P_anonymous_type_33 = ^_anonymous_type_33;
+
+  { _anonymous_type_34  }
+  _anonymous_type_34 = record
     usage: ma_aaudio_usage;
     contentType: ma_aaudio_content_type;
     inputPreset: ma_aaudio_input_preset;
   end;
 
-  { P_anonymous_type_32  }
-  P_anonymous_type_32 = ^_anonymous_type_32;
+  { P_anonymous_type_34  }
+  P_anonymous_type_34 = ^_anonymous_type_34;
 
   { ma_device_config  }
   ma_device_config = record
@@ -7693,14 +8093,14 @@ type
     stopCallback: ma_stop_proc;
     pUserData: Pointer;
     resampling: ma_resampler_config;
-    playback: _anonymous_type_25;
-    capture: _anonymous_type_26;
-    wasapi: _anonymous_type_27;
-    alsa: _anonymous_type_28;
-    pulse: _anonymous_type_29;
-    coreaudio: _anonymous_type_30;
-    opensl: _anonymous_type_31;
-    aaudio: _anonymous_type_32;
+    playback: _anonymous_type_27;
+    capture: _anonymous_type_28;
+    wasapi: _anonymous_type_29;
+    alsa: _anonymous_type_30;
+    pulse: _anonymous_type_31;
+    coreaudio: _anonymous_type_32;
+    opensl: _anonymous_type_33;
+    aaudio: _anonymous_type_34;
   end;
 
   { ma_enum_devices_callback_proc  }
@@ -7735,30 +8135,9 @@ type
     onDeviceDataLoopWakeup: function(pDevice: Pma_device): ma_result; cdecl;
   end;
 
-  { _anonymous_type_33  }
-  _anonymous_type_33 = record
-    useVerboseDeviceEnumeration: ma_bool32;
-  end;
-
-  { P_anonymous_type_33  }
-  P_anonymous_type_33 = ^_anonymous_type_33;
-
-  { _anonymous_type_34  }
-  _anonymous_type_34 = record
-    pApplicationName: PUTF8Char;
-    pServerName: PUTF8Char;
-    tryAutoSpawn: ma_bool32;
-  end;
-
-  { P_anonymous_type_34  }
-  P_anonymous_type_34 = ^_anonymous_type_34;
-
   { _anonymous_type_35  }
   _anonymous_type_35 = record
-    sessionCategory: ma_ios_session_category;
-    sessionCategoryOptions: ma_uint32;
-    noAudioSessionActivate: ma_bool32;
-    noAudioSessionDeactivate: ma_bool32;
+    useVerboseDeviceEnumeration: ma_bool32;
   end;
 
   { P_anonymous_type_35  }
@@ -7766,12 +8145,33 @@ type
 
   { _anonymous_type_36  }
   _anonymous_type_36 = record
-    pClientName: PUTF8Char;
-    tryStartServer: ma_bool32;
+    pApplicationName: PUTF8Char;
+    pServerName: PUTF8Char;
+    tryAutoSpawn: ma_bool32;
   end;
 
   { P_anonymous_type_36  }
   P_anonymous_type_36 = ^_anonymous_type_36;
+
+  { _anonymous_type_37  }
+  _anonymous_type_37 = record
+    sessionCategory: ma_ios_session_category;
+    sessionCategoryOptions: ma_uint32;
+    noAudioSessionActivate: ma_bool32;
+    noAudioSessionDeactivate: ma_bool32;
+  end;
+
+  { P_anonymous_type_37  }
+  P_anonymous_type_37 = ^_anonymous_type_37;
+
+  { _anonymous_type_38  }
+  _anonymous_type_38 = record
+    pClientName: PUTF8Char;
+    tryStartServer: ma_bool32;
+  end;
+
+  { P_anonymous_type_38  }
+  P_anonymous_type_38 = ^_anonymous_type_38;
 
   { ma_context_config  }
   ma_context_config = record
@@ -7780,36 +8180,16 @@ type
     threadStackSize: NativeUInt;
     pUserData: Pointer;
     allocationCallbacks: ma_allocation_callbacks;
-    alsa: _anonymous_type_33;
-    pulse: _anonymous_type_34;
-    coreaudio: _anonymous_type_35;
-    jack: _anonymous_type_36;
+    alsa: _anonymous_type_35;
+    pulse: _anonymous_type_36;
+    coreaudio: _anonymous_type_37;
+    jack: _anonymous_type_38;
     custom: ma_backend_callbacks;
   end;
 
-  { _anonymous_type_37  }
-  _anonymous_type_37 = record
-    _unused: Integer;
-  end;
-
-  { P_anonymous_type_37  }
-  P_anonymous_type_37 = ^_anonymous_type_37;
-
-  { _anonymous_type_38  }
-  _anonymous_type_38 = record
-    deviceType: ma_device_type;
-    pAudioClient: Pointer;
-    ppAudioClientService: PPointer;
-    pResult: Pma_result;
-  end;
-
-  { P_anonymous_type_38  }
-  P_anonymous_type_38 = ^_anonymous_type_38;
-
   { _anonymous_type_39  }
   _anonymous_type_39 = record
-    pDevice: Pma_device;
-    deviceType: ma_device_type;
+    _unused: Integer;
   end;
 
   { P_anonymous_type_39  }
@@ -7817,24 +8197,44 @@ type
 
   { _anonymous_type_40  }
   _anonymous_type_40 = record
-    case Integer of
-      0: (quit: _anonymous_type_37);
-      1: (createAudioClient: _anonymous_type_38);
-      2: (releaseAudioClient: _anonymous_type_39);
+    deviceType: ma_device_type;
+    pAudioClient: Pointer;
+    ppAudioClientService: PPointer;
+    pResult: Pma_result;
   end;
 
   { P_anonymous_type_40  }
   P_anonymous_type_40 = ^_anonymous_type_40;
 
+  { _anonymous_type_41  }
+  _anonymous_type_41 = record
+    pDevice: Pma_device;
+    deviceType: ma_device_type;
+  end;
+
+  { P_anonymous_type_41  }
+  P_anonymous_type_41 = ^_anonymous_type_41;
+
+  { _anonymous_type_42  }
+  _anonymous_type_42 = record
+    case Integer of
+      0: (quit: _anonymous_type_39);
+      1: (createAudioClient: _anonymous_type_40);
+      2: (releaseAudioClient: _anonymous_type_41);
+  end;
+
+  { P_anonymous_type_42  }
+  P_anonymous_type_42 = ^_anonymous_type_42;
+
   { ma_context_command__wasapi  }
   ma_context_command__wasapi = record
     code: Integer;
     pEvent: Pma_event;
-    data: _anonymous_type_40;
+    data: _anonymous_type_42;
   end;
 
-  { _anonymous_type_41  }
-  _anonymous_type_41 = record
+  { _anonymous_type_43  }
+  _anonymous_type_43 = record
     commandThread: ma_thread;
     commandLock: ma_mutex;
     commandSem: ma_semaphore;
@@ -7843,11 +8243,11 @@ type
     commands: array [0..3] of ma_context_command__wasapi;
   end;
 
-  { P_anonymous_type_41  }
-  P_anonymous_type_41 = ^_anonymous_type_41;
+  { P_anonymous_type_43  }
+  P_anonymous_type_43 = ^_anonymous_type_43;
 
-  { _anonymous_type_42  }
-  _anonymous_type_42 = record
+  { _anonymous_type_44  }
+  _anonymous_type_44 = record
     hDSoundDLL: ma_handle;
     DirectSoundCreate: ma_proc;
     DirectSoundEnumerateA: ma_proc;
@@ -7855,11 +8255,11 @@ type
     DirectSoundCaptureEnumerateA: ma_proc;
   end;
 
-  { P_anonymous_type_42  }
-  P_anonymous_type_42 = ^_anonymous_type_42;
+  { P_anonymous_type_44  }
+  P_anonymous_type_44 = ^_anonymous_type_44;
 
-  { _anonymous_type_43  }
-  _anonymous_type_43 = record
+  { _anonymous_type_45  }
+  _anonymous_type_45 = record
     hWinMM: ma_handle;
     waveOutGetNumDevs: ma_proc;
     waveOutGetDevCapsA: ma_proc;
@@ -7880,11 +8280,11 @@ type
     waveInReset: ma_proc;
   end;
 
-  { P_anonymous_type_43  }
-  P_anonymous_type_43 = ^_anonymous_type_43;
+  { P_anonymous_type_45  }
+  P_anonymous_type_45 = ^_anonymous_type_45;
 
-  { _anonymous_type_44  }
-  _anonymous_type_44 = record
+  { _anonymous_type_46  }
+  _anonymous_type_46 = record
     jackSO: ma_handle;
     jack_client_open: ma_proc;
     jack_client_close: ma_proc;
@@ -7906,32 +8306,32 @@ type
     tryStartServer: ma_bool32;
   end;
 
-  { P_anonymous_type_44  }
-  P_anonymous_type_44 = ^_anonymous_type_44;
-
-  { _anonymous_type_45  }
-  _anonymous_type_45 = record
-    _unused: Integer;
-  end;
-
-  { P_anonymous_type_45  }
-  P_anonymous_type_45 = ^_anonymous_type_45;
-
-  { _anonymous_type_46  }
-  _anonymous_type_46 = record
-    case Integer of
-      0: (wasapi: _anonymous_type_41);
-      1: (dsound: _anonymous_type_42);
-      2: (winmm: _anonymous_type_43);
-      3: (jack: _anonymous_type_44);
-      4: (null_backend: _anonymous_type_45);
-  end;
-
   { P_anonymous_type_46  }
   P_anonymous_type_46 = ^_anonymous_type_46;
 
   { _anonymous_type_47  }
   _anonymous_type_47 = record
+    _unused: Integer;
+  end;
+
+  { P_anonymous_type_47  }
+  P_anonymous_type_47 = ^_anonymous_type_47;
+
+  { _anonymous_type_48  }
+  _anonymous_type_48 = record
+    case Integer of
+      0: (wasapi: _anonymous_type_43);
+      1: (dsound: _anonymous_type_44);
+      2: (winmm: _anonymous_type_45);
+      3: (jack: _anonymous_type_46);
+      4: (null_backend: _anonymous_type_47);
+  end;
+
+  { P_anonymous_type_48  }
+  P_anonymous_type_48 = ^_anonymous_type_48;
+
+  { _anonymous_type_49  }
+  _anonymous_type_49 = record
     hOle32DLL: ma_handle;
     CoInitializeEx: ma_proc;
     CoUninitialize: ma_proc;
@@ -7948,18 +8348,18 @@ type
     RegQueryValueExA: ma_proc;
   end;
 
-  { P_anonymous_type_47  }
-  P_anonymous_type_47 = ^_anonymous_type_47;
+  { P_anonymous_type_49  }
+  P_anonymous_type_49 = ^_anonymous_type_49;
 
-  { _anonymous_type_48  }
-  _anonymous_type_48 = record
+  { _anonymous_type_50  }
+  _anonymous_type_50 = record
     case Integer of
-      0: (win32: _anonymous_type_47);
+      0: (win32: _anonymous_type_49);
       1: (_unused: Integer);
   end;
 
-  { P_anonymous_type_48  }
-  P_anonymous_type_48 = ^_anonymous_type_48;
+  { P_anonymous_type_50  }
+  P_anonymous_type_50 = ^_anonymous_type_50;
 
   { ma_context  }
   ma_context = record
@@ -7977,31 +8377,31 @@ type
     playbackDeviceInfoCount: ma_uint32;
     captureDeviceInfoCount: ma_uint32;
     pDeviceInfos: Pma_device_info;
-    f15: _anonymous_type_46;
-    f16: _anonymous_type_48;
+    f15: _anonymous_type_48;
+    f16: _anonymous_type_50;
   end;
-
-  { _anonymous_type_49  }
-  _anonymous_type_49 = record
-    lpfOrder: ma_uint32;
-  end;
-
-  { P_anonymous_type_49  }
-  P_anonymous_type_49 = ^_anonymous_type_49;
-
-  { _anonymous_type_50  }
-  _anonymous_type_50 = record
-    algorithm: ma_resample_algorithm;
-    pBackendVTable: Pma_resampling_backend_vtable;
-    pBackendUserData: Pointer;
-    linear: _anonymous_type_49;
-  end;
-
-  { P_anonymous_type_50  }
-  P_anonymous_type_50 = ^_anonymous_type_50;
 
   { _anonymous_type_51  }
   _anonymous_type_51 = record
+    lpfOrder: ma_uint32;
+  end;
+
+  { P_anonymous_type_51  }
+  P_anonymous_type_51 = ^_anonymous_type_51;
+
+  { _anonymous_type_52  }
+  _anonymous_type_52 = record
+    algorithm: ma_resample_algorithm;
+    pBackendVTable: Pma_resampling_backend_vtable;
+    pBackendUserData: Pointer;
+    linear: _anonymous_type_51;
+  end;
+
+  { P_anonymous_type_52  }
+  P_anonymous_type_52 = ^_anonymous_type_52;
+
+  { _anonymous_type_53  }
+  _anonymous_type_53 = record
     id: ma_device_id;
     name: array [0..255] of UTF8Char;
     shareMode: ma_share_mode;
@@ -8022,11 +8422,11 @@ type
     inputCacheRemaining: ma_uint64;
   end;
 
-  { P_anonymous_type_51  }
-  P_anonymous_type_51 = ^_anonymous_type_51;
+  { P_anonymous_type_53  }
+  P_anonymous_type_53 = ^_anonymous_type_53;
 
-  { _anonymous_type_52  }
-  _anonymous_type_52 = record
+  { _anonymous_type_54  }
+  _anonymous_type_54 = record
     id: ma_device_id;
     name: array [0..255] of UTF8Char;
     shareMode: ma_share_mode;
@@ -8043,11 +8443,11 @@ type
     converter: ma_data_converter;
   end;
 
-  { P_anonymous_type_52  }
-  P_anonymous_type_52 = ^_anonymous_type_52;
+  { P_anonymous_type_54  }
+  P_anonymous_type_54 = ^_anonymous_type_54;
 
-  { _anonymous_type_53  }
-  _anonymous_type_53 = record
+  { _anonymous_type_55  }
+  _anonymous_type_55 = record
     pAudioClientPlayback: ma_ptr;
     pAudioClientCapture: ma_ptr;
     pRenderClient: ma_ptr;
@@ -8075,11 +8475,11 @@ type
     isDetachedCapture: ma_bool8;
   end;
 
-  { P_anonymous_type_53  }
-  P_anonymous_type_53 = ^_anonymous_type_53;
+  { P_anonymous_type_55  }
+  P_anonymous_type_55 = ^_anonymous_type_55;
 
-  { _anonymous_type_54  }
-  _anonymous_type_54 = record
+  { _anonymous_type_56  }
+  _anonymous_type_56 = record
     pPlayback: ma_ptr;
     pPlaybackPrimaryBuffer: ma_ptr;
     pPlaybackBuffer: ma_ptr;
@@ -8087,11 +8487,11 @@ type
     pCaptureBuffer: ma_ptr;
   end;
 
-  { P_anonymous_type_54  }
-  P_anonymous_type_54 = ^_anonymous_type_54;
+  { P_anonymous_type_56  }
+  P_anonymous_type_56 = ^_anonymous_type_56;
 
-  { _anonymous_type_55  }
-  _anonymous_type_55 = record
+  { _anonymous_type_57  }
+  _anonymous_type_57 = record
     hDevicePlayback: ma_handle;
     hDeviceCapture: ma_handle;
     hEventPlayback: ma_handle;
@@ -8108,11 +8508,11 @@ type
     _pHeapData: Pma_uint8;
   end;
 
-  { P_anonymous_type_55  }
-  P_anonymous_type_55 = ^_anonymous_type_55;
+  { P_anonymous_type_57  }
+  P_anonymous_type_57 = ^_anonymous_type_57;
 
-  { _anonymous_type_56  }
-  _anonymous_type_56 = record
+  { _anonymous_type_58  }
+  _anonymous_type_58 = record
     pClient: ma_ptr;
     ppPortsPlayback: Pma_ptr;
     ppPortsCapture: Pma_ptr;
@@ -8120,11 +8520,11 @@ type
     pIntermediaryBufferCapture: PSingle;
   end;
 
-  { P_anonymous_type_56  }
-  P_anonymous_type_56 = ^_anonymous_type_56;
+  { P_anonymous_type_58  }
+  P_anonymous_type_58 = ^_anonymous_type_58;
 
-  { _anonymous_type_57  }
-  _anonymous_type_57 = record
+  { _anonymous_type_59  }
+  _anonymous_type_59 = record
     deviceThread: ma_thread;
     operationEvent: ma_event;
     operationCompletionEvent: ma_event;
@@ -8140,21 +8540,21 @@ type
     isStarted: ma_bool32;
   end;
 
-  { P_anonymous_type_57  }
-  P_anonymous_type_57 = ^_anonymous_type_57;
+  { P_anonymous_type_59  }
+  P_anonymous_type_59 = ^_anonymous_type_59;
 
-  { _anonymous_type_58  }
-  _anonymous_type_58 = record
+  { _anonymous_type_60  }
+  _anonymous_type_60 = record
     case Integer of
-      0: (wasapi: _anonymous_type_53);
-      1: (dsound: _anonymous_type_54);
-      2: (winmm: _anonymous_type_55);
-      3: (jack: _anonymous_type_56);
-      4: (null_device: _anonymous_type_57);
+      0: (wasapi: _anonymous_type_55);
+      1: (dsound: _anonymous_type_56);
+      2: (winmm: _anonymous_type_57);
+      3: (jack: _anonymous_type_58);
+      4: (null_device: _anonymous_type_59);
   end;
 
-  { P_anonymous_type_58  }
-  P_anonymous_type_58 = ^_anonymous_type_58;
+  { P_anonymous_type_60  }
+  P_anonymous_type_60 = ^_anonymous_type_60;
 
   { ma_device  }
   ma_device = record
@@ -8177,10 +8577,10 @@ type
     noDisableDenormals: ma_bool8;
     masterVolumeFactor: Single;
     duplexRB: ma_duplex_rb;
-    resampling: _anonymous_type_50;
-    playback: _anonymous_type_51;
-    capture: _anonymous_type_52;
-    f23: _anonymous_type_58;
+    resampling: _anonymous_type_52;
+    playback: _anonymous_type_53;
+    capture: _anonymous_type_54;
+    f23: _anonymous_type_60;
   end;
 
   { ma_fence  }
@@ -8411,34 +8811,34 @@ type
     pCustomBackendUserData: Pointer;
   end;
 
-  { _anonymous_type_59  }
-  _anonymous_type_59 = record
+  { _anonymous_type_61  }
+  _anonymous_type_61 = record
     pVFS: Pma_vfs;
     _file: ma_vfs_file;
   end;
 
-  { P_anonymous_type_59  }
-  P_anonymous_type_59 = ^_anonymous_type_59;
+  { P_anonymous_type_61  }
+  P_anonymous_type_61 = ^_anonymous_type_61;
 
-  { _anonymous_type_60  }
-  _anonymous_type_60 = record
+  { _anonymous_type_62  }
+  _anonymous_type_62 = record
     pData: Pma_uint8;
     dataSize: NativeUInt;
     currentReadPos: NativeUInt;
   end;
 
-  { P_anonymous_type_60  }
-  P_anonymous_type_60 = ^_anonymous_type_60;
+  { P_anonymous_type_62  }
+  P_anonymous_type_62 = ^_anonymous_type_62;
 
-  { _anonymous_type_61  }
-  _anonymous_type_61 = record
+  { _anonymous_type_63  }
+  _anonymous_type_63 = record
     case Integer of
-      0: (vfs: _anonymous_type_59);
-      1: (memory: _anonymous_type_60);
+      0: (vfs: _anonymous_type_61);
+      1: (memory: _anonymous_type_62);
   end;
 
-  { P_anonymous_type_61  }
-  P_anonymous_type_61 = ^_anonymous_type_61;
+  { P_anonymous_type_63  }
+  P_anonymous_type_63 = ^_anonymous_type_63;
 
   { ma_decoder  }
   ma_decoder = record
@@ -8460,7 +8860,7 @@ type
     inputCacheConsumed: ma_uint64;
     inputCacheRemaining: ma_uint64;
     allocationCallbacks: ma_allocation_callbacks;
-    data: _anonymous_type_61;
+    data: _anonymous_type_63;
   end;
 
   { ma_encoder_write_proc  }
@@ -8528,40 +8928,40 @@ type
     duplicateChannels: ma_bool32;
   end;
 
-  { _anonymous_type_62  }
-  _anonymous_type_62 = record
+  { _anonymous_type_64  }
+  _anonymous_type_64 = record
     bin: PPDouble;
     accumulation: PDouble;
     counter: Pma_uint32;
   end;
 
-  { P_anonymous_type_62  }
-  P_anonymous_type_62 = ^_anonymous_type_62;
+  { P_anonymous_type_64  }
+  P_anonymous_type_64 = ^_anonymous_type_64;
 
-  { _anonymous_type_63  }
-  _anonymous_type_63 = record
+  { _anonymous_type_65  }
+  _anonymous_type_65 = record
     accumulation: PDouble;
   end;
 
-  { P_anonymous_type_63  }
-  P_anonymous_type_63 = ^_anonymous_type_63;
+  { P_anonymous_type_65  }
+  P_anonymous_type_65 = ^_anonymous_type_65;
 
-  { _anonymous_type_64  }
-  _anonymous_type_64 = record
+  { _anonymous_type_66  }
+  _anonymous_type_66 = record
     case Integer of
-      0: (pink: _anonymous_type_62);
-      1: (brownian: _anonymous_type_63);
+      0: (pink: _anonymous_type_64);
+      1: (brownian: _anonymous_type_65);
   end;
 
-  { P_anonymous_type_64  }
-  P_anonymous_type_64 = ^_anonymous_type_64;
+  { P_anonymous_type_66  }
+  P_anonymous_type_66 = ^_anonymous_type_66;
 
   { ma_noise  }
   ma_noise = record
     ds: ma_data_source_vtable;
     config: ma_noise_config;
     lcg: ma_lcg;
-    state: _anonymous_type_64;
+    state: _anonymous_type_66;
     _pHeap: Pointer;
     _ownsHeap: ma_bool32;
   end;
@@ -8578,28 +8978,28 @@ type
     done: ma_resource_manager_pipeline_stage_notification;
   end;
 
-  { _anonymous_type_65  }
-  _anonymous_type_65 = record
+  { _anonymous_type_67  }
+  _anonymous_type_67 = record
     code: ma_uint16;
     slot: ma_uint16;
     refcount: ma_uint32;
   end;
 
-  { P_anonymous_type_65  }
-  P_anonymous_type_65 = ^_anonymous_type_65;
+  { P_anonymous_type_67  }
+  P_anonymous_type_67 = ^_anonymous_type_67;
 
-  { _anonymous_type_66  }
-  _anonymous_type_66 = record
+  { _anonymous_type_68  }
+  _anonymous_type_68 = record
     case Integer of
-      0: (breakup: _anonymous_type_65);
+      0: (breakup: _anonymous_type_67);
       1: (allocation: ma_uint64);
   end;
 
-  { P_anonymous_type_66  }
-  P_anonymous_type_66 = ^_anonymous_type_66;
+  { P_anonymous_type_68  }
+  P_anonymous_type_68 = ^_anonymous_type_68;
 
-  { _anonymous_type_67  }
-  _anonymous_type_67 = record
+  { _anonymous_type_69  }
+  _anonymous_type_69 = record
     pDataBufferNode: Pma_resource_manager_data_buffer_node;
     pFilePath: PUTF8Char;
     pFilePathW: PWideChar;
@@ -8610,36 +9010,13 @@ type
     pDoneFence: Pma_fence;
   end;
 
-  { P_anonymous_type_67  }
-  P_anonymous_type_67 = ^_anonymous_type_67;
-
-  { _anonymous_type_68  }
-  _anonymous_type_68 = record
-    pDataBufferNode: Pma_resource_manager_data_buffer_node;
-    pDoneNotification: Pma_async_notification;
-    pDoneFence: Pma_fence;
-  end;
-
-  { P_anonymous_type_68  }
-  P_anonymous_type_68 = ^_anonymous_type_68;
-
-  { _anonymous_type_69  }
-  _anonymous_type_69 = record
-    pDataBufferNode: Pma_resource_manager_data_buffer_node;
-    pDecoder: Pma_decoder;
-    pDoneNotification: Pma_async_notification;
-    pDoneFence: Pma_fence;
-  end;
-
   { P_anonymous_type_69  }
   P_anonymous_type_69 = ^_anonymous_type_69;
 
   { _anonymous_type_70  }
   _anonymous_type_70 = record
-    pDataBuffer: Pma_resource_manager_data_buffer;
-    pInitNotification: Pma_async_notification;
+    pDataBufferNode: Pma_resource_manager_data_buffer_node;
     pDoneNotification: Pma_async_notification;
-    pInitFence: Pma_fence;
     pDoneFence: Pma_fence;
   end;
 
@@ -8648,7 +9025,8 @@ type
 
   { _anonymous_type_71  }
   _anonymous_type_71 = record
-    pDataBuffer: Pma_resource_manager_data_buffer;
+    pDataBufferNode: Pma_resource_manager_data_buffer_node;
+    pDecoder: Pma_decoder;
     pDoneNotification: Pma_async_notification;
     pDoneFence: Pma_fence;
   end;
@@ -8658,12 +9036,11 @@ type
 
   { _anonymous_type_72  }
   _anonymous_type_72 = record
-    pDataStream: Pma_resource_manager_data_stream;
-    pFilePath: PUTF8Char;
-    pFilePathW: PWideChar;
-    initialSeekPoint: ma_uint64;
+    pDataBuffer: Pma_resource_manager_data_buffer;
     pInitNotification: Pma_async_notification;
+    pDoneNotification: Pma_async_notification;
     pInitFence: Pma_fence;
+    pDoneFence: Pma_fence;
   end;
 
   { P_anonymous_type_72  }
@@ -8671,7 +9048,7 @@ type
 
   { _anonymous_type_73  }
   _anonymous_type_73 = record
-    pDataStream: Pma_resource_manager_data_stream;
+    pDataBuffer: Pma_resource_manager_data_buffer;
     pDoneNotification: Pma_async_notification;
     pDoneFence: Pma_fence;
   end;
@@ -8682,7 +9059,11 @@ type
   { _anonymous_type_74  }
   _anonymous_type_74 = record
     pDataStream: Pma_resource_manager_data_stream;
-    pageIndex: ma_uint32;
+    pFilePath: PUTF8Char;
+    pFilePathW: PWideChar;
+    initialSeekPoint: ma_uint64;
+    pInitNotification: Pma_async_notification;
+    pInitFence: Pma_fence;
   end;
 
   { P_anonymous_type_74  }
@@ -8691,7 +9072,8 @@ type
   { _anonymous_type_75  }
   _anonymous_type_75 = record
     pDataStream: Pma_resource_manager_data_stream;
-    frameIndex: ma_uint64;
+    pDoneNotification: Pma_async_notification;
+    pDoneFence: Pma_fence;
   end;
 
   { P_anonymous_type_75  }
@@ -8699,8 +9081,8 @@ type
 
   { _anonymous_type_76  }
   _anonymous_type_76 = record
-    data0: ma_uintptr;
-    data1: ma_uintptr;
+    pDataStream: Pma_resource_manager_data_stream;
+    pageIndex: ma_uint32;
   end;
 
   { P_anonymous_type_76  }
@@ -8708,28 +9090,46 @@ type
 
   { _anonymous_type_77  }
   _anonymous_type_77 = record
-    case Integer of
-      0: (loadDataBufferNode: _anonymous_type_67);
-      1: (freeDataBufferNode: _anonymous_type_68);
-      2: (pageDataBufferNode: _anonymous_type_69);
-      3: (loadDataBuffer: _anonymous_type_70);
-      4: (freeDataBuffer: _anonymous_type_71);
-      5: (loadDataStream: _anonymous_type_72);
-      6: (freeDataStream: _anonymous_type_73);
-      7: (pageDataStream: _anonymous_type_74);
-      8: (seekDataStream: _anonymous_type_75);
-      9: (custom: _anonymous_type_76);
+    pDataStream: Pma_resource_manager_data_stream;
+    frameIndex: ma_uint64;
   end;
 
   { P_anonymous_type_77  }
   P_anonymous_type_77 = ^_anonymous_type_77;
 
+  { _anonymous_type_78  }
+  _anonymous_type_78 = record
+    data0: ma_uintptr;
+    data1: ma_uintptr;
+  end;
+
+  { P_anonymous_type_78  }
+  P_anonymous_type_78 = ^_anonymous_type_78;
+
+  { _anonymous_type_79  }
+  _anonymous_type_79 = record
+    case Integer of
+      0: (loadDataBufferNode: _anonymous_type_69);
+      1: (freeDataBufferNode: _anonymous_type_70);
+      2: (pageDataBufferNode: _anonymous_type_71);
+      3: (loadDataBuffer: _anonymous_type_72);
+      4: (freeDataBuffer: _anonymous_type_73);
+      5: (loadDataStream: _anonymous_type_74);
+      6: (freeDataStream: _anonymous_type_75);
+      7: (pageDataStream: _anonymous_type_76);
+      8: (seekDataStream: _anonymous_type_77);
+      9: (custom: _anonymous_type_78);
+  end;
+
+  { P_anonymous_type_79  }
+  P_anonymous_type_79 = ^_anonymous_type_79;
+
   { ma_resource_manager_job  }
   ma_resource_manager_job = record
-    toc: _anonymous_type_66;
+    toc: _anonymous_type_68;
     next: ma_uint64;
     order: ma_uint32;
-    data: _anonymous_type_77;
+    data: _anonymous_type_79;
   end;
 
   { ma_resource_manager_job_queue_config  }
@@ -8766,17 +9166,17 @@ type
     flags: ma_uint32;
   end;
 
-  { _anonymous_type_78  }
-  _anonymous_type_78 = record
+  { _anonymous_type_80  }
+  _anonymous_type_80 = record
     pData: Pointer;
     sizeInBytes: NativeUInt;
   end;
 
-  { P_anonymous_type_78  }
-  P_anonymous_type_78 = ^_anonymous_type_78;
+  { P_anonymous_type_80  }
+  P_anonymous_type_80 = ^_anonymous_type_80;
 
-  { _anonymous_type_79  }
-  _anonymous_type_79 = record
+  { _anonymous_type_81  }
+  _anonymous_type_81 = record
     pData: Pointer;
     totalFrameCount: ma_uint64;
     decodedFrameCount: ma_uint64;
@@ -8785,34 +9185,34 @@ type
     sampleRate: ma_uint32;
   end;
 
-  { P_anonymous_type_79  }
-  P_anonymous_type_79 = ^_anonymous_type_79;
+  { P_anonymous_type_81  }
+  P_anonymous_type_81 = ^_anonymous_type_81;
 
-  { _anonymous_type_80  }
-  _anonymous_type_80 = record
+  { _anonymous_type_82  }
+  _anonymous_type_82 = record
     data: ma_paged_audio_buffer_data;
     decodedFrameCount: ma_uint64;
     sampleRate: ma_uint32;
   end;
 
-  { P_anonymous_type_80  }
-  P_anonymous_type_80 = ^_anonymous_type_80;
+  { P_anonymous_type_82  }
+  P_anonymous_type_82 = ^_anonymous_type_82;
 
-  { _anonymous_type_81  }
-  _anonymous_type_81 = record
+  { _anonymous_type_83  }
+  _anonymous_type_83 = record
     case Integer of
-      0: (encoded: _anonymous_type_78);
-      1: (decoded: _anonymous_type_79);
-      2: (decodedPaged: _anonymous_type_80);
+      0: (encoded: _anonymous_type_80);
+      1: (decoded: _anonymous_type_81);
+      2: (decodedPaged: _anonymous_type_82);
   end;
 
-  { P_anonymous_type_81  }
-  P_anonymous_type_81 = ^_anonymous_type_81;
+  { P_anonymous_type_83  }
+  P_anonymous_type_83 = ^_anonymous_type_83;
 
   { ma_resource_manager_data_supply  }
   ma_resource_manager_data_supply = record
     _type: ma_resource_manager_data_supply_type;
-    backend: _anonymous_type_81;
+    backend: _anonymous_type_83;
   end;
 
   { ma_resource_manager_data_buffer_node  }
@@ -8829,16 +9229,16 @@ type
     pChildHi: Pma_resource_manager_data_buffer_node;
   end;
 
-  { _anonymous_type_82  }
-  _anonymous_type_82 = record
+  { _anonymous_type_84  }
+  _anonymous_type_84 = record
     case Integer of
       0: (decoder: ma_decoder);
       1: (buffer: ma_audio_buffer);
       2: (pagedBuffer: ma_paged_audio_buffer);
   end;
 
-  { P_anonymous_type_82  }
-  P_anonymous_type_82 = ^_anonymous_type_82;
+  { P_anonymous_type_84  }
+  P_anonymous_type_84 = ^_anonymous_type_84;
 
   { ma_resource_manager_data_buffer  }
   ma_resource_manager_data_buffer = record
@@ -8853,7 +9253,7 @@ type
     result: ma_result;
     isLooping: ma_bool32;
     isConnectorInitialized: ma_bool32;
-    connector: _anonymous_type_82;
+    connector: _anonymous_type_84;
   end;
 
   { ma_resource_manager_data_stream  }
@@ -8878,19 +9278,19 @@ type
     seekCounter: ma_bool32;
   end;
 
-  { _anonymous_type_83  }
-  _anonymous_type_83 = record
+  { _anonymous_type_85  }
+  _anonymous_type_85 = record
     case Integer of
       0: (buffer: ma_resource_manager_data_buffer);
       1: (stream: ma_resource_manager_data_stream);
   end;
 
-  { P_anonymous_type_83  }
-  P_anonymous_type_83 = ^_anonymous_type_83;
+  { P_anonymous_type_85  }
+  P_anonymous_type_85 = ^_anonymous_type_85;
 
   { ma_resource_manager_data_source  }
   ma_resource_manager_data_source = record
-    backend: _anonymous_type_83;
+    backend: _anonymous_type_85;
     flags: ma_uint32;
     executionCounter: ma_uint32;
     executionPointer: ma_uint32;
@@ -9399,6 +9799,902 @@ type
     closeArchive: procedure(opaque: Pointer); cdecl;
   end;
 
+  { z_size_t  }
+  z_size_t = NativeUInt;
+
+  { uInt  }
+  uInt = Cardinal;
+
+  { PuInt  }
+  PuInt = ^uInt;
+
+  { uLong  }
+  uLong = Cardinal;
+
+  { PuLong  }
+  PuLong = ^uLong;
+
+  { Bytef  }
+  Bytef = Byte;
+
+  { PBytef  }
+  PBytef = ^Bytef;
+
+  { charf  }
+  charf = UTF8Char;
+
+  { intf  }
+  intf = Integer;
+
+  { uIntf  }
+  uIntf = uInt;
+
+  { uLongf  }
+  uLongf = uLong;
+
+  { PuLongf  }
+  PuLongf = ^uLongf;
+
+  { voidpc  }
+  voidpc = Pointer;
+
+  { voidpf  }
+  voidpf = Pointer;
+
+  { voidp  }
+  voidp = Pointer;
+
+  { z_crc_t  }
+  z_crc_t = Cardinal;
+
+  { Pz_crc_t  }
+  Pz_crc_t = ^z_crc_t;
+
+  { alloc_func  }
+  alloc_func = function(opaque: voidpf; items: uInt; size: uInt): voidpf; cdecl;
+
+  { free_func  }
+  free_func = procedure(opaque: voidpf; address: voidpf); cdecl;
+
+  { z_stream_s  }
+  z_stream_s = record
+    next_in: PBytef;
+    avail_in: uInt;
+    total_in: uLong;
+    next_out: PBytef;
+    avail_out: uInt;
+    total_out: uLong;
+    msg: PUTF8Char;
+    state: Pinternal_state;
+    zalloc: alloc_func;
+    zfree: free_func;
+    opaque: voidpf;
+    data_type: Integer;
+    adler: uLong;
+    reserved: uLong;
+  end;
+
+  { Pz_stream  }
+  Pz_stream = ^z_stream;
+
+  { z_stream  }
+  z_stream = z_stream_s;
+
+  { z_streamp  }
+  z_streamp = Pz_stream;
+
+  { gz_header_s  }
+  gz_header_s = record
+    text: Integer;
+    time: uLong;
+    xflags: Integer;
+    os: Integer;
+    extra: PBytef;
+    extra_len: uInt;
+    extra_max: uInt;
+    name: PBytef;
+    name_max: uInt;
+    comment: PBytef;
+    comm_max: uInt;
+    hcrc: Integer;
+    done: Integer;
+  end;
+
+  { Pgz_header  }
+  Pgz_header = ^gz_header;
+
+  { gz_header  }
+  gz_header = gz_header_s;
+
+  { gz_headerp  }
+  gz_headerp = Pgz_header;
+
+  { in_func  }
+  in_func = function(p1: Pointer; p2: PPByte): Cardinal; cdecl;
+
+  { out_func  }
+  out_func = function(p1: Pointer; p2: PByte; p3: Cardinal): Integer; cdecl;
+
+  { gzFile  }
+  gzFile = PgzFile_s;
+
+  { gzFile_s  }
+  gzFile_s = record
+    have: Cardinal;
+    next: PByte;
+    pos: Int64;
+  end;
+
+  { ZPOS64_T  }
+  ZPOS64_T = UInt64;
+
+  { open_file_func  }
+  open_file_func = function(opaque: voidpf; const filename: PUTF8Char; mode: Integer): voidpf; cdecl;
+
+  { read_file_func  }
+  read_file_func = function(opaque: voidpf; stream: voidpf; buf: Pointer; size: uLong): uLong; cdecl;
+
+  { write_file_func  }
+  write_file_func = function(opaque: voidpf; stream: voidpf; const buf: Pointer; size: uLong): uLong; cdecl;
+
+  { close_file_func  }
+  close_file_func = function(opaque: voidpf; stream: voidpf): Integer; cdecl;
+
+  { testerror_file_func  }
+  testerror_file_func = function(opaque: voidpf; stream: voidpf): Integer; cdecl;
+
+  { tell_file_func  }
+  tell_file_func = function(opaque: voidpf; stream: voidpf): Integer; cdecl;
+
+  { seek_file_func  }
+  seek_file_func = function(opaque: voidpf; stream: voidpf; offset: uLong; origin: Integer): Integer; cdecl;
+
+  { zlib_filefunc_def_s  }
+  zlib_filefunc_def_s = record
+    zopen_file: open_file_func;
+    zread_file: read_file_func;
+    zwrite_file: write_file_func;
+    ztell_file: tell_file_func;
+    zseek_file: seek_file_func;
+    zclose_file: close_file_func;
+    zerror_file: testerror_file_func;
+    opaque: voidpf;
+  end;
+
+  { zlib_filefunc_def  }
+  zlib_filefunc_def = zlib_filefunc_def_s;
+
+  { Pzlib_filefunc_def  }
+  Pzlib_filefunc_def = ^zlib_filefunc_def;
+
+  { tell64_file_func  }
+  tell64_file_func = function(opaque: voidpf; stream: voidpf): ZPOS64_T; cdecl;
+
+  { seek64_file_func  }
+  seek64_file_func = function(opaque: voidpf; stream: voidpf; offset: ZPOS64_T; origin: Integer): Integer; cdecl;
+
+  { open64_file_func  }
+  open64_file_func = function(opaque: voidpf; const filename: Pointer; mode: Integer): voidpf; cdecl;
+
+  { zlib_filefunc64_def_s  }
+  zlib_filefunc64_def_s = record
+    zopen64_file: open64_file_func;
+    zread_file: read_file_func;
+    zwrite_file: write_file_func;
+    ztell64_file: tell64_file_func;
+    zseek64_file: seek64_file_func;
+    zclose_file: close_file_func;
+    zerror_file: testerror_file_func;
+    opaque: voidpf;
+  end;
+
+  { zlib_filefunc64_def  }
+  zlib_filefunc64_def = zlib_filefunc64_def_s;
+
+  { Pzlib_filefunc64_def  }
+  Pzlib_filefunc64_def = ^zlib_filefunc64_def;
+
+  { zlib_filefunc64_32_def_s  }
+  zlib_filefunc64_32_def_s = record
+    zfile_func64: zlib_filefunc64_def;
+    zopen32_file: open_file_func;
+    ztell32_file: tell_file_func;
+    zseek32_file: seek_file_func;
+  end;
+
+  { zlib_filefunc64_32_def  }
+  zlib_filefunc64_32_def = zlib_filefunc64_32_def_s;
+
+  { Pzlib_filefunc64_32_def  }
+  Pzlib_filefunc64_32_def = ^zlib_filefunc64_32_def;
+
+  { zipFile  }
+  zipFile = voidp;
+
+  { tm_zip_s  }
+  tm_zip_s = record
+    tm_sec: uInt;
+    tm_min: uInt;
+    tm_hour: uInt;
+    tm_mday: uInt;
+    tm_mon: uInt;
+    tm_year: uInt;
+  end;
+
+  { tm_zip  }
+  tm_zip = tm_zip_s;
+
+  { zip_fileinfo  }
+  zip_fileinfo = record
+    tmz_date: tm_zip;
+    dosDate: uLong;
+    internal_fa: uLong;
+    external_fa: uLong;
+  end;
+
+  { zipcharpc  }
+  zipcharpc = PUTF8Char;
+
+  { Pzipcharpc  }
+  Pzipcharpc = ^zipcharpc;
+
+  { unzFile  }
+  unzFile = voidp;
+
+  { tm_unz_s  }
+  tm_unz_s = record
+    tm_sec: uInt;
+    tm_min: uInt;
+    tm_hour: uInt;
+    tm_mday: uInt;
+    tm_mon: uInt;
+    tm_year: uInt;
+  end;
+
+  { tm_unz  }
+  tm_unz = tm_unz_s;
+
+  { unz_global_info64_s  }
+  unz_global_info64_s = record
+    number_entry: ZPOS64_T;
+    size_comment: uLong;
+  end;
+
+  { unz_global_info64  }
+  unz_global_info64 = unz_global_info64_s;
+
+  { Punz_global_info64  }
+  Punz_global_info64 = ^unz_global_info64;
+
+  { unz_global_info_s  }
+  unz_global_info_s = record
+    number_entry: uLong;
+    size_comment: uLong;
+  end;
+
+  { unz_global_info  }
+  unz_global_info = unz_global_info_s;
+
+  { Punz_global_info  }
+  Punz_global_info = ^unz_global_info;
+
+  { unz_file_info64_s  }
+  unz_file_info64_s = record
+    version: uLong;
+    version_needed: uLong;
+    flag: uLong;
+    compression_method: uLong;
+    dosDate: uLong;
+    crc: uLong;
+    compressed_size: ZPOS64_T;
+    uncompressed_size: ZPOS64_T;
+    size_filename: uLong;
+    size_file_extra: uLong;
+    size_file_comment: uLong;
+    disk_num_start: uLong;
+    internal_fa: uLong;
+    external_fa: uLong;
+    tmu_date: tm_unz;
+  end;
+
+  { unz_file_info64  }
+  unz_file_info64 = unz_file_info64_s;
+
+  { Punz_file_info64  }
+  Punz_file_info64 = ^unz_file_info64;
+
+  { unz_file_info_s  }
+  unz_file_info_s = record
+    version: uLong;
+    version_needed: uLong;
+    flag: uLong;
+    compression_method: uLong;
+    dosDate: uLong;
+    crc: uLong;
+    compressed_size: uLong;
+    uncompressed_size: uLong;
+    size_filename: uLong;
+    size_file_extra: uLong;
+    size_file_comment: uLong;
+    disk_num_start: uLong;
+    internal_fa: uLong;
+    external_fa: uLong;
+    tmu_date: tm_unz;
+  end;
+
+  { unz_file_info  }
+  unz_file_info = unz_file_info_s;
+
+  { Punz_file_info  }
+  Punz_file_info = ^unz_file_info;
+
+  { unz_file_pos_s  }
+  unz_file_pos_s = record
+    pos_in_zip_directory: uLong;
+    num_of_file: uLong;
+  end;
+
+  { unz_file_pos  }
+  unz_file_pos = unz_file_pos_s;
+
+  { Punz_file_pos  }
+  Punz_file_pos = ^unz_file_pos;
+
+  { unz64_file_pos_s  }
+  unz64_file_pos_s = record
+    pos_in_zip_directory: ZPOS64_T;
+    num_of_file: ZPOS64_T;
+  end;
+
+  { unz64_file_pos  }
+  unz64_file_pos = unz64_file_pos_s;
+
+  { Punz64_file_pos  }
+  Punz64_file_pos = ^unz64_file_pos;
+
+  { sdlsurface_context  }
+  sdlsurface_context = record
+    ctx: nk_context;
+    scissors: nk_rect;
+    fb: PSDL_Surface;
+    font_tex: PSDL_Surface;
+    atlas: nk_font_atlas;
+  end;
+
+  { FPSmanager  }
+  FPSmanager = record
+    framecount: Uint32;
+    rateticks: Single;
+    baseticks: Uint32;
+    lastticks: Uint32;
+    rate: Uint32;
+  end;
+
+  { ENetSocket  }
+  ENetSocket = TSocket;
+
+  { ENetBuffer  }
+  ENetBuffer = record
+    dataLength: NativeUInt;
+    data: Pointer;
+  end;
+
+  { ENetSocketSet  }
+  ENetSocketSet = fd_set;
+
+  { PENetSocketSet  }
+  PENetSocketSet = ^ENetSocketSet;
+
+  { enet_uint8  }
+  enet_uint8 = Byte;
+
+  { Penet_uint8  }
+  Penet_uint8 = ^enet_uint8;
+
+  { enet_uint16  }
+  enet_uint16 = Word;
+
+  { enet_uint32  }
+  enet_uint32 = Cardinal;
+
+  { Penet_uint32  }
+  Penet_uint32 = ^enet_uint32;
+
+  { ENetProtocolCommand  }
+  ENetProtocolCommand = _ENetProtocolCommand;
+
+  { ENetProtocolFlag  }
+  ENetProtocolFlag = _ENetProtocolFlag;
+
+  { _ENetProtocolHeader  }
+  _ENetProtocolHeader = record
+    peerID: enet_uint16;
+    sentTime: enet_uint16;
+  end;
+
+  { ENetProtocolHeader  }
+  ENetProtocolHeader = _ENetProtocolHeader;
+
+  { _ENetProtocolCommandHeader  }
+  _ENetProtocolCommandHeader = record
+    command: enet_uint8;
+    channelID: enet_uint8;
+    reliableSequenceNumber: enet_uint16;
+  end;
+
+  { ENetProtocolCommandHeader  }
+  ENetProtocolCommandHeader = _ENetProtocolCommandHeader;
+
+  { _ENetProtocolAcknowledge  }
+  _ENetProtocolAcknowledge = record
+    header: ENetProtocolCommandHeader;
+    receivedReliableSequenceNumber: enet_uint16;
+    receivedSentTime: enet_uint16;
+  end;
+
+  { ENetProtocolAcknowledge  }
+  ENetProtocolAcknowledge = _ENetProtocolAcknowledge;
+
+  { _ENetProtocolConnect  }
+  _ENetProtocolConnect = record
+    header: ENetProtocolCommandHeader;
+    outgoingPeerID: enet_uint16;
+    incomingSessionID: enet_uint8;
+    outgoingSessionID: enet_uint8;
+    mtu: enet_uint32;
+    windowSize: enet_uint32;
+    channelCount: enet_uint32;
+    incomingBandwidth: enet_uint32;
+    outgoingBandwidth: enet_uint32;
+    packetThrottleInterval: enet_uint32;
+    packetThrottleAcceleration: enet_uint32;
+    packetThrottleDeceleration: enet_uint32;
+    connectID: enet_uint32;
+    data: enet_uint32;
+  end;
+
+  { ENetProtocolConnect  }
+  ENetProtocolConnect = _ENetProtocolConnect;
+
+  { _ENetProtocolVerifyConnect  }
+  _ENetProtocolVerifyConnect = record
+    header: ENetProtocolCommandHeader;
+    outgoingPeerID: enet_uint16;
+    incomingSessionID: enet_uint8;
+    outgoingSessionID: enet_uint8;
+    mtu: enet_uint32;
+    windowSize: enet_uint32;
+    channelCount: enet_uint32;
+    incomingBandwidth: enet_uint32;
+    outgoingBandwidth: enet_uint32;
+    packetThrottleInterval: enet_uint32;
+    packetThrottleAcceleration: enet_uint32;
+    packetThrottleDeceleration: enet_uint32;
+    connectID: enet_uint32;
+  end;
+
+  { ENetProtocolVerifyConnect  }
+  ENetProtocolVerifyConnect = _ENetProtocolVerifyConnect;
+
+  { _ENetProtocolBandwidthLimit  }
+  _ENetProtocolBandwidthLimit = record
+    header: ENetProtocolCommandHeader;
+    incomingBandwidth: enet_uint32;
+    outgoingBandwidth: enet_uint32;
+  end;
+
+  { ENetProtocolBandwidthLimit  }
+  ENetProtocolBandwidthLimit = _ENetProtocolBandwidthLimit;
+
+  { _ENetProtocolThrottleConfigure  }
+  _ENetProtocolThrottleConfigure = record
+    header: ENetProtocolCommandHeader;
+    packetThrottleInterval: enet_uint32;
+    packetThrottleAcceleration: enet_uint32;
+    packetThrottleDeceleration: enet_uint32;
+  end;
+
+  { ENetProtocolThrottleConfigure  }
+  ENetProtocolThrottleConfigure = _ENetProtocolThrottleConfigure;
+
+  { _ENetProtocolDisconnect  }
+  _ENetProtocolDisconnect = record
+    header: ENetProtocolCommandHeader;
+    data: enet_uint32;
+  end;
+
+  { ENetProtocolDisconnect  }
+  ENetProtocolDisconnect = _ENetProtocolDisconnect;
+
+  { _ENetProtocolPing  }
+  _ENetProtocolPing = record
+    header: ENetProtocolCommandHeader;
+  end;
+
+  { ENetProtocolPing  }
+  ENetProtocolPing = _ENetProtocolPing;
+
+  { _ENetProtocolSendReliable  }
+  _ENetProtocolSendReliable = record
+    header: ENetProtocolCommandHeader;
+    dataLength: enet_uint16;
+  end;
+
+  { ENetProtocolSendReliable  }
+  ENetProtocolSendReliable = _ENetProtocolSendReliable;
+
+  { _ENetProtocolSendUnreliable  }
+  _ENetProtocolSendUnreliable = record
+    header: ENetProtocolCommandHeader;
+    unreliableSequenceNumber: enet_uint16;
+    dataLength: enet_uint16;
+  end;
+
+  { ENetProtocolSendUnreliable  }
+  ENetProtocolSendUnreliable = _ENetProtocolSendUnreliable;
+
+  { _ENetProtocolSendUnsequenced  }
+  _ENetProtocolSendUnsequenced = record
+    header: ENetProtocolCommandHeader;
+    unsequencedGroup: enet_uint16;
+    dataLength: enet_uint16;
+  end;
+
+  { ENetProtocolSendUnsequenced  }
+  ENetProtocolSendUnsequenced = _ENetProtocolSendUnsequenced;
+
+  { _ENetProtocolSendFragment  }
+  _ENetProtocolSendFragment = record
+    header: ENetProtocolCommandHeader;
+    startSequenceNumber: enet_uint16;
+    dataLength: enet_uint16;
+    fragmentCount: enet_uint32;
+    fragmentNumber: enet_uint32;
+    totalLength: enet_uint32;
+    fragmentOffset: enet_uint32;
+  end;
+
+  { ENetProtocolSendFragment  }
+  ENetProtocolSendFragment = _ENetProtocolSendFragment;
+
+  { _ENetProtocol  }
+  _ENetProtocol = record
+    case Integer of
+      0: (header: ENetProtocolCommandHeader);
+      1: (acknowledge: ENetProtocolAcknowledge);
+      2: (connect: ENetProtocolConnect);
+      3: (verifyConnect: ENetProtocolVerifyConnect);
+      4: (disconnect: ENetProtocolDisconnect);
+      5: (ping: ENetProtocolPing);
+      6: (sendReliable: ENetProtocolSendReliable);
+      7: (sendUnreliable: ENetProtocolSendUnreliable);
+      8: (sendUnsequenced: ENetProtocolSendUnsequenced);
+      9: (sendFragment: ENetProtocolSendFragment);
+      10: (bandwidthLimit: ENetProtocolBandwidthLimit);
+      11: (throttleConfigure: ENetProtocolThrottleConfigure);
+  end;
+
+  { ENetProtocol  }
+  ENetProtocol = _ENetProtocol;
+
+  { PENetProtocol  }
+  PENetProtocol = ^ENetProtocol;
+
+  { _ENetListNode  }
+  _ENetListNode = record
+    next: P_ENetListNode;
+    previous: P_ENetListNode;
+  end;
+
+  { ENetListNode  }
+  ENetListNode = _ENetListNode;
+
+  { ENetListIterator  }
+  ENetListIterator = ^ENetListNode;
+
+  { _ENetList  }
+  _ENetList = record
+    sentinel: ENetListNode;
+  end;
+
+  { ENetList  }
+  ENetList = _ENetList;
+
+  { PENetList  }
+  PENetList = ^ENetList;
+
+  { _ENetCallbacks  }
+  _ENetCallbacks = record
+    malloc: function(size: NativeUInt): Pointer; cdecl;
+    free: procedure(memory: Pointer); cdecl;
+    no_memory: procedure(); cdecl;
+  end;
+
+  { ENetCallbacks  }
+  ENetCallbacks = _ENetCallbacks;
+
+  { PENetCallbacks  }
+  PENetCallbacks = ^ENetCallbacks;
+
+  { ENetVersion  }
+  ENetVersion = enet_uint32;
+
+  { ENetSocketType  }
+  ENetSocketType = _ENetSocketType;
+
+  { ENetSocketWait  }
+  ENetSocketWait = _ENetSocketWait;
+
+  { ENetSocketOption  }
+  ENetSocketOption = _ENetSocketOption;
+
+  { ENetSocketShutdown  }
+  ENetSocketShutdown = _ENetSocketShutdown;
+
+  { _ENetAddress  }
+  _ENetAddress = record
+    host: enet_uint32;
+    port: enet_uint16;
+  end;
+
+  { ENetAddress  }
+  ENetAddress = _ENetAddress;
+
+  { PENetAddress  }
+  PENetAddress = ^ENetAddress;
+
+  { ENetPacketFlag  }
+  ENetPacketFlag = _ENetPacketFlag;
+
+  { ENetPacketFreeCallback  }
+  ENetPacketFreeCallback = procedure(p1: P_ENetPacket); cdecl;
+
+  { _ENetPacket  }
+  _ENetPacket = record
+    referenceCount: NativeUInt;
+    flags: enet_uint32;
+    data: Penet_uint8;
+    dataLength: NativeUInt;
+    freeCallback: ENetPacketFreeCallback;
+    userData: Pointer;
+  end;
+
+  { ENetPacket  }
+  ENetPacket = _ENetPacket;
+
+  { PENetPacket  }
+  PENetPacket = ^ENetPacket;
+
+  { _ENetAcknowledgement  }
+  _ENetAcknowledgement = record
+    acknowledgementList: ENetListNode;
+    sentTime: enet_uint32;
+    command: ENetProtocol;
+  end;
+
+  { ENetAcknowledgement  }
+  ENetAcknowledgement = _ENetAcknowledgement;
+
+  { PENetAcknowledgement  }
+  PENetAcknowledgement = ^ENetAcknowledgement;
+
+  { _ENetOutgoingCommand  }
+  _ENetOutgoingCommand = record
+    outgoingCommandList: ENetListNode;
+    reliableSequenceNumber: enet_uint16;
+    unreliableSequenceNumber: enet_uint16;
+    sentTime: enet_uint32;
+    roundTripTimeout: enet_uint32;
+    roundTripTimeoutLimit: enet_uint32;
+    fragmentOffset: enet_uint32;
+    fragmentLength: enet_uint16;
+    sendAttempts: enet_uint16;
+    command: ENetProtocol;
+    packet: PENetPacket;
+  end;
+
+  { ENetOutgoingCommand  }
+  ENetOutgoingCommand = _ENetOutgoingCommand;
+
+  { PENetOutgoingCommand  }
+  PENetOutgoingCommand = ^ENetOutgoingCommand;
+
+  { _ENetIncomingCommand  }
+  _ENetIncomingCommand = record
+    incomingCommandList: ENetListNode;
+    reliableSequenceNumber: enet_uint16;
+    unreliableSequenceNumber: enet_uint16;
+    command: ENetProtocol;
+    fragmentCount: enet_uint32;
+    fragmentsRemaining: enet_uint32;
+    fragments: Penet_uint32;
+    packet: PENetPacket;
+  end;
+
+  { ENetIncomingCommand  }
+  ENetIncomingCommand = _ENetIncomingCommand;
+
+  { PENetIncomingCommand  }
+  PENetIncomingCommand = ^ENetIncomingCommand;
+
+  { ENetPeerState  }
+  ENetPeerState = _ENetPeerState;
+
+  { _ENetChannel  }
+  _ENetChannel = record
+    outgoingReliableSequenceNumber: enet_uint16;
+    outgoingUnreliableSequenceNumber: enet_uint16;
+    usedReliableWindows: enet_uint16;
+    reliableWindows: array [0..15] of enet_uint16;
+    incomingReliableSequenceNumber: enet_uint16;
+    incomingUnreliableSequenceNumber: enet_uint16;
+    incomingReliableCommands: ENetList;
+    incomingUnreliableCommands: ENetList;
+  end;
+
+  { ENetChannel  }
+  ENetChannel = _ENetChannel;
+
+  { PENetChannel  }
+  PENetChannel = ^ENetChannel;
+
+  { ENetPeerFlag  }
+  ENetPeerFlag = _ENetPeerFlag;
+
+  { _ENetPeer  }
+  _ENetPeer = record
+    dispatchList: ENetListNode;
+    host: P_ENetHost;
+    outgoingPeerID: enet_uint16;
+    incomingPeerID: enet_uint16;
+    connectID: enet_uint32;
+    outgoingSessionID: enet_uint8;
+    incomingSessionID: enet_uint8;
+    address: ENetAddress;
+    data: Pointer;
+    state: ENetPeerState;
+    channels: PENetChannel;
+    channelCount: NativeUInt;
+    incomingBandwidth: enet_uint32;
+    outgoingBandwidth: enet_uint32;
+    incomingBandwidthThrottleEpoch: enet_uint32;
+    outgoingBandwidthThrottleEpoch: enet_uint32;
+    incomingDataTotal: enet_uint32;
+    outgoingDataTotal: enet_uint32;
+    lastSendTime: enet_uint32;
+    lastReceiveTime: enet_uint32;
+    nextTimeout: enet_uint32;
+    earliestTimeout: enet_uint32;
+    packetLossEpoch: enet_uint32;
+    packetsSent: enet_uint32;
+    packetsLost: enet_uint32;
+    packetLoss: enet_uint32;
+    packetLossVariance: enet_uint32;
+    packetThrottle: enet_uint32;
+    packetThrottleLimit: enet_uint32;
+    packetThrottleCounter: enet_uint32;
+    packetThrottleEpoch: enet_uint32;
+    packetThrottleAcceleration: enet_uint32;
+    packetThrottleDeceleration: enet_uint32;
+    packetThrottleInterval: enet_uint32;
+    pingInterval: enet_uint32;
+    timeoutLimit: enet_uint32;
+    timeoutMinimum: enet_uint32;
+    timeoutMaximum: enet_uint32;
+    lastRoundTripTime: enet_uint32;
+    lowestRoundTripTime: enet_uint32;
+    lastRoundTripTimeVariance: enet_uint32;
+    highestRoundTripTimeVariance: enet_uint32;
+    roundTripTime: enet_uint32;
+    roundTripTimeVariance: enet_uint32;
+    mtu: enet_uint32;
+    windowSize: enet_uint32;
+    reliableDataInTransit: enet_uint32;
+    outgoingReliableSequenceNumber: enet_uint16;
+    acknowledgements: ENetList;
+    sentReliableCommands: ENetList;
+    sentUnreliableCommands: ENetList;
+    outgoingCommands: ENetList;
+    dispatchedCommands: ENetList;
+    flags: enet_uint16;
+    reserved: enet_uint16;
+    incomingUnsequencedGroup: enet_uint16;
+    outgoingUnsequencedGroup: enet_uint16;
+    unsequencedWindow: array [0..31] of enet_uint32;
+    eventData: enet_uint32;
+    totalWaitingData: NativeUInt;
+  end;
+
+  { ENetPeer  }
+  ENetPeer = _ENetPeer;
+
+  { PENetPeer  }
+  PENetPeer = ^ENetPeer;
+
+  { _ENetCompressor  }
+  _ENetCompressor = record
+    context: Pointer;
+    compress: function(context: Pointer; const inBuffers: PENetBuffer; inBufferCount: NativeUInt; inLimit: NativeUInt; outData: Penet_uint8; outLimit: NativeUInt): NativeUInt; cdecl;
+    decompress: function(context: Pointer; const inData: Penet_uint8; inLimit: NativeUInt; outData: Penet_uint8; outLimit: NativeUInt): NativeUInt; cdecl;
+    destroy: procedure(context: Pointer); cdecl;
+  end;
+
+  { ENetCompressor  }
+  ENetCompressor = _ENetCompressor;
+
+  { PENetCompressor  }
+  PENetCompressor = ^ENetCompressor;
+
+  { ENetChecksumCallback  }
+  ENetChecksumCallback = function(const buffers: PENetBuffer; bufferCount: NativeUInt): enet_uint32; cdecl;
+
+  { ENetInterceptCallback  }
+  ENetInterceptCallback = function(host: P_ENetHost; event: P_ENetEvent): Integer; cdecl;
+
+  { _ENetHost  }
+  _ENetHost = record
+    socket: ENetSocket;
+    address: ENetAddress;
+    incomingBandwidth: enet_uint32;
+    outgoingBandwidth: enet_uint32;
+    bandwidthThrottleEpoch: enet_uint32;
+    mtu: enet_uint32;
+    randomSeed: enet_uint32;
+    recalculateBandwidthLimits: Integer;
+    peers: PENetPeer;
+    peerCount: NativeUInt;
+    channelLimit: NativeUInt;
+    serviceTime: enet_uint32;
+    dispatchQueue: ENetList;
+    continueSending: Integer;
+    packetSize: NativeUInt;
+    headerFlags: enet_uint16;
+    commands: array [0..31] of ENetProtocol;
+    commandCount: NativeUInt;
+    buffers: array [0..64] of ENetBuffer;
+    bufferCount: NativeUInt;
+    checksum: ENetChecksumCallback;
+    compressor: ENetCompressor;
+    packetData: array [0..1] of array [0..4095] of enet_uint8;
+    receivedAddress: ENetAddress;
+    receivedData: Penet_uint8;
+    receivedDataLength: NativeUInt;
+    totalSentData: enet_uint32;
+    totalSentPackets: enet_uint32;
+    totalReceivedData: enet_uint32;
+    totalReceivedPackets: enet_uint32;
+    intercept: ENetInterceptCallback;
+    connectedPeers: NativeUInt;
+    bandwidthLimitedPeers: NativeUInt;
+    duplicatePeers: NativeUInt;
+    maximumPacketSize: NativeUInt;
+    maximumWaitingData: NativeUInt;
+  end;
+
+  { ENetHost  }
+  ENetHost = _ENetHost;
+
+  { PENetHost  }
+  PENetHost = ^ENetHost;
+
+  { ENetEventType  }
+  ENetEventType = _ENetEventType;
+
+  { _ENetEvent  }
+  _ENetEvent = record
+    _type: ENetEventType;
+    peer: PENetPeer;
+    channelID: enet_uint8;
+    data: enet_uint32;
+    packet: PENetPacket;
+  end;
+
+  { ENetEvent  }
+  ENetEvent = _ENetEvent;
+
+  { PENetEvent  }
+  PENetEvent = ^ENetEvent;
+
   { SDL_qsort_compare  }
   SDL_qsort_compare = function(const p1: Pointer; const p2: Pointer): Integer; cdecl;
 
@@ -9421,6 +10717,124 @@ type
   PHYSFS_mountMemory_del = procedure(p1: Pointer); cdecl;
 
 var
+  aaArcRGBA: function(renderer: PSDL_Renderer; cx: Single; cy: Single; rx: Single; ry: Single; start: Single; _end: Single; thick: Single; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaBezierRGBA: function(renderer: PSDL_Renderer; x: PDouble; y: PDouble; n: Integer; s: Integer; thick: Single; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aacircleColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  aacircleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaellipseColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; color: Uint32): Integer; cdecl;
+  aaellipseRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledEllipseRGBA: function(renderer: PSDL_Renderer; cx: Single; cy: Single; rx: Single; ry: Single; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledPieRGBA: function(renderer: PSDL_Renderer; cx: Single; cy: Single; rx: Single; ry: Single; start: Single; _end: Single; chord: Uint32; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledPolyBezierRGBA: function(renderer: PSDL_Renderer; x: PDouble; y: PDouble; n: Integer; s: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aaFilledPolygonRGBA: function(renderer: PSDL_Renderer; const vx: PDouble; const vy: PDouble; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aalineColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  aalineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aapolygonColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; color: Uint32): Integer; cdecl;
+  aapolygonRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  aatrigonColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; color: Uint32): Integer; cdecl;
+  aatrigonRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  arcColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
+  arcRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  bezierColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; s: Integer; color: Uint32): Integer; cdecl;
+  bezierRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; s: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  boxColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  boxRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  characterColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; c: UTF8Char; color: Uint32): Integer; cdecl;
+  characterRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; c: UTF8Char; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  circleColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  circleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  ellipseColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; color: Uint32): Integer; cdecl;
+  ellipseRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  enet_address_get_host: function(const address: PENetAddress; hostName: PUTF8Char; nameLength: NativeUInt): Integer; cdecl;
+  enet_address_get_host_ip: function(const address: PENetAddress; hostName: PUTF8Char; nameLength: NativeUInt): Integer; cdecl;
+  enet_address_set_host: function(address: PENetAddress; const hostName: PUTF8Char): Integer; cdecl;
+  enet_address_set_host_ip: function(address: PENetAddress; const hostName: PUTF8Char): Integer; cdecl;
+  enet_crc32: function(const p1: PENetBuffer; p2: NativeUInt): enet_uint32; cdecl;
+  enet_deinitialize: procedure(); cdecl;
+  enet_free: procedure(p1: Pointer); cdecl;
+  enet_host_bandwidth_limit: procedure(p1: PENetHost; p2: enet_uint32; p3: enet_uint32); cdecl;
+  enet_host_bandwidth_throttle: procedure(p1: PENetHost); cdecl;
+  enet_host_broadcast: procedure(p1: PENetHost; p2: enet_uint8; p3: PENetPacket); cdecl;
+  enet_host_channel_limit: procedure(p1: PENetHost; p2: NativeUInt); cdecl;
+  enet_host_check_events: function(p1: PENetHost; p2: PENetEvent): Integer; cdecl;
+  enet_host_compress: procedure(p1: PENetHost; const p2: PENetCompressor); cdecl;
+  enet_host_compress_with_range_coder: function(host: PENetHost): Integer; cdecl;
+  enet_host_connect: function(p1: PENetHost; const p2: PENetAddress; p3: NativeUInt; p4: enet_uint32): PENetPeer; cdecl;
+  enet_host_create: function(const p1: PENetAddress; p2: NativeUInt; p3: NativeUInt; p4: enet_uint32; p5: enet_uint32): PENetHost; cdecl;
+  enet_host_destroy: procedure(p1: PENetHost); cdecl;
+  enet_host_flush: procedure(p1: PENetHost); cdecl;
+  enet_host_random: function(p1: PENetHost): enet_uint32; cdecl;
+  enet_host_random_seed: function(): enet_uint32; cdecl;
+  enet_host_service: function(p1: PENetHost; p2: PENetEvent; p3: enet_uint32): Integer; cdecl;
+  enet_initialize: function(): Integer; cdecl;
+  enet_initialize_with_callbacks: function(version: ENetVersion; const inits: PENetCallbacks): Integer; cdecl;
+  enet_linked_version: function(): ENetVersion; cdecl;
+  enet_list_clear: procedure(p1: PENetList); cdecl;
+  enet_list_insert: function(p1: ENetListIterator; p2: Pointer): ENetListIterator; cdecl;
+  enet_list_move: function(p1: ENetListIterator; p2: Pointer; p3: Pointer): ENetListIterator; cdecl;
+  enet_list_remove: function(p1: ENetListIterator): Pointer; cdecl;
+  enet_list_size: function(p1: PENetList): NativeUInt; cdecl;
+  enet_malloc: function(p1: NativeUInt): Pointer; cdecl;
+  enet_packet_create: function(const p1: Pointer; p2: NativeUInt; p3: enet_uint32): PENetPacket; cdecl;
+  enet_packet_destroy: procedure(p1: PENetPacket); cdecl;
+  enet_packet_resize: function(p1: PENetPacket; p2: NativeUInt): Integer; cdecl;
+  enet_peer_disconnect: procedure(p1: PENetPeer; p2: enet_uint32); cdecl;
+  enet_peer_disconnect_later: procedure(p1: PENetPeer; p2: enet_uint32); cdecl;
+  enet_peer_disconnect_now: procedure(p1: PENetPeer; p2: enet_uint32); cdecl;
+  enet_peer_dispatch_incoming_reliable_commands: procedure(p1: PENetPeer; p2: PENetChannel; p3: PENetIncomingCommand); cdecl;
+  enet_peer_dispatch_incoming_unreliable_commands: procedure(p1: PENetPeer; p2: PENetChannel; p3: PENetIncomingCommand); cdecl;
+  enet_peer_on_connect: procedure(p1: PENetPeer); cdecl;
+  enet_peer_on_disconnect: procedure(p1: PENetPeer); cdecl;
+  enet_peer_ping: procedure(p1: PENetPeer); cdecl;
+  enet_peer_ping_interval: procedure(p1: PENetPeer; p2: enet_uint32); cdecl;
+  enet_peer_queue_acknowledgement: function(p1: PENetPeer; const p2: PENetProtocol; p3: enet_uint16): PENetAcknowledgement; cdecl;
+  enet_peer_queue_incoming_command: function(p1: PENetPeer; const p2: PENetProtocol; const p3: Pointer; p4: NativeUInt; p5: enet_uint32; p6: enet_uint32): PENetIncomingCommand; cdecl;
+  enet_peer_queue_outgoing_command: function(p1: PENetPeer; const p2: PENetProtocol; p3: PENetPacket; p4: enet_uint32; p5: enet_uint16): PENetOutgoingCommand; cdecl;
+  enet_peer_receive: function(p1: PENetPeer; channelID: Penet_uint8): PENetPacket; cdecl;
+  enet_peer_reset: procedure(p1: PENetPeer); cdecl;
+  enet_peer_reset_queues: procedure(p1: PENetPeer); cdecl;
+  enet_peer_send: function(p1: PENetPeer; p2: enet_uint8; p3: PENetPacket): Integer; cdecl;
+  enet_peer_setup_outgoing_command: procedure(p1: PENetPeer; p2: PENetOutgoingCommand); cdecl;
+  enet_peer_throttle: function(p1: PENetPeer; p2: enet_uint32): Integer; cdecl;
+  enet_peer_throttle_configure: procedure(p1: PENetPeer; p2: enet_uint32; p3: enet_uint32; p4: enet_uint32); cdecl;
+  enet_peer_timeout: procedure(p1: PENetPeer; p2: enet_uint32; p3: enet_uint32; p4: enet_uint32); cdecl;
+  enet_protocol_command_size: function(p1: enet_uint8): NativeUInt; cdecl;
+  enet_range_coder_compress: function(p1: Pointer; const p2: PENetBuffer; p3: NativeUInt; p4: NativeUInt; p5: Penet_uint8; p6: NativeUInt): NativeUInt; cdecl;
+  enet_range_coder_create: function(): Pointer; cdecl;
+  enet_range_coder_decompress: function(p1: Pointer; const p2: Penet_uint8; p3: NativeUInt; p4: Penet_uint8; p5: NativeUInt): NativeUInt; cdecl;
+  enet_range_coder_destroy: procedure(p1: Pointer); cdecl;
+  enet_socket_accept: function(p1: ENetSocket; p2: PENetAddress): ENetSocket; cdecl;
+  enet_socket_bind: function(p1: ENetSocket; const p2: PENetAddress): Integer; cdecl;
+  enet_socket_connect: function(p1: ENetSocket; const p2: PENetAddress): Integer; cdecl;
+  enet_socket_create: function(p1: ENetSocketType): ENetSocket; cdecl;
+  enet_socket_destroy: procedure(p1: ENetSocket); cdecl;
+  enet_socket_get_address: function(p1: ENetSocket; p2: PENetAddress): Integer; cdecl;
+  enet_socket_get_option: function(p1: ENetSocket; p2: ENetSocketOption; p3: PInteger): Integer; cdecl;
+  enet_socket_listen: function(p1: ENetSocket; p2: Integer): Integer; cdecl;
+  enet_socket_receive: function(p1: ENetSocket; p2: PENetAddress; p3: PENetBuffer; p4: NativeUInt): Integer; cdecl;
+  enet_socket_send: function(p1: ENetSocket; const p2: PENetAddress; const p3: PENetBuffer; p4: NativeUInt): Integer; cdecl;
+  enet_socket_set_option: function(p1: ENetSocket; p2: ENetSocketOption; p3: Integer): Integer; cdecl;
+  enet_socket_shutdown: function(p1: ENetSocket; p2: ENetSocketShutdown): Integer; cdecl;
+  enet_socket_wait: function(p1: ENetSocket; p2: Penet_uint32; p3: enet_uint32): Integer; cdecl;
+  enet_socketset_select: function(p1: ENetSocket; p2: PENetSocketSet; p3: PENetSocketSet; p4: enet_uint32): Integer; cdecl;
+  enet_time_get: function(): enet_uint32; cdecl;
+  enet_time_set: procedure(p1: enet_uint32); cdecl;
+  filledCircleColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; r: Sint16; color: Uint32): Integer; cdecl;
+  filledCircleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledEllipseColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; color: Uint32): Integer; cdecl;
+  filledEllipseRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rx: Sint16; ry: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledPieColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
+  filledPieRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledPolygonColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; color: Uint32): Integer; cdecl;
+  filledPolygonRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  filledTrigonColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; color: Uint32): Integer; cdecl;
+  filledTrigonRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  gfxPrimitivesSetFont: procedure(const fontdata: Pointer; cw: Uint32; ch: Uint32); cdecl;
+  gfxPrimitivesSetFontRotation: procedure(rotation: Uint32); cdecl;
+  hlineColor: function(renderer: PSDL_Renderer; x1: Sint16; x2: Sint16; y: Sint16; color: Uint32): Integer; cdecl;
+  hlineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; x2: Sint16; y: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  lineColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  lineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   ma_aligned_free: procedure(p: Pointer; const pAllocationCallbacks: Pma_allocation_callbacks); cdecl;
   ma_aligned_malloc: function(sz: NativeUInt; alignment: NativeUInt; const pAllocationCallbacks: Pma_allocation_callbacks): Pointer; cdecl;
   ma_apply_volume_factor_f32: procedure(pSamples: PSingle; sampleCount: ma_uint64; factor: Single); cdecl;
@@ -10580,6 +11994,10 @@ var
   nk_rgba_hex: function(const rgb: PUTF8Char): nk_color; cdecl;
   nk_rgba_iv: function(const rgba: PInteger): nk_color; cdecl;
   nk_rgba_u32: function(p1: nk_uint): nk_color; cdecl;
+  nk_sdl_handle_event: function(ctx: Pnk_context; evt: PSDL_Event): Integer; cdecl;
+  nk_sdlsurface_init: function(fb: PSDL_Surface; fontSize: Single): Psdlsurface_context; cdecl;
+  nk_sdlsurface_render: procedure(const sdlsurface: Psdlsurface_context; const clear: nk_color; const enable_clear: Byte); cdecl;
+  nk_sdlsurface_shutdown: procedure(sdlsurface: Psdlsurface_context); cdecl;
   nk_select_image_label: function(p1: Pnk_context; p2: nk_image; const p3: PUTF8Char; align: nk_flags; value: nk_bool): nk_bool; cdecl;
   nk_select_image_text: function(p1: Pnk_context; p2: nk_image; const p3: PUTF8Char; p4: Integer; align: nk_flags; value: nk_bool): nk_bool; cdecl;
   nk_select_label: function(p1: Pnk_context; const p2: PUTF8Char; align: nk_flags; value: nk_bool): nk_bool; cdecl;
@@ -10872,6 +12290,10 @@ var
   PHYSFS_writeULE16: function(_file: PPHYSFS_File; val: PHYSFS_uint16): Integer; cdecl;
   PHYSFS_writeULE32: function(_file: PPHYSFS_File; val: PHYSFS_uint32): Integer; cdecl;
   PHYSFS_writeULE64: function(_file: PPHYSFS_File; val: PHYSFS_uint64): Integer; cdecl;
+  pieColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
+  pieRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  pixelColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; color: Uint32): Integer; cdecl;
+  pixelRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   plm_audio_create_with_buffer: function(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_audio_t; cdecl;
   plm_audio_decode: function(self: Pplm_audio_t): Pplm_samples_t; cdecl;
   plm_audio_destroy: procedure(self: Pplm_audio_t); cdecl;
@@ -10955,6 +12377,19 @@ var
   plm_video_rewind: procedure(self: Pplm_video_t); cdecl;
   plm_video_set_no_delay: procedure(self: Pplm_video_t; no_delay: Integer); cdecl;
   plm_video_set_time: procedure(self: Pplm_video_t; time: Double); cdecl;
+  polygonColor: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; color: Uint32): Integer; cdecl;
+  polygonRGBA: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  rectangleColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  rectangleRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  rotateSurface90Degrees: function(src: PSDL_Surface; numClockwiseTurns: Integer): PSDL_Surface; cdecl;
+  rotozoomSurface: function(src: PSDL_Surface; angle: Double; zoom: Double; smooth: Integer): PSDL_Surface; cdecl;
+  rotozoomSurfaceSize: procedure(width: Integer; height: Integer; angle: Double; zoom: Double; dstwidth: PInteger; dstheight: PInteger); cdecl;
+  rotozoomSurfaceSizeXY: procedure(width: Integer; height: Integer; angle: Double; zoomx: Double; zoomy: Double; dstwidth: PInteger; dstheight: PInteger); cdecl;
+  rotozoomSurfaceXY: function(src: PSDL_Surface; angle: Double; zoomx: Double; zoomy: Double; smooth: Integer): PSDL_Surface; cdecl;
+  roundedBoxColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  roundedBoxRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  roundedRectangleColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; color: Uint32): Integer; cdecl;
+  roundedRectangleRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   SDL_abs: function(x: Integer): Integer; cdecl;
   SDL_acos: function(x: Double): Double; cdecl;
   SDL_acosf: function(x: Single): Single; cdecl;
@@ -11068,6 +12503,7 @@ var
   SDL_FlushEvents: procedure(minType: Uint32; maxType: Uint32); cdecl;
   SDL_fmod: function(x: Double; y: Double): Double; cdecl;
   SDL_fmodf: function(x: Single; y: Single): Single; cdecl;
+  SDL_framerateDelay: function(manager: PFPSmanager): Uint32; cdecl;
   SDL_free: procedure(mem: Pointer); cdecl;
   SDL_FreeAudioStream: procedure(stream: PSDL_AudioStream); cdecl;
   SDL_FreeCursor: procedure(cursor: PSDL_Cursor); cdecl;
@@ -11159,6 +12595,8 @@ var
   SDL_GetError: function(): PUTF8Char; cdecl;
   SDL_GetErrorMsg: function(errstr: PUTF8Char; maxlen: Integer): PUTF8Char; cdecl;
   SDL_GetEventFilter: function(filter: PSDL_EventFilter; userdata: PPointer): SDL_bool; cdecl;
+  SDL_getFramecount: function(manager: PFPSmanager): Integer; cdecl;
+  SDL_getFramerate: function(manager: PFPSmanager): Integer; cdecl;
   SDL_GetGlobalMouseState: function(x: PInteger; y: PInteger): Uint32; cdecl;
   SDL_GetGrabbedWindow: function(): PSDL_Window; cdecl;
   SDL_GetHint: function(const name: PUTF8Char): PUTF8Char; cdecl;
@@ -11338,7 +12776,38 @@ var
   SDL_iconv_close: function(cd: SDL_iconv_t): Integer; cdecl;
   SDL_iconv_open: function(const tocode: PUTF8Char; const fromcode: PUTF8Char): SDL_iconv_t; cdecl;
   SDL_iconv_string: function(const tocode: PUTF8Char; const fromcode: PUTF8Char; const inbuf: PUTF8Char; inbytesleft: NativeUInt): PUTF8Char; cdecl;
+  SDL_imageFilterAbsDiff: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterAdd: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterAddByte: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterAddByteToHalf: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterAddUint: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Cardinal): Integer; cdecl;
+  SDL_imageFilterBinarizeUsingThreshold: function(Src1: PByte; Dest: PByte; length: Cardinal; T: Byte): Integer; cdecl;
+  SDL_imageFilterBitAnd: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterBitNegation: function(Src1: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterBitOr: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterClipToRange: function(Src1: PByte; Dest: PByte; length: Cardinal; Tmin: Byte; Tmax: Byte): Integer; cdecl;
+  SDL_imageFilterDiv: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMean: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMMXdetect: function(): Integer; cdecl;
+  SDL_imageFilterMMXoff: procedure(); cdecl;
+  SDL_imageFilterMMXon: procedure(); cdecl;
+  SDL_imageFilterMult: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMultByByte: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterMultDivby2: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMultDivby4: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterMultNor: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterNormalizeLinear: function(Src: PByte; Dest: PByte; length: Cardinal; Cmin: Integer; Cmax: Integer; Nmin: Integer; Nmax: Integer): Integer; cdecl;
+  SDL_imageFilterShiftLeft: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftLeftByte: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftLeftUint: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftRight: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterShiftRightAndMultByByte: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte; C: Byte): Integer; cdecl;
+  SDL_imageFilterShiftRightUint: function(Src1: PByte; Dest: PByte; length: Cardinal; N: Byte): Integer; cdecl;
+  SDL_imageFilterSub: function(Src1: PByte; Src2: PByte; Dest: PByte; length: Cardinal): Integer; cdecl;
+  SDL_imageFilterSubByte: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Byte): Integer; cdecl;
+  SDL_imageFilterSubUint: function(Src1: PByte; Dest: PByte; length: Cardinal; C: Cardinal): Integer; cdecl;
   SDL_Init: function(flags: Uint32): Integer; cdecl;
+  SDL_initFramerate: procedure(manager: PFPSmanager); cdecl;
   SDL_InitSubSystem: function(flags: Uint32): Integer; cdecl;
   SDL_IntersectRect: function(const A: PSDL_Rect; const B: PSDL_Rect; result: PSDL_Rect): SDL_bool; cdecl;
   SDL_IntersectRectAndLine: function(const rect: PSDL_Rect; X1: PInteger; Y1: PInteger; X2: PInteger; Y2: PInteger): SDL_bool; cdecl;
@@ -11604,6 +13073,7 @@ var
   SDL_setenv: function(const name: PUTF8Char; const value: PUTF8Char; overwrite: Integer): Integer; cdecl;
   SDL_SetError: function(const fmt: PUTF8Char): Integer varargs; cdecl;
   SDL_SetEventFilter: procedure(filter: SDL_EventFilter; userdata: Pointer); cdecl;
+  SDL_setFramerate: function(manager: PFPSmanager; rate: Uint32): Integer; cdecl;
   SDL_SetHint: function(const name: PUTF8Char; const value: PUTF8Char): SDL_bool; cdecl;
   SDL_SetHintWithPriority: function(const name: PUTF8Char; const value: PUTF8Char; priority: SDL_HintPriority): SDL_bool; cdecl;
   SDL_SetMainReady: procedure(); cdecl;
@@ -11751,6 +13221,7 @@ var
   SDL_WriteLE32: function(dst: PSDL_RWops; value: Uint32): NativeUInt; cdecl;
   SDL_WriteLE64: function(dst: PSDL_RWops; value: Uint64): NativeUInt; cdecl;
   SDL_WriteU8: function(dst: PSDL_RWops; value: Uint8): NativeUInt; cdecl;
+  shrinkSurface: function(src: PSDL_Surface; factorx: Integer; factory: Integer): PSDL_Surface; cdecl;
   stbi_convert_iphone_png_to_rgb: procedure(flag_true_if_should_convert: Integer); cdecl;
   stbi_convert_iphone_png_to_rgb_thread: procedure(flag_true_if_should_convert: Integer); cdecl;
   stbi_failure_reason: function(): PUTF8Char; cdecl;
@@ -11864,6 +13335,71 @@ var
   stbtt_Rasterize: procedure(result: Pstbtt__bitmap; flatness_in_pixels: Single; vertices: Pstbtt_vertex; num_verts: Integer; scale_x: Single; scale_y: Single; shift_x: Single; shift_y: Single; x_off: Integer; y_off: Integer; invert: Integer; userdata: Pointer); cdecl;
   stbtt_ScaleForMappingEmToPixels: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
   stbtt_ScaleForPixelHeight: function(const info: Pstbtt_fontinfo; pixels: Single): Single; cdecl;
+  stringColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; const s: PUTF8Char; color: Uint32): Integer; cdecl;
+  stringRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; const s: PUTF8Char; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  texturedPolygon: function(renderer: PSDL_Renderer; const vx: PSint16; const vy: PSint16; n: Integer; texture: PSDL_Surface; texture_dx: Integer; texture_dy: Integer): Integer; cdecl;
+  thickArcRGBA: function(renderer: PSDL_Renderer; xc: Sint16; yc: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8; thick: Uint8): Integer; cdecl;
+  thickCircleRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8; thick: Uint8): Integer; cdecl;
+  thickEllipseRGBA: function(renderer: PSDL_Renderer; xc: Sint16; yc: Sint16; xr: Sint16; yr: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8; thick: Uint8): Integer; cdecl;
+  thickLineColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; width: Uint8; color: Uint32): Integer; cdecl;
+  thickLineRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; width: Uint8; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  trigonColor: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; color: Uint32): Integer; cdecl;
+  trigonRGBA: function(renderer: PSDL_Renderer; x1: Sint16; y1: Sint16; x2: Sint16; y2: Sint16; x3: Sint16; y3: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  unzClose: function(_file: unzFile): Integer; cdecl;
+  unzCloseCurrentFile: function(_file: unzFile): Integer; cdecl;
+  unzeof: function(_file: unzFile): Integer; cdecl;
+  unzGetCurrentFileInfo: function(_file: unzFile; pfile_info: Punz_file_info; szFileName: PUTF8Char; fileNameBufferSize: uLong; extraField: Pointer; extraFieldBufferSize: uLong; szComment: PUTF8Char; commentBufferSize: uLong): Integer; cdecl;
+  unzGetCurrentFileInfo64: function(_file: unzFile; pfile_info: Punz_file_info64; szFileName: PUTF8Char; fileNameBufferSize: uLong; extraField: Pointer; extraFieldBufferSize: uLong; szComment: PUTF8Char; commentBufferSize: uLong): Integer; cdecl;
+  unzGetCurrentFileZStreamPos64: function(_file: unzFile): ZPOS64_T; cdecl;
+  unzGetFilePos: function(_file: unzFile; file_pos: Punz_file_pos): Integer; cdecl;
+  unzGetFilePos64: function(_file: unzFile; file_pos: Punz64_file_pos): Integer; cdecl;
+  unzGetGlobalComment: function(_file: unzFile; szComment: PUTF8Char; uSizeBuf: uLong): Integer; cdecl;
+  unzGetGlobalInfo: function(_file: unzFile; pglobal_info: Punz_global_info): Integer; cdecl;
+  unzGetGlobalInfo64: function(_file: unzFile; pglobal_info: Punz_global_info64): Integer; cdecl;
+  unzGetLocalExtrafield: function(_file: unzFile; buf: voidp; len: Cardinal): Integer; cdecl;
+  unzGetOffset: function(_file: unzFile): uLong; cdecl;
+  unzGetOffset64: function(_file: unzFile): ZPOS64_T; cdecl;
+  unzGoToFilePos: function(_file: unzFile; file_pos: Punz_file_pos): Integer; cdecl;
+  unzGoToFilePos64: function(_file: unzFile; const file_pos: Punz64_file_pos): Integer; cdecl;
+  unzGoToFirstFile: function(_file: unzFile): Integer; cdecl;
+  unzGoToNextFile: function(_file: unzFile): Integer; cdecl;
+  unzLocateFile: function(_file: unzFile; const szFileName: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
+  unzOpen: function(const path: PUTF8Char): unzFile; cdecl;
+  unzOpen2: function(const path: PUTF8Char; pzlib_filefunc_def: Pzlib_filefunc_def): unzFile; cdecl;
+  unzOpen2_64: function(const path: Pointer; pzlib_filefunc_def: Pzlib_filefunc64_def): unzFile; cdecl;
+  unzOpen64: function(const path: Pointer): unzFile; cdecl;
+  unzOpenCurrentFile: function(_file: unzFile): Integer; cdecl;
+  unzOpenCurrentFile2: function(_file: unzFile; method: PInteger; level: PInteger; raw: Integer): Integer; cdecl;
+  unzOpenCurrentFile3: function(_file: unzFile; method: PInteger; level: PInteger; raw: Integer; const password: PUTF8Char): Integer; cdecl;
+  unzOpenCurrentFilePassword: function(_file: unzFile; const password: PUTF8Char): Integer; cdecl;
+  unzReadCurrentFile: function(_file: unzFile; buf: voidp; len: Cardinal): Integer; cdecl;
+  unzSetOffset: function(_file: unzFile; pos: uLong): Integer; cdecl;
+  unzSetOffset64: function(_file: unzFile; pos: ZPOS64_T): Integer; cdecl;
+  unzStringFileNameCompare: function(const fileName1: PUTF8Char; const fileName2: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
+  unztell: function(_file: unzFile): Integer; cdecl;
+  unztell64: function(_file: unzFile): ZPOS64_T; cdecl;
+  vlineColor: function(renderer: PSDL_Renderer; x: Sint16; y1: Sint16; y2: Sint16; color: Uint32): Integer; cdecl;
+  vlineRGBA: function(renderer: PSDL_Renderer; x: Sint16; y1: Sint16; y2: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
+  zipClose: function(_file: zipFile; const global_comment: PUTF8Char): Integer; cdecl;
+  zipCloseFileInZip: function(_file: zipFile): Integer; cdecl;
+  zipCloseFileInZipRaw: function(_file: zipFile; uncompressed_size: uLong; crc32: uLong): Integer; cdecl;
+  zipCloseFileInZipRaw64: function(_file: zipFile; uncompressed_size: ZPOS64_T; crc32: uLong): Integer; cdecl;
+  zipOpen: function(const pathname: PUTF8Char; append: Integer): zipFile; cdecl;
+  zipOpen2: function(const pathname: PUTF8Char; append: Integer; globalcomment: Pzipcharpc; pzlib_filefunc_def: Pzlib_filefunc_def): zipFile; cdecl;
+  zipOpen2_64: function(const pathname: Pointer; append: Integer; globalcomment: Pzipcharpc; pzlib_filefunc_def: Pzlib_filefunc64_def): zipFile; cdecl;
+  zipOpen64: function(const pathname: Pointer; append: Integer): zipFile; cdecl;
+  zipOpenNewFileInZip: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer): Integer; cdecl;
+  zipOpenNewFileInZip2: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer): Integer; cdecl;
+  zipOpenNewFileInZip2_64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; zip64: Integer): Integer; cdecl;
+  zipOpenNewFileInZip3: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong): Integer; cdecl;
+  zipOpenNewFileInZip3_64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; zip64: Integer): Integer; cdecl;
+  zipOpenNewFileInZip4: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; versionMadeBy: uLong; flagBase: uLong): Integer; cdecl;
+  zipOpenNewFileInZip4_64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; versionMadeBy: uLong; flagBase: uLong; zip64: Integer): Integer; cdecl;
+  zipOpenNewFileInZip64: function(_file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; zip64: Integer): Integer; cdecl;
+  zipRemoveExtraInfoBlock: function(pData: PUTF8Char; dataLen: PInteger; sHeader: Smallint): Integer; cdecl;
+  zipWriteInFileInZip: function(_file: zipFile; const buf: Pointer; len: Cardinal): Integer; cdecl;
+  zoomSurface: function(src: PSDL_Surface; zoomx: Double; zoomy: Double; smooth: Integer): PSDL_Surface; cdecl;
+  zoomSurfaceSize: procedure(width: Integer; height: Integer; zoomx: Double; zoomy: Double; dstwidth: PInteger; dstheight: PInteger); cdecl;
 
 implementation
 
@@ -11890,6 +13426,124 @@ begin
 
   LDllHandle := SafeLoadLibrary(LDllName);
 
+  aaArcRGBA := GetProcAddress(LDllHandle, 'aaArcRGBA');
+  aaBezierRGBA := GetProcAddress(LDllHandle, 'aaBezierRGBA');
+  aacircleColor := GetProcAddress(LDllHandle, 'aacircleColor');
+  aacircleRGBA := GetProcAddress(LDllHandle, 'aacircleRGBA');
+  aaellipseColor := GetProcAddress(LDllHandle, 'aaellipseColor');
+  aaellipseRGBA := GetProcAddress(LDllHandle, 'aaellipseRGBA');
+  aaFilledEllipseRGBA := GetProcAddress(LDllHandle, 'aaFilledEllipseRGBA');
+  aaFilledPieRGBA := GetProcAddress(LDllHandle, 'aaFilledPieRGBA');
+  aaFilledPolyBezierRGBA := GetProcAddress(LDllHandle, 'aaFilledPolyBezierRGBA');
+  aaFilledPolygonRGBA := GetProcAddress(LDllHandle, 'aaFilledPolygonRGBA');
+  aalineColor := GetProcAddress(LDllHandle, 'aalineColor');
+  aalineRGBA := GetProcAddress(LDllHandle, 'aalineRGBA');
+  aapolygonColor := GetProcAddress(LDllHandle, 'aapolygonColor');
+  aapolygonRGBA := GetProcAddress(LDllHandle, 'aapolygonRGBA');
+  aatrigonColor := GetProcAddress(LDllHandle, 'aatrigonColor');
+  aatrigonRGBA := GetProcAddress(LDllHandle, 'aatrigonRGBA');
+  arcColor := GetProcAddress(LDllHandle, 'arcColor');
+  arcRGBA := GetProcAddress(LDllHandle, 'arcRGBA');
+  bezierColor := GetProcAddress(LDllHandle, 'bezierColor');
+  bezierRGBA := GetProcAddress(LDllHandle, 'bezierRGBA');
+  boxColor := GetProcAddress(LDllHandle, 'boxColor');
+  boxRGBA := GetProcAddress(LDllHandle, 'boxRGBA');
+  characterColor := GetProcAddress(LDllHandle, 'characterColor');
+  characterRGBA := GetProcAddress(LDllHandle, 'characterRGBA');
+  circleColor := GetProcAddress(LDllHandle, 'circleColor');
+  circleRGBA := GetProcAddress(LDllHandle, 'circleRGBA');
+  ellipseColor := GetProcAddress(LDllHandle, 'ellipseColor');
+  ellipseRGBA := GetProcAddress(LDllHandle, 'ellipseRGBA');
+  enet_address_get_host := GetProcAddress(LDllHandle, 'enet_address_get_host');
+  enet_address_get_host_ip := GetProcAddress(LDllHandle, 'enet_address_get_host_ip');
+  enet_address_set_host := GetProcAddress(LDllHandle, 'enet_address_set_host');
+  enet_address_set_host_ip := GetProcAddress(LDllHandle, 'enet_address_set_host_ip');
+  enet_crc32 := GetProcAddress(LDllHandle, 'enet_crc32');
+  enet_deinitialize := GetProcAddress(LDllHandle, 'enet_deinitialize');
+  enet_free := GetProcAddress(LDllHandle, 'enet_free');
+  enet_host_bandwidth_limit := GetProcAddress(LDllHandle, 'enet_host_bandwidth_limit');
+  enet_host_bandwidth_throttle := GetProcAddress(LDllHandle, 'enet_host_bandwidth_throttle');
+  enet_host_broadcast := GetProcAddress(LDllHandle, 'enet_host_broadcast');
+  enet_host_channel_limit := GetProcAddress(LDllHandle, 'enet_host_channel_limit');
+  enet_host_check_events := GetProcAddress(LDllHandle, 'enet_host_check_events');
+  enet_host_compress := GetProcAddress(LDllHandle, 'enet_host_compress');
+  enet_host_compress_with_range_coder := GetProcAddress(LDllHandle, 'enet_host_compress_with_range_coder');
+  enet_host_connect := GetProcAddress(LDllHandle, 'enet_host_connect');
+  enet_host_create := GetProcAddress(LDllHandle, 'enet_host_create');
+  enet_host_destroy := GetProcAddress(LDllHandle, 'enet_host_destroy');
+  enet_host_flush := GetProcAddress(LDllHandle, 'enet_host_flush');
+  enet_host_random := GetProcAddress(LDllHandle, 'enet_host_random');
+  enet_host_random_seed := GetProcAddress(LDllHandle, 'enet_host_random_seed');
+  enet_host_service := GetProcAddress(LDllHandle, 'enet_host_service');
+  enet_initialize := GetProcAddress(LDllHandle, 'enet_initialize');
+  enet_initialize_with_callbacks := GetProcAddress(LDllHandle, 'enet_initialize_with_callbacks');
+  enet_linked_version := GetProcAddress(LDllHandle, 'enet_linked_version');
+  enet_list_clear := GetProcAddress(LDllHandle, 'enet_list_clear');
+  enet_list_insert := GetProcAddress(LDllHandle, 'enet_list_insert');
+  enet_list_move := GetProcAddress(LDllHandle, 'enet_list_move');
+  enet_list_remove := GetProcAddress(LDllHandle, 'enet_list_remove');
+  enet_list_size := GetProcAddress(LDllHandle, 'enet_list_size');
+  enet_malloc := GetProcAddress(LDllHandle, 'enet_malloc');
+  enet_packet_create := GetProcAddress(LDllHandle, 'enet_packet_create');
+  enet_packet_destroy := GetProcAddress(LDllHandle, 'enet_packet_destroy');
+  enet_packet_resize := GetProcAddress(LDllHandle, 'enet_packet_resize');
+  enet_peer_disconnect := GetProcAddress(LDllHandle, 'enet_peer_disconnect');
+  enet_peer_disconnect_later := GetProcAddress(LDllHandle, 'enet_peer_disconnect_later');
+  enet_peer_disconnect_now := GetProcAddress(LDllHandle, 'enet_peer_disconnect_now');
+  enet_peer_dispatch_incoming_reliable_commands := GetProcAddress(LDllHandle, 'enet_peer_dispatch_incoming_reliable_commands');
+  enet_peer_dispatch_incoming_unreliable_commands := GetProcAddress(LDllHandle, 'enet_peer_dispatch_incoming_unreliable_commands');
+  enet_peer_on_connect := GetProcAddress(LDllHandle, 'enet_peer_on_connect');
+  enet_peer_on_disconnect := GetProcAddress(LDllHandle, 'enet_peer_on_disconnect');
+  enet_peer_ping := GetProcAddress(LDllHandle, 'enet_peer_ping');
+  enet_peer_ping_interval := GetProcAddress(LDllHandle, 'enet_peer_ping_interval');
+  enet_peer_queue_acknowledgement := GetProcAddress(LDllHandle, 'enet_peer_queue_acknowledgement');
+  enet_peer_queue_incoming_command := GetProcAddress(LDllHandle, 'enet_peer_queue_incoming_command');
+  enet_peer_queue_outgoing_command := GetProcAddress(LDllHandle, 'enet_peer_queue_outgoing_command');
+  enet_peer_receive := GetProcAddress(LDllHandle, 'enet_peer_receive');
+  enet_peer_reset := GetProcAddress(LDllHandle, 'enet_peer_reset');
+  enet_peer_reset_queues := GetProcAddress(LDllHandle, 'enet_peer_reset_queues');
+  enet_peer_send := GetProcAddress(LDllHandle, 'enet_peer_send');
+  enet_peer_setup_outgoing_command := GetProcAddress(LDllHandle, 'enet_peer_setup_outgoing_command');
+  enet_peer_throttle := GetProcAddress(LDllHandle, 'enet_peer_throttle');
+  enet_peer_throttle_configure := GetProcAddress(LDllHandle, 'enet_peer_throttle_configure');
+  enet_peer_timeout := GetProcAddress(LDllHandle, 'enet_peer_timeout');
+  enet_protocol_command_size := GetProcAddress(LDllHandle, 'enet_protocol_command_size');
+  enet_range_coder_compress := GetProcAddress(LDllHandle, 'enet_range_coder_compress');
+  enet_range_coder_create := GetProcAddress(LDllHandle, 'enet_range_coder_create');
+  enet_range_coder_decompress := GetProcAddress(LDllHandle, 'enet_range_coder_decompress');
+  enet_range_coder_destroy := GetProcAddress(LDllHandle, 'enet_range_coder_destroy');
+  enet_socket_accept := GetProcAddress(LDllHandle, 'enet_socket_accept');
+  enet_socket_bind := GetProcAddress(LDllHandle, 'enet_socket_bind');
+  enet_socket_connect := GetProcAddress(LDllHandle, 'enet_socket_connect');
+  enet_socket_create := GetProcAddress(LDllHandle, 'enet_socket_create');
+  enet_socket_destroy := GetProcAddress(LDllHandle, 'enet_socket_destroy');
+  enet_socket_get_address := GetProcAddress(LDllHandle, 'enet_socket_get_address');
+  enet_socket_get_option := GetProcAddress(LDllHandle, 'enet_socket_get_option');
+  enet_socket_listen := GetProcAddress(LDllHandle, 'enet_socket_listen');
+  enet_socket_receive := GetProcAddress(LDllHandle, 'enet_socket_receive');
+  enet_socket_send := GetProcAddress(LDllHandle, 'enet_socket_send');
+  enet_socket_set_option := GetProcAddress(LDllHandle, 'enet_socket_set_option');
+  enet_socket_shutdown := GetProcAddress(LDllHandle, 'enet_socket_shutdown');
+  enet_socket_wait := GetProcAddress(LDllHandle, 'enet_socket_wait');
+  enet_socketset_select := GetProcAddress(LDllHandle, 'enet_socketset_select');
+  enet_time_get := GetProcAddress(LDllHandle, 'enet_time_get');
+  enet_time_set := GetProcAddress(LDllHandle, 'enet_time_set');
+  filledCircleColor := GetProcAddress(LDllHandle, 'filledCircleColor');
+  filledCircleRGBA := GetProcAddress(LDllHandle, 'filledCircleRGBA');
+  filledEllipseColor := GetProcAddress(LDllHandle, 'filledEllipseColor');
+  filledEllipseRGBA := GetProcAddress(LDllHandle, 'filledEllipseRGBA');
+  filledPieColor := GetProcAddress(LDllHandle, 'filledPieColor');
+  filledPieRGBA := GetProcAddress(LDllHandle, 'filledPieRGBA');
+  filledPolygonColor := GetProcAddress(LDllHandle, 'filledPolygonColor');
+  filledPolygonRGBA := GetProcAddress(LDllHandle, 'filledPolygonRGBA');
+  filledTrigonColor := GetProcAddress(LDllHandle, 'filledTrigonColor');
+  filledTrigonRGBA := GetProcAddress(LDllHandle, 'filledTrigonRGBA');
+  gfxPrimitivesSetFont := GetProcAddress(LDllHandle, 'gfxPrimitivesSetFont');
+  gfxPrimitivesSetFontRotation := GetProcAddress(LDllHandle, 'gfxPrimitivesSetFontRotation');
+  hlineColor := GetProcAddress(LDllHandle, 'hlineColor');
+  hlineRGBA := GetProcAddress(LDllHandle, 'hlineRGBA');
+  lineColor := GetProcAddress(LDllHandle, 'lineColor');
+  lineRGBA := GetProcAddress(LDllHandle, 'lineRGBA');
   ma_aligned_free := GetProcAddress(LDllHandle, 'ma_aligned_free');
   ma_aligned_malloc := GetProcAddress(LDllHandle, 'ma_aligned_malloc');
   ma_apply_volume_factor_f32 := GetProcAddress(LDllHandle, 'ma_apply_volume_factor_f32');
@@ -13049,6 +14703,10 @@ begin
   nk_rgba_hex := GetProcAddress(LDllHandle, 'nk_rgba_hex');
   nk_rgba_iv := GetProcAddress(LDllHandle, 'nk_rgba_iv');
   nk_rgba_u32 := GetProcAddress(LDllHandle, 'nk_rgba_u32');
+  nk_sdl_handle_event := GetProcAddress(LDllHandle, 'nk_sdl_handle_event');
+  nk_sdlsurface_init := GetProcAddress(LDllHandle, 'nk_sdlsurface_init');
+  nk_sdlsurface_render := GetProcAddress(LDllHandle, 'nk_sdlsurface_render');
+  nk_sdlsurface_shutdown := GetProcAddress(LDllHandle, 'nk_sdlsurface_shutdown');
   nk_select_image_label := GetProcAddress(LDllHandle, 'nk_select_image_label');
   nk_select_image_text := GetProcAddress(LDllHandle, 'nk_select_image_text');
   nk_select_label := GetProcAddress(LDllHandle, 'nk_select_label');
@@ -13341,6 +14999,10 @@ begin
   PHYSFS_writeULE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE16');
   PHYSFS_writeULE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE32');
   PHYSFS_writeULE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE64');
+  pieColor := GetProcAddress(LDllHandle, 'pieColor');
+  pieRGBA := GetProcAddress(LDllHandle, 'pieRGBA');
+  pixelColor := GetProcAddress(LDllHandle, 'pixelColor');
+  pixelRGBA := GetProcAddress(LDllHandle, 'pixelRGBA');
   plm_audio_create_with_buffer := GetProcAddress(LDllHandle, 'plm_audio_create_with_buffer');
   plm_audio_decode := GetProcAddress(LDllHandle, 'plm_audio_decode');
   plm_audio_destroy := GetProcAddress(LDllHandle, 'plm_audio_destroy');
@@ -13424,6 +15086,19 @@ begin
   plm_video_rewind := GetProcAddress(LDllHandle, 'plm_video_rewind');
   plm_video_set_no_delay := GetProcAddress(LDllHandle, 'plm_video_set_no_delay');
   plm_video_set_time := GetProcAddress(LDllHandle, 'plm_video_set_time');
+  polygonColor := GetProcAddress(LDllHandle, 'polygonColor');
+  polygonRGBA := GetProcAddress(LDllHandle, 'polygonRGBA');
+  rectangleColor := GetProcAddress(LDllHandle, 'rectangleColor');
+  rectangleRGBA := GetProcAddress(LDllHandle, 'rectangleRGBA');
+  rotateSurface90Degrees := GetProcAddress(LDllHandle, 'rotateSurface90Degrees');
+  rotozoomSurface := GetProcAddress(LDllHandle, 'rotozoomSurface');
+  rotozoomSurfaceSize := GetProcAddress(LDllHandle, 'rotozoomSurfaceSize');
+  rotozoomSurfaceSizeXY := GetProcAddress(LDllHandle, 'rotozoomSurfaceSizeXY');
+  rotozoomSurfaceXY := GetProcAddress(LDllHandle, 'rotozoomSurfaceXY');
+  roundedBoxColor := GetProcAddress(LDllHandle, 'roundedBoxColor');
+  roundedBoxRGBA := GetProcAddress(LDllHandle, 'roundedBoxRGBA');
+  roundedRectangleColor := GetProcAddress(LDllHandle, 'roundedRectangleColor');
+  roundedRectangleRGBA := GetProcAddress(LDllHandle, 'roundedRectangleRGBA');
   SDL_abs := GetProcAddress(LDllHandle, 'SDL_abs');
   SDL_acos := GetProcAddress(LDllHandle, 'SDL_acos');
   SDL_acosf := GetProcAddress(LDllHandle, 'SDL_acosf');
@@ -13537,6 +15212,7 @@ begin
   SDL_FlushEvents := GetProcAddress(LDllHandle, 'SDL_FlushEvents');
   SDL_fmod := GetProcAddress(LDllHandle, 'SDL_fmod');
   SDL_fmodf := GetProcAddress(LDllHandle, 'SDL_fmodf');
+  SDL_framerateDelay := GetProcAddress(LDllHandle, 'SDL_framerateDelay');
   SDL_free := GetProcAddress(LDllHandle, 'SDL_free');
   SDL_FreeAudioStream := GetProcAddress(LDllHandle, 'SDL_FreeAudioStream');
   SDL_FreeCursor := GetProcAddress(LDllHandle, 'SDL_FreeCursor');
@@ -13628,6 +15304,8 @@ begin
   SDL_GetError := GetProcAddress(LDllHandle, 'SDL_GetError');
   SDL_GetErrorMsg := GetProcAddress(LDllHandle, 'SDL_GetErrorMsg');
   SDL_GetEventFilter := GetProcAddress(LDllHandle, 'SDL_GetEventFilter');
+  SDL_getFramecount := GetProcAddress(LDllHandle, 'SDL_getFramecount');
+  SDL_getFramerate := GetProcAddress(LDllHandle, 'SDL_getFramerate');
   SDL_GetGlobalMouseState := GetProcAddress(LDllHandle, 'SDL_GetGlobalMouseState');
   SDL_GetGrabbedWindow := GetProcAddress(LDllHandle, 'SDL_GetGrabbedWindow');
   SDL_GetHint := GetProcAddress(LDllHandle, 'SDL_GetHint');
@@ -13807,7 +15485,38 @@ begin
   SDL_iconv_close := GetProcAddress(LDllHandle, 'SDL_iconv_close');
   SDL_iconv_open := GetProcAddress(LDllHandle, 'SDL_iconv_open');
   SDL_iconv_string := GetProcAddress(LDllHandle, 'SDL_iconv_string');
+  SDL_imageFilterAbsDiff := GetProcAddress(LDllHandle, 'SDL_imageFilterAbsDiff');
+  SDL_imageFilterAdd := GetProcAddress(LDllHandle, 'SDL_imageFilterAdd');
+  SDL_imageFilterAddByte := GetProcAddress(LDllHandle, 'SDL_imageFilterAddByte');
+  SDL_imageFilterAddByteToHalf := GetProcAddress(LDllHandle, 'SDL_imageFilterAddByteToHalf');
+  SDL_imageFilterAddUint := GetProcAddress(LDllHandle, 'SDL_imageFilterAddUint');
+  SDL_imageFilterBinarizeUsingThreshold := GetProcAddress(LDllHandle, 'SDL_imageFilterBinarizeUsingThreshold');
+  SDL_imageFilterBitAnd := GetProcAddress(LDllHandle, 'SDL_imageFilterBitAnd');
+  SDL_imageFilterBitNegation := GetProcAddress(LDllHandle, 'SDL_imageFilterBitNegation');
+  SDL_imageFilterBitOr := GetProcAddress(LDllHandle, 'SDL_imageFilterBitOr');
+  SDL_imageFilterClipToRange := GetProcAddress(LDllHandle, 'SDL_imageFilterClipToRange');
+  SDL_imageFilterDiv := GetProcAddress(LDllHandle, 'SDL_imageFilterDiv');
+  SDL_imageFilterMean := GetProcAddress(LDllHandle, 'SDL_imageFilterMean');
+  SDL_imageFilterMMXdetect := GetProcAddress(LDllHandle, 'SDL_imageFilterMMXdetect');
+  SDL_imageFilterMMXoff := GetProcAddress(LDllHandle, 'SDL_imageFilterMMXoff');
+  SDL_imageFilterMMXon := GetProcAddress(LDllHandle, 'SDL_imageFilterMMXon');
+  SDL_imageFilterMult := GetProcAddress(LDllHandle, 'SDL_imageFilterMult');
+  SDL_imageFilterMultByByte := GetProcAddress(LDllHandle, 'SDL_imageFilterMultByByte');
+  SDL_imageFilterMultDivby2 := GetProcAddress(LDllHandle, 'SDL_imageFilterMultDivby2');
+  SDL_imageFilterMultDivby4 := GetProcAddress(LDllHandle, 'SDL_imageFilterMultDivby4');
+  SDL_imageFilterMultNor := GetProcAddress(LDllHandle, 'SDL_imageFilterMultNor');
+  SDL_imageFilterNormalizeLinear := GetProcAddress(LDllHandle, 'SDL_imageFilterNormalizeLinear');
+  SDL_imageFilterShiftLeft := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftLeft');
+  SDL_imageFilterShiftLeftByte := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftLeftByte');
+  SDL_imageFilterShiftLeftUint := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftLeftUint');
+  SDL_imageFilterShiftRight := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftRight');
+  SDL_imageFilterShiftRightAndMultByByte := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftRightAndMultByByte');
+  SDL_imageFilterShiftRightUint := GetProcAddress(LDllHandle, 'SDL_imageFilterShiftRightUint');
+  SDL_imageFilterSub := GetProcAddress(LDllHandle, 'SDL_imageFilterSub');
+  SDL_imageFilterSubByte := GetProcAddress(LDllHandle, 'SDL_imageFilterSubByte');
+  SDL_imageFilterSubUint := GetProcAddress(LDllHandle, 'SDL_imageFilterSubUint');
   SDL_Init := GetProcAddress(LDllHandle, 'SDL_Init');
+  SDL_initFramerate := GetProcAddress(LDllHandle, 'SDL_initFramerate');
   SDL_InitSubSystem := GetProcAddress(LDllHandle, 'SDL_InitSubSystem');
   SDL_IntersectRect := GetProcAddress(LDllHandle, 'SDL_IntersectRect');
   SDL_IntersectRectAndLine := GetProcAddress(LDllHandle, 'SDL_IntersectRectAndLine');
@@ -14073,6 +15782,7 @@ begin
   SDL_setenv := GetProcAddress(LDllHandle, 'SDL_setenv');
   SDL_SetError := GetProcAddress(LDllHandle, 'SDL_SetError');
   SDL_SetEventFilter := GetProcAddress(LDllHandle, 'SDL_SetEventFilter');
+  SDL_setFramerate := GetProcAddress(LDllHandle, 'SDL_setFramerate');
   SDL_SetHint := GetProcAddress(LDllHandle, 'SDL_SetHint');
   SDL_SetHintWithPriority := GetProcAddress(LDllHandle, 'SDL_SetHintWithPriority');
   SDL_SetMainReady := GetProcAddress(LDllHandle, 'SDL_SetMainReady');
@@ -14220,6 +15930,7 @@ begin
   SDL_WriteLE32 := GetProcAddress(LDllHandle, 'SDL_WriteLE32');
   SDL_WriteLE64 := GetProcAddress(LDllHandle, 'SDL_WriteLE64');
   SDL_WriteU8 := GetProcAddress(LDllHandle, 'SDL_WriteU8');
+  shrinkSurface := GetProcAddress(LDllHandle, 'shrinkSurface');
   stbi_convert_iphone_png_to_rgb := GetProcAddress(LDllHandle, 'stbi_convert_iphone_png_to_rgb');
   stbi_convert_iphone_png_to_rgb_thread := GetProcAddress(LDllHandle, 'stbi_convert_iphone_png_to_rgb_thread');
   stbi_failure_reason := GetProcAddress(LDllHandle, 'stbi_failure_reason');
@@ -14333,6 +16044,71 @@ begin
   stbtt_Rasterize := GetProcAddress(LDllHandle, 'stbtt_Rasterize');
   stbtt_ScaleForMappingEmToPixels := GetProcAddress(LDllHandle, 'stbtt_ScaleForMappingEmToPixels');
   stbtt_ScaleForPixelHeight := GetProcAddress(LDllHandle, 'stbtt_ScaleForPixelHeight');
+  stringColor := GetProcAddress(LDllHandle, 'stringColor');
+  stringRGBA := GetProcAddress(LDllHandle, 'stringRGBA');
+  texturedPolygon := GetProcAddress(LDllHandle, 'texturedPolygon');
+  thickArcRGBA := GetProcAddress(LDllHandle, 'thickArcRGBA');
+  thickCircleRGBA := GetProcAddress(LDllHandle, 'thickCircleRGBA');
+  thickEllipseRGBA := GetProcAddress(LDllHandle, 'thickEllipseRGBA');
+  thickLineColor := GetProcAddress(LDllHandle, 'thickLineColor');
+  thickLineRGBA := GetProcAddress(LDllHandle, 'thickLineRGBA');
+  trigonColor := GetProcAddress(LDllHandle, 'trigonColor');
+  trigonRGBA := GetProcAddress(LDllHandle, 'trigonRGBA');
+  unzClose := GetProcAddress(LDllHandle, 'unzClose');
+  unzCloseCurrentFile := GetProcAddress(LDllHandle, 'unzCloseCurrentFile');
+  unzeof := GetProcAddress(LDllHandle, 'unzeof');
+  unzGetCurrentFileInfo := GetProcAddress(LDllHandle, 'unzGetCurrentFileInfo');
+  unzGetCurrentFileInfo64 := GetProcAddress(LDllHandle, 'unzGetCurrentFileInfo64');
+  unzGetCurrentFileZStreamPos64 := GetProcAddress(LDllHandle, 'unzGetCurrentFileZStreamPos64');
+  unzGetFilePos := GetProcAddress(LDllHandle, 'unzGetFilePos');
+  unzGetFilePos64 := GetProcAddress(LDllHandle, 'unzGetFilePos64');
+  unzGetGlobalComment := GetProcAddress(LDllHandle, 'unzGetGlobalComment');
+  unzGetGlobalInfo := GetProcAddress(LDllHandle, 'unzGetGlobalInfo');
+  unzGetGlobalInfo64 := GetProcAddress(LDllHandle, 'unzGetGlobalInfo64');
+  unzGetLocalExtrafield := GetProcAddress(LDllHandle, 'unzGetLocalExtrafield');
+  unzGetOffset := GetProcAddress(LDllHandle, 'unzGetOffset');
+  unzGetOffset64 := GetProcAddress(LDllHandle, 'unzGetOffset64');
+  unzGoToFilePos := GetProcAddress(LDllHandle, 'unzGoToFilePos');
+  unzGoToFilePos64 := GetProcAddress(LDllHandle, 'unzGoToFilePos64');
+  unzGoToFirstFile := GetProcAddress(LDllHandle, 'unzGoToFirstFile');
+  unzGoToNextFile := GetProcAddress(LDllHandle, 'unzGoToNextFile');
+  unzLocateFile := GetProcAddress(LDllHandle, 'unzLocateFile');
+  unzOpen := GetProcAddress(LDllHandle, 'unzOpen');
+  unzOpen2 := GetProcAddress(LDllHandle, 'unzOpen2');
+  unzOpen2_64 := GetProcAddress(LDllHandle, 'unzOpen2_64');
+  unzOpen64 := GetProcAddress(LDllHandle, 'unzOpen64');
+  unzOpenCurrentFile := GetProcAddress(LDllHandle, 'unzOpenCurrentFile');
+  unzOpenCurrentFile2 := GetProcAddress(LDllHandle, 'unzOpenCurrentFile2');
+  unzOpenCurrentFile3 := GetProcAddress(LDllHandle, 'unzOpenCurrentFile3');
+  unzOpenCurrentFilePassword := GetProcAddress(LDllHandle, 'unzOpenCurrentFilePassword');
+  unzReadCurrentFile := GetProcAddress(LDllHandle, 'unzReadCurrentFile');
+  unzSetOffset := GetProcAddress(LDllHandle, 'unzSetOffset');
+  unzSetOffset64 := GetProcAddress(LDllHandle, 'unzSetOffset64');
+  unzStringFileNameCompare := GetProcAddress(LDllHandle, 'unzStringFileNameCompare');
+  unztell := GetProcAddress(LDllHandle, 'unztell');
+  unztell64 := GetProcAddress(LDllHandle, 'unztell64');
+  vlineColor := GetProcAddress(LDllHandle, 'vlineColor');
+  vlineRGBA := GetProcAddress(LDllHandle, 'vlineRGBA');
+  zipClose := GetProcAddress(LDllHandle, 'zipClose');
+  zipCloseFileInZip := GetProcAddress(LDllHandle, 'zipCloseFileInZip');
+  zipCloseFileInZipRaw := GetProcAddress(LDllHandle, 'zipCloseFileInZipRaw');
+  zipCloseFileInZipRaw64 := GetProcAddress(LDllHandle, 'zipCloseFileInZipRaw64');
+  zipOpen := GetProcAddress(LDllHandle, 'zipOpen');
+  zipOpen2 := GetProcAddress(LDllHandle, 'zipOpen2');
+  zipOpen2_64 := GetProcAddress(LDllHandle, 'zipOpen2_64');
+  zipOpen64 := GetProcAddress(LDllHandle, 'zipOpen64');
+  zipOpenNewFileInZip := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip');
+  zipOpenNewFileInZip2 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip2');
+  zipOpenNewFileInZip2_64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip2_64');
+  zipOpenNewFileInZip3 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip3');
+  zipOpenNewFileInZip3_64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip3_64');
+  zipOpenNewFileInZip4 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip4');
+  zipOpenNewFileInZip4_64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip4_64');
+  zipOpenNewFileInZip64 := GetProcAddress(LDllHandle, 'zipOpenNewFileInZip64');
+  zipRemoveExtraInfoBlock := GetProcAddress(LDllHandle, 'zipRemoveExtraInfoBlock');
+  zipWriteInFileInZip := GetProcAddress(LDllHandle, 'zipWriteInFileInZip');
+  zoomSurface := GetProcAddress(LDllHandle, 'zoomSurface');
+  zoomSurfaceSize := GetProcAddress(LDllHandle, 'zoomSurfaceSize');
 end;
 
 procedure UnloadDLL;
