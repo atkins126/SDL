@@ -12290,6 +12290,10 @@ var
   PHYSFS_writeULE16: function(_file: PPHYSFS_File; val: PHYSFS_uint16): Integer; cdecl;
   PHYSFS_writeULE32: function(_file: PPHYSFS_File; val: PHYSFS_uint32): Integer; cdecl;
   PHYSFS_writeULE64: function(_file: PPHYSFS_File; val: PHYSFS_uint64): Integer; cdecl;
+  PHYSFSRWOPS_makeRWops: function(handle: PPHYSFS_File): PSDL_RWops; cdecl;
+  PHYSFSRWOPS_openAppend: function(const fname: PUTF8Char): PSDL_RWops; cdecl;
+  PHYSFSRWOPS_openRead: function(const fname: PUTF8Char): PSDL_RWops; cdecl;
+  PHYSFSRWOPS_openWrite: function(const fname: PUTF8Char): PSDL_RWops; cdecl;
   pieColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
   pieRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   pixelColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; color: Uint32): Integer; cdecl;
@@ -14999,6 +15003,10 @@ begin
   PHYSFS_writeULE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE16');
   PHYSFS_writeULE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE32');
   PHYSFS_writeULE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE64');
+  PHYSFSRWOPS_makeRWops := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_makeRWops');
+  PHYSFSRWOPS_openAppend := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_openAppend');
+  PHYSFSRWOPS_openRead := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_openRead');
+  PHYSFSRWOPS_openWrite := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_openWrite');
   pieColor := GetProcAddress(LDllHandle, 'pieColor');
   pieRGBA := GetProcAddress(LDllHandle, 'pieRGBA');
   pixelColor := GetProcAddress(LDllHandle, 'pixelColor');
