@@ -542,7 +542,7 @@ const
   STBTT_MACSTYLE_NONE = 8;
   MA_VERSION_MAJOR = 0;
   MA_VERSION_MINOR = 11;
-  MA_VERSION_REVISION = 0;
+  MA_VERSION_REVISION = 1;
   MA_SIZEOF_PTR = 8;
   MA_TRUE = 1;
   MA_FALSE = 0;
@@ -553,173 +553,18 @@ const
   MA_LOG_LEVEL_INFO = 3;
   MA_LOG_LEVEL_WARNING = 2;
   MA_LOG_LEVEL_ERROR = 1;
-  MA_CHANNEL_NONE = 0;
-  MA_CHANNEL_MONO = 1;
-  MA_CHANNEL_FRONT_LEFT = 2;
-  MA_CHANNEL_FRONT_RIGHT = 3;
-  MA_CHANNEL_FRONT_CENTER = 4;
-  MA_CHANNEL_LFE = 5;
-  MA_CHANNEL_BACK_LEFT = 6;
-  MA_CHANNEL_BACK_RIGHT = 7;
-  MA_CHANNEL_FRONT_LEFT_CENTER = 8;
-  MA_CHANNEL_FRONT_RIGHT_CENTER = 9;
-  MA_CHANNEL_BACK_CENTER = 10;
-  MA_CHANNEL_SIDE_LEFT = 11;
-  MA_CHANNEL_SIDE_RIGHT = 12;
-  MA_CHANNEL_TOP_CENTER = 13;
-  MA_CHANNEL_TOP_FRONT_LEFT = 14;
-  MA_CHANNEL_TOP_FRONT_CENTER = 15;
-  MA_CHANNEL_TOP_FRONT_RIGHT = 16;
-  MA_CHANNEL_TOP_BACK_LEFT = 17;
-  MA_CHANNEL_TOP_BACK_CENTER = 18;
-  MA_CHANNEL_TOP_BACK_RIGHT = 19;
-  MA_CHANNEL_AUX_0 = 20;
-  MA_CHANNEL_AUX_1 = 21;
-  MA_CHANNEL_AUX_2 = 22;
-  MA_CHANNEL_AUX_3 = 23;
-  MA_CHANNEL_AUX_4 = 24;
-  MA_CHANNEL_AUX_5 = 25;
-  MA_CHANNEL_AUX_6 = 26;
-  MA_CHANNEL_AUX_7 = 27;
-  MA_CHANNEL_AUX_8 = 28;
-  MA_CHANNEL_AUX_9 = 29;
-  MA_CHANNEL_AUX_10 = 30;
-  MA_CHANNEL_AUX_11 = 31;
-  MA_CHANNEL_AUX_12 = 32;
-  MA_CHANNEL_AUX_13 = 33;
-  MA_CHANNEL_AUX_14 = 34;
-  MA_CHANNEL_AUX_15 = 35;
-  MA_CHANNEL_AUX_16 = 36;
-  MA_CHANNEL_AUX_17 = 37;
-  MA_CHANNEL_AUX_18 = 38;
-  MA_CHANNEL_AUX_19 = 39;
-  MA_CHANNEL_AUX_20 = 40;
-  MA_CHANNEL_AUX_21 = 41;
-  MA_CHANNEL_AUX_22 = 42;
-  MA_CHANNEL_AUX_23 = 43;
-  MA_CHANNEL_AUX_24 = 44;
-  MA_CHANNEL_AUX_25 = 45;
-  MA_CHANNEL_AUX_26 = 46;
-  MA_CHANNEL_AUX_27 = 47;
-  MA_CHANNEL_AUX_28 = 48;
-  MA_CHANNEL_AUX_29 = 49;
-  MA_CHANNEL_AUX_30 = 50;
-  MA_CHANNEL_AUX_31 = 51;
-  MA_CHANNEL_LEFT = MA_CHANNEL_FRONT_LEFT;
-  MA_CHANNEL_RIGHT = MA_CHANNEL_FRONT_RIGHT;
-  MA_CHANNEL_POSITION_COUNT = (MA_CHANNEL_AUX_31+1);
-  MA_SUCCESS = 0;
-  MA_ERROR = -1;
-  MA_INVALID_ARGS = -2;
-  MA_INVALID_OPERATION = -3;
-  MA_OUT_OF_MEMORY = -4;
-  MA_OUT_OF_RANGE = -5;
-  MA_ACCESS_DENIED = -6;
-  MA_DOES_NOT_EXIST = -7;
-  MA_ALREADY_EXISTS = -8;
-  MA_TOO_MANY_OPEN_FILES = -9;
-  MA_INVALID_FILE = -10;
-  MA_TOO_BIG = -11;
-  MA_PATH_TOO_LONG = -12;
-  MA_NAME_TOO_LONG = -13;
-  MA_NOT_DIRECTORY = -14;
-  MA_IS_DIRECTORY = -15;
-  MA_DIRECTORY_NOT_EMPTY = -16;
-  MA_AT_END = -17;
-  MA_NO_SPACE = -18;
-  MA_BUSY = -19;
-  MA_IO_ERROR = -20;
-  MA_INTERRUPT = -21;
-  MA_UNAVAILABLE = -22;
-  MA_ALREADY_IN_USE = -23;
-  MA_BAD_ADDRESS = -24;
-  MA_BAD_SEEK = -25;
-  MA_BAD_PIPE = -26;
-  MA_DEADLOCK = -27;
-  MA_TOO_MANY_LINKS = -28;
-  MA_NOT_IMPLEMENTED = -29;
-  MA_NO_MESSAGE = -30;
-  MA_BAD_MESSAGE = -31;
-  MA_NO_DATA_AVAILABLE = -32;
-  MA_INVALID_DATA = -33;
-  MA_TIMEOUT = -34;
-  MA_NO_NETWORK = -35;
-  MA_NOT_UNIQUE = -36;
-  MA_NOT_SOCKET = -37;
-  MA_NO_ADDRESS = -38;
-  MA_BAD_PROTOCOL = -39;
-  MA_PROTOCOL_UNAVAILABLE = -40;
-  MA_PROTOCOL_NOT_SUPPORTED = -41;
-  MA_PROTOCOL_FAMILY_NOT_SUPPORTED = -42;
-  MA_ADDRESS_FAMILY_NOT_SUPPORTED = -43;
-  MA_SOCKET_NOT_SUPPORTED = -44;
-  MA_CONNECTION_RESET = -45;
-  MA_ALREADY_CONNECTED = -46;
-  MA_NOT_CONNECTED = -47;
-  MA_CONNECTION_REFUSED = -48;
-  MA_NO_HOST = -49;
-  MA_IN_PROGRESS = -50;
-  MA_CANCELLED = -51;
-  MA_MEMORY_ALREADY_MAPPED = -52;
-  MA_FORMAT_NOT_SUPPORTED = -100;
-  MA_DEVICE_TYPE_NOT_SUPPORTED = -101;
-  MA_SHARE_MODE_NOT_SUPPORTED = -102;
-  MA_NO_BACKEND = -103;
-  MA_NO_DEVICE = -104;
-  MA_API_NOT_FOUND = -105;
-  MA_INVALID_DEVICE_CONFIG = -106;
-  MA_LOOP = -107;
-  MA_DEVICE_NOT_INITIALIZED = -200;
-  MA_DEVICE_ALREADY_INITIALIZED = -201;
-  MA_DEVICE_NOT_STARTED = -202;
-  MA_DEVICE_NOT_STOPPED = -203;
-  MA_FAILED_TO_INIT_BACKEND = -300;
-  MA_FAILED_TO_OPEN_BACKEND_DEVICE = -301;
-  MA_FAILED_TO_START_BACKEND_DEVICE = -302;
-  MA_FAILED_TO_STOP_BACKEND_DEVICE = -303;
   MA_MIN_CHANNELS = 1;
   MA_MAX_CHANNELS = 254;
   MA_MAX_FILTER_ORDER = 8;
   MA_MAX_LOG_CALLBACKS = 4;
   MA_CHANNEL_INDEX_NULL = 255;
   MA_DATA_FORMAT_FLAG_EXCLUSIVE_MODE = (1 shl 1);
+  MA_MAX_DEVICE_NAME_LENGTH = 255;
   MA_DATA_SOURCE_SELF_MANAGED_RANGE_AND_LOOP_POINT = $00000001;
-  MA_OPEN_MODE_READ = $00000001;
-  MA_OPEN_MODE_WRITE = $00000002;
-  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_STREAM = $00000001;
-  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_DECODE = $00000002;
-  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_ASYNC = $00000004;
-  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_WAIT_INIT = $00000008;
-  MA_RESOURCE_MANAGER_JOB_QUIT = $00000000;
-  MA_RESOURCE_MANAGER_JOB_LOAD_DATA_BUFFER_NODE = $00000001;
-  MA_RESOURCE_MANAGER_JOB_FREE_DATA_BUFFER_NODE = $00000002;
-  MA_RESOURCE_MANAGER_JOB_PAGE_DATA_BUFFER_NODE = $00000003;
-  MA_RESOURCE_MANAGER_JOB_LOAD_DATA_BUFFER = $00000004;
-  MA_RESOURCE_MANAGER_JOB_FREE_DATA_BUFFER = $00000005;
-  MA_RESOURCE_MANAGER_JOB_LOAD_DATA_STREAM = $00000006;
-  MA_RESOURCE_MANAGER_JOB_FREE_DATA_STREAM = $00000007;
-  MA_RESOURCE_MANAGER_JOB_PAGE_DATA_STREAM = $00000008;
-  MA_RESOURCE_MANAGER_JOB_SEEK_DATA_STREAM = $00000009;
-  MA_RESOURCE_MANAGER_JOB_CUSTOM = $00000100;
-  MA_RESOURCE_MANAGER_JOB_QUEUE_FLAG_NON_BLOCKING = $00000001;
   MA_RESOURCE_MANAGER_MAX_JOB_THREAD_COUNT = 64;
-  MA_RESOURCE_MANAGER_FLAG_NON_BLOCKING = $00000001;
-  MA_RESOURCE_MANAGER_FLAG_NO_THREADING = $00000002;
   MA_MAX_NODE_BUS_COUNT = 254;
   MA_MAX_NODE_LOCAL_BUS_COUNT = 2;
   MA_NODE_BUS_COUNT_UNKNOWN = 255;
-  MA_NODE_FLAG_PASSTHROUGH = $00000001;
-  MA_NODE_FLAG_CONTINUOUS_PROCESSING = $00000002;
-  MA_NODE_FLAG_ALLOW_NULL_INPUT = $00000004;
-  MA_NODE_FLAG_DIFFERENT_PROCESSING_RATES = $00000008;
-  MA_NODE_OUTPUT_BUS_FLAG_HAS_READ = $01;
-  MA_SOUND_FLAG_STREAM = MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_STREAM;
-  MA_SOUND_FLAG_DECODE = MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_DECODE;
-  MA_SOUND_FLAG_ASYNC = MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_ASYNC;
-  MA_SOUND_FLAG_WAIT_INIT = MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_WAIT_INIT;
-  MA_SOUND_FLAG_NO_DEFAULT_ATTACHMENT = $00000010;
-  MA_SOUND_FLAG_NO_PITCH = $00000020;
-  MA_SOUND_FLAG_NO_SPATIALIZATION = $00000040;
   MA_ENGINE_MAX_LISTENERS = 4;
   MA_SOUND_SOURCE_CHANNEL_COUNT = $FFFFFFFF;
   PHYSFS_VER_MAJOR = 3;
@@ -2064,6 +1909,130 @@ const
   STBTT_MAC_LANG_CHINESE_SIMPLIFIED = 33;
   STBTT_MAC_LANG_ITALIAN = 3;
   STBTT_MAC_LANG_CHINESE_TRAD = 19;
+  MA_CHANNEL_NONE = 0;
+  MA_CHANNEL_MONO = 1;
+  MA_CHANNEL_FRONT_LEFT = 2;
+  MA_CHANNEL_FRONT_RIGHT = 3;
+  MA_CHANNEL_FRONT_CENTER = 4;
+  MA_CHANNEL_LFE = 5;
+  MA_CHANNEL_BACK_LEFT = 6;
+  MA_CHANNEL_BACK_RIGHT = 7;
+  MA_CHANNEL_FRONT_LEFT_CENTER = 8;
+  MA_CHANNEL_FRONT_RIGHT_CENTER = 9;
+  MA_CHANNEL_BACK_CENTER = 10;
+  MA_CHANNEL_SIDE_LEFT = 11;
+  MA_CHANNEL_SIDE_RIGHT = 12;
+  MA_CHANNEL_TOP_CENTER = 13;
+  MA_CHANNEL_TOP_FRONT_LEFT = 14;
+  MA_CHANNEL_TOP_FRONT_CENTER = 15;
+  MA_CHANNEL_TOP_FRONT_RIGHT = 16;
+  MA_CHANNEL_TOP_BACK_LEFT = 17;
+  MA_CHANNEL_TOP_BACK_CENTER = 18;
+  MA_CHANNEL_TOP_BACK_RIGHT = 19;
+  MA_CHANNEL_AUX_0 = 20;
+  MA_CHANNEL_AUX_1 = 21;
+  MA_CHANNEL_AUX_2 = 22;
+  MA_CHANNEL_AUX_3 = 23;
+  MA_CHANNEL_AUX_4 = 24;
+  MA_CHANNEL_AUX_5 = 25;
+  MA_CHANNEL_AUX_6 = 26;
+  MA_CHANNEL_AUX_7 = 27;
+  MA_CHANNEL_AUX_8 = 28;
+  MA_CHANNEL_AUX_9 = 29;
+  MA_CHANNEL_AUX_10 = 30;
+  MA_CHANNEL_AUX_11 = 31;
+  MA_CHANNEL_AUX_12 = 32;
+  MA_CHANNEL_AUX_13 = 33;
+  MA_CHANNEL_AUX_14 = 34;
+  MA_CHANNEL_AUX_15 = 35;
+  MA_CHANNEL_AUX_16 = 36;
+  MA_CHANNEL_AUX_17 = 37;
+  MA_CHANNEL_AUX_18 = 38;
+  MA_CHANNEL_AUX_19 = 39;
+  MA_CHANNEL_AUX_20 = 40;
+  MA_CHANNEL_AUX_21 = 41;
+  MA_CHANNEL_AUX_22 = 42;
+  MA_CHANNEL_AUX_23 = 43;
+  MA_CHANNEL_AUX_24 = 44;
+  MA_CHANNEL_AUX_25 = 45;
+  MA_CHANNEL_AUX_26 = 46;
+  MA_CHANNEL_AUX_27 = 47;
+  MA_CHANNEL_AUX_28 = 48;
+  MA_CHANNEL_AUX_29 = 49;
+  MA_CHANNEL_AUX_30 = 50;
+  MA_CHANNEL_AUX_31 = 51;
+  MA_CHANNEL_LEFT = 2;
+  MA_CHANNEL_RIGHT = 3;
+  MA_CHANNEL_POSITION_COUNT = 52;
+  MA_SUCCESS = 0;
+  MA_ERROR = -1;
+  MA_INVALID_ARGS = -2;
+  MA_INVALID_OPERATION = -3;
+  MA_OUT_OF_MEMORY = -4;
+  MA_OUT_OF_RANGE = -5;
+  MA_ACCESS_DENIED = -6;
+  MA_DOES_NOT_EXIST = -7;
+  MA_ALREADY_EXISTS = -8;
+  MA_TOO_MANY_OPEN_FILES = -9;
+  MA_INVALID_FILE = -10;
+  MA_TOO_BIG = -11;
+  MA_PATH_TOO_LONG = -12;
+  MA_NAME_TOO_LONG = -13;
+  MA_NOT_DIRECTORY = -14;
+  MA_IS_DIRECTORY = -15;
+  MA_DIRECTORY_NOT_EMPTY = -16;
+  MA_AT_END = -17;
+  MA_NO_SPACE = -18;
+  MA_BUSY = -19;
+  MA_IO_ERROR = -20;
+  MA_INTERRUPT = -21;
+  MA_UNAVAILABLE = -22;
+  MA_ALREADY_IN_USE = -23;
+  MA_BAD_ADDRESS = -24;
+  MA_BAD_SEEK = -25;
+  MA_BAD_PIPE = -26;
+  MA_DEADLOCK = -27;
+  MA_TOO_MANY_LINKS = -28;
+  MA_NOT_IMPLEMENTED = -29;
+  MA_NO_MESSAGE = -30;
+  MA_BAD_MESSAGE = -31;
+  MA_NO_DATA_AVAILABLE = -32;
+  MA_INVALID_DATA = -33;
+  MA_TIMEOUT = -34;
+  MA_NO_NETWORK = -35;
+  MA_NOT_UNIQUE = -36;
+  MA_NOT_SOCKET = -37;
+  MA_NO_ADDRESS = -38;
+  MA_BAD_PROTOCOL = -39;
+  MA_PROTOCOL_UNAVAILABLE = -40;
+  MA_PROTOCOL_NOT_SUPPORTED = -41;
+  MA_PROTOCOL_FAMILY_NOT_SUPPORTED = -42;
+  MA_ADDRESS_FAMILY_NOT_SUPPORTED = -43;
+  MA_SOCKET_NOT_SUPPORTED = -44;
+  MA_CONNECTION_RESET = -45;
+  MA_ALREADY_CONNECTED = -46;
+  MA_NOT_CONNECTED = -47;
+  MA_CONNECTION_REFUSED = -48;
+  MA_NO_HOST = -49;
+  MA_IN_PROGRESS = -50;
+  MA_CANCELLED = -51;
+  MA_MEMORY_ALREADY_MAPPED = -52;
+  MA_FORMAT_NOT_SUPPORTED = -100;
+  MA_DEVICE_TYPE_NOT_SUPPORTED = -101;
+  MA_SHARE_MODE_NOT_SUPPORTED = -102;
+  MA_NO_BACKEND = -103;
+  MA_NO_DEVICE = -104;
+  MA_API_NOT_FOUND = -105;
+  MA_INVALID_DEVICE_CONFIG = -106;
+  MA_LOOP = -107;
+  MA_DEVICE_NOT_INITIALIZED = -200;
+  MA_DEVICE_ALREADY_INITIALIZED = -201;
+  MA_DEVICE_NOT_STARTED = -202;
+  MA_DEVICE_NOT_STOPPED = -203;
+  MA_FAILED_TO_INIT_BACKEND = -300;
+  MA_FAILED_TO_OPEN_BACKEND_DEVICE = -301;
+  MA_FAILED_TO_START_BACKEND_DEVICE = -302;
+  MA_FAILED_TO_STOP_BACKEND_DEVICE = -303;
   ma_stream_format_pcm = 0;
   ma_stream_layout_interleaved = 0;
   ma_stream_layout_deinterleaved = 1;
@@ -2228,6 +2197,8 @@ const
   ma_aaudio_input_preset_voice_recognition = 4;
   ma_aaudio_input_preset_voice_communication = 5;
   ma_aaudio_input_preset_voice_performance = 6;
+  MA_OPEN_MODE_READ = 1;
+  MA_OPEN_MODE_WRITE = 2;
   ma_seek_origin_start = 0;
   ma_seek_origin_current = 1;
   ma_seek_origin_end = 2;
@@ -2243,12 +2214,41 @@ const
   ma_noise_type_white = 0;
   ma_noise_type_pink = 1;
   ma_noise_type_brownian = 2;
+  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_STREAM = 1;
+  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_DECODE = 2;
+  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_ASYNC = 4;
+  MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_WAIT_INIT = 8;
+  MA_RESOURCE_MANAGER_JOB_QUIT = 0;
+  MA_RESOURCE_MANAGER_JOB_LOAD_DATA_BUFFER_NODE = 1;
+  MA_RESOURCE_MANAGER_JOB_FREE_DATA_BUFFER_NODE = 2;
+  MA_RESOURCE_MANAGER_JOB_PAGE_DATA_BUFFER_NODE = 3;
+  MA_RESOURCE_MANAGER_JOB_LOAD_DATA_BUFFER = 4;
+  MA_RESOURCE_MANAGER_JOB_FREE_DATA_BUFFER = 5;
+  MA_RESOURCE_MANAGER_JOB_LOAD_DATA_STREAM = 6;
+  MA_RESOURCE_MANAGER_JOB_FREE_DATA_STREAM = 7;
+  MA_RESOURCE_MANAGER_JOB_PAGE_DATA_STREAM = 8;
+  MA_RESOURCE_MANAGER_JOB_SEEK_DATA_STREAM = 9;
+  MA_RESOURCE_MANAGER_JOB_CUSTOM = 256;
+  MA_RESOURCE_MANAGER_JOB_QUEUE_FLAG_NON_BLOCKING = 1;
+  MA_RESOURCE_MANAGER_FLAG_NON_BLOCKING = 1;
+  MA_RESOURCE_MANAGER_FLAG_NO_THREADING = 2;
   ma_resource_manager_data_supply_type_unknown = 0;
   ma_resource_manager_data_supply_type_encoded = 1;
   ma_resource_manager_data_supply_type_decoded = 2;
   ma_resource_manager_data_supply_type_decoded_paged = 3;
+  MA_NODE_FLAG_PASSTHROUGH = 1;
+  MA_NODE_FLAG_CONTINUOUS_PROCESSING = 2;
+  MA_NODE_FLAG_ALLOW_NULL_INPUT = 4;
+  MA_NODE_FLAG_DIFFERENT_PROCESSING_RATES = 8;
   ma_node_state_started = 0;
   ma_node_state_stopped = 1;
+  MA_SOUND_FLAG_STREAM = 1;
+  MA_SOUND_FLAG_DECODE = 2;
+  MA_SOUND_FLAG_ASYNC = 4;
+  MA_SOUND_FLAG_WAIT_INIT = 8;
+  MA_SOUND_FLAG_NO_DEFAULT_ATTACHMENT = 16;
+  MA_SOUND_FLAG_NO_PITCH = 32;
+  MA_SOUND_FLAG_NO_SPATIALIZATION = 64;
   ma_engine_node_type_sound = 0;
   ma_engine_node_type_group = 1;
   PHYSFS_ENUM_ERROR = -1;
@@ -3013,6 +3013,18 @@ type
   { P_anonymous_type_9  }
   P_anonymous_type_9 = ^_anonymous_type_9;
 
+  { _ma_channel_position  }
+  _ma_channel_position = Integer;
+
+  { P_ma_channel_position  }
+  P_ma_channel_position = ^_ma_channel_position;
+
+  { ma_result  }
+  ma_result = Integer;
+
+  { Pma_result  }
+  Pma_result = ^ma_result;
+
   { ma_stream_format  }
   ma_stream_format = Integer;
 
@@ -3181,6 +3193,12 @@ type
   { Pma_aaudio_input_preset  }
   Pma_aaudio_input_preset = ^ma_aaudio_input_preset;
 
+  { ma_open_mode_flags  }
+  ma_open_mode_flags = Integer;
+
+  { Pma_open_mode_flags  }
+  Pma_open_mode_flags = ^ma_open_mode_flags;
+
   { ma_seek_origin  }
   ma_seek_origin = Integer;
 
@@ -3205,17 +3223,53 @@ type
   { Pma_noise_type  }
   Pma_noise_type = ^ma_noise_type;
 
+  { ma_resource_manager_data_source_flags  }
+  ma_resource_manager_data_source_flags = Integer;
+
+  { Pma_resource_manager_data_source_flags  }
+  Pma_resource_manager_data_source_flags = ^ma_resource_manager_data_source_flags;
+
+  { ma_resource_manager_job_type  }
+  ma_resource_manager_job_type = Integer;
+
+  { Pma_resource_manager_job_type  }
+  Pma_resource_manager_job_type = ^ma_resource_manager_job_type;
+
+  { ma_resource_manager_job_queue_flags  }
+  ma_resource_manager_job_queue_flags = Integer;
+
+  { Pma_resource_manager_job_queue_flags  }
+  Pma_resource_manager_job_queue_flags = ^ma_resource_manager_job_queue_flags;
+
+  { ma_resource_manager_flags  }
+  ma_resource_manager_flags = Integer;
+
+  { Pma_resource_manager_flags  }
+  Pma_resource_manager_flags = ^ma_resource_manager_flags;
+
   { ma_resource_manager_data_supply_type  }
   ma_resource_manager_data_supply_type = Integer;
 
   { Pma_resource_manager_data_supply_type  }
   Pma_resource_manager_data_supply_type = ^ma_resource_manager_data_supply_type;
 
+  { ma_node_flags  }
+  ma_node_flags = Integer;
+
+  { Pma_node_flags  }
+  Pma_node_flags = ^ma_node_flags;
+
   { ma_node_state  }
   ma_node_state = Integer;
 
   { Pma_node_state  }
   Pma_node_state = ^ma_node_state;
+
+  { ma_sound_flags  }
+  ma_sound_flags = Integer;
+
+  { Pma_sound_flags  }
+  Pma_sound_flags = ^ma_sound_flags;
 
   { ma_engine_node_type  }
   ma_engine_node_type = Integer;
@@ -7268,12 +7322,6 @@ type
   { Pma_channel  }
   Pma_channel = ^ma_channel;
 
-  { ma_result  }
-  ma_result = Integer;
-
-  { Pma_result  }
-  Pma_result = ^ma_result;
-
   { ma_allocation_callbacks  }
   ma_allocation_callbacks = record
     pUserData: Pointer;
@@ -7699,6 +7747,7 @@ type
     coneOuterAngleInRadians: Single;
     coneOuterGain: Single;
     dopplerFactor: Single;
+    directionalAttenuationFactor: Single;
     gainSmoothTimeInFrames: ma_uint32;
   end;
 
@@ -8133,6 +8182,7 @@ type
     onDeviceWrite: function(pDevice: Pma_device; const pFrames: Pointer; frameCount: ma_uint32; pFramesWritten: Pma_uint32): ma_result; cdecl;
     onDeviceDataLoop: function(pDevice: Pma_device): ma_result; cdecl;
     onDeviceDataLoopWakeup: function(pDevice: Pma_device): ma_result; cdecl;
+    onDeviceGetInfo: function(pDevice: Pma_device; _type: ma_device_type; pDeviceInfo: Pma_device_info): ma_result; cdecl;
   end;
 
   { _anonymous_type_35  }
@@ -11054,9 +11104,11 @@ var
   ma_delay_uninit: procedure(pDelay: Pma_delay; const pAllocationCallbacks: Pma_allocation_callbacks); cdecl;
   ma_device_config_init: function(deviceType: ma_device_type): ma_device_config; cdecl;
   ma_device_get_context: function(pDevice: Pma_device): Pma_context; cdecl;
+  ma_device_get_info: function(pDevice: Pma_device; _type: ma_device_type; pDeviceInfo: Pma_device_info): ma_result; cdecl;
   ma_device_get_log: function(pDevice: Pma_device): Pma_log; cdecl;
   ma_device_get_master_volume: function(pDevice: Pma_device; pVolume: PSingle): ma_result; cdecl;
   ma_device_get_master_volume_db: function(pDevice: Pma_device; pGainDB: PSingle): ma_result; cdecl;
+  ma_device_get_name: function(pDevice: Pma_device; _type: ma_device_type; pName: PUTF8Char; nameCap: NativeUInt; pLengthNotIncludingNullTerminator: PNativeUInt): ma_result; cdecl;
   ma_device_get_state: function(const pDevice: Pma_device): ma_device_state; cdecl;
   ma_device_handle_backend_data_callback: function(pDevice: Pma_device; pOutput: Pointer; const pInput: Pointer; frameCount: ma_uint32): ma_result; cdecl;
   ma_device_init: function(pContext: Pma_context; const pConfig: Pma_device_config; pDevice: Pma_device): ma_result; cdecl;
@@ -11494,9 +11546,12 @@ var
   ma_sound_get_data_format: function(pSound: Pma_sound; pFormat: Pma_format; pChannels: Pma_uint32; pSampleRate: Pma_uint32; pChannelMap: Pma_channel; channelMapCap: NativeUInt): ma_result; cdecl;
   ma_sound_get_data_source: function(const pSound: Pma_sound): Pma_data_source; cdecl;
   ma_sound_get_direction: function(const pSound: Pma_sound): ma_vec3f; cdecl;
+  ma_sound_get_direction_to_listener: function(const pSound: Pma_sound): ma_vec3f; cdecl;
+  ma_sound_get_directional_attenuation_factor: function(const pSound: Pma_sound): Single; cdecl;
   ma_sound_get_doppler_factor: function(const pSound: Pma_sound): Single; cdecl;
   ma_sound_get_engine: function(const pSound: Pma_sound): Pma_engine; cdecl;
   ma_sound_get_length_in_pcm_frames: function(pSound: Pma_sound; pLength: Pma_uint64): ma_result; cdecl;
+  ma_sound_get_listener_index: function(const pSound: Pma_sound): ma_uint32; cdecl;
   ma_sound_get_max_distance: function(const pSound: Pma_sound): Single; cdecl;
   ma_sound_get_max_gain: function(const pSound: Pma_sound): Single; cdecl;
   ma_sound_get_min_distance: function(const pSound: Pma_sound): Single; cdecl;
@@ -11516,8 +11571,11 @@ var
   ma_sound_group_get_cone: procedure(const pGroup: Pma_sound_group; pInnerAngleInRadians: PSingle; pOuterAngleInRadians: PSingle; pOuterGain: PSingle); cdecl;
   ma_sound_group_get_current_fade_volume: function(pGroup: Pma_sound_group): Single; cdecl;
   ma_sound_group_get_direction: function(const pGroup: Pma_sound_group): ma_vec3f; cdecl;
+  ma_sound_group_get_direction_to_listener: function(const pGroup: Pma_sound_group): ma_vec3f; cdecl;
+  ma_sound_group_get_directional_attenuation_factor: function(const pGroup: Pma_sound_group): Single; cdecl;
   ma_sound_group_get_doppler_factor: function(const pGroup: Pma_sound_group): Single; cdecl;
   ma_sound_group_get_engine: function(const pGroup: Pma_sound_group): Pma_engine; cdecl;
+  ma_sound_group_get_listener_index: function(const pGroup: Pma_sound_group): ma_uint32; cdecl;
   ma_sound_group_get_max_distance: function(const pGroup: Pma_sound_group): Single; cdecl;
   ma_sound_group_get_max_gain: function(const pGroup: Pma_sound_group): Single; cdecl;
   ma_sound_group_get_min_distance: function(const pGroup: Pma_sound_group): Single; cdecl;
@@ -11539,6 +11597,7 @@ var
   ma_sound_group_set_attenuation_model: procedure(pGroup: Pma_sound_group; attenuationModel: ma_attenuation_model); cdecl;
   ma_sound_group_set_cone: procedure(pGroup: Pma_sound_group; innerAngleInRadians: Single; outerAngleInRadians: Single; outerGain: Single); cdecl;
   ma_sound_group_set_direction: procedure(pGroup: Pma_sound_group; x: Single; y: Single; z: Single); cdecl;
+  ma_sound_group_set_directional_attenuation_factor: procedure(pGroup: Pma_sound_group; directionalAttenuationFactor: Single); cdecl;
   ma_sound_group_set_doppler_factor: procedure(pGroup: Pma_sound_group; dopplerFactor: Single); cdecl;
   ma_sound_group_set_fade_in_milliseconds: procedure(pGroup: Pma_sound_group; volumeBeg: Single; volumeEnd: Single; fadeLengthInMilliseconds: ma_uint64); cdecl;
   ma_sound_group_set_fade_in_pcm_frames: procedure(pGroup: Pma_sound_group; volumeBeg: Single; volumeEnd: Single; fadeLengthInFrames: ma_uint64); cdecl;
@@ -11575,6 +11634,7 @@ var
   ma_sound_set_attenuation_model: procedure(pSound: Pma_sound; attenuationModel: ma_attenuation_model); cdecl;
   ma_sound_set_cone: procedure(pSound: Pma_sound; innerAngleInRadians: Single; outerAngleInRadians: Single; outerGain: Single); cdecl;
   ma_sound_set_direction: procedure(pSound: Pma_sound; x: Single; y: Single; z: Single); cdecl;
+  ma_sound_set_directional_attenuation_factor: procedure(pSound: Pma_sound; directionalAttenuationFactor: Single); cdecl;
   ma_sound_set_doppler_factor: procedure(pSound: Pma_sound; dopplerFactor: Single); cdecl;
   ma_sound_set_fade_in_milliseconds: procedure(pSound: Pma_sound; volumeBeg: Single; volumeEnd: Single; fadeLengthInMilliseconds: ma_uint64); cdecl;
   ma_sound_set_fade_in_pcm_frames: procedure(pSound: Pma_sound; volumeBeg: Single; volumeEnd: Single; fadeLengthInFrames: ma_uint64); cdecl;
@@ -11604,6 +11664,7 @@ var
   ma_spatializer_get_attenuation_model: function(const pSpatializer: Pma_spatializer): ma_attenuation_model; cdecl;
   ma_spatializer_get_cone: procedure(const pSpatializer: Pma_spatializer; pInnerAngleInRadians: PSingle; pOuterAngleInRadians: PSingle; pOuterGain: PSingle); cdecl;
   ma_spatializer_get_direction: function(const pSpatializer: Pma_spatializer): ma_vec3f; cdecl;
+  ma_spatializer_get_directional_attenuation_factor: function(const pSpatializer: Pma_spatializer): Single; cdecl;
   ma_spatializer_get_doppler_factor: function(const pSpatializer: Pma_spatializer): Single; cdecl;
   ma_spatializer_get_heap_size: function(const pConfig: Pma_spatializer_config; pHeapSizeInBytes: PNativeUInt): ma_result; cdecl;
   ma_spatializer_get_input_channels: function(const pSpatializer: Pma_spatializer): ma_uint32; cdecl;
@@ -11614,6 +11675,7 @@ var
   ma_spatializer_get_output_channels: function(const pSpatializer: Pma_spatializer): ma_uint32; cdecl;
   ma_spatializer_get_position: function(const pSpatializer: Pma_spatializer): ma_vec3f; cdecl;
   ma_spatializer_get_positioning: function(const pSpatializer: Pma_spatializer): ma_positioning; cdecl;
+  ma_spatializer_get_relative_position_and_direction: procedure(const pSpatializer: Pma_spatializer; const pListener: Pma_spatializer_listener; pRelativePos: Pma_vec3f; pRelativeDir: Pma_vec3f); cdecl;
   ma_spatializer_get_rolloff: function(const pSpatializer: Pma_spatializer): Single; cdecl;
   ma_spatializer_get_velocity: function(const pSpatializer: Pma_spatializer): ma_vec3f; cdecl;
   ma_spatializer_init: function(const pConfig: Pma_spatializer_config; const pAllocationCallbacks: Pma_allocation_callbacks; pSpatializer: Pma_spatializer): ma_result; cdecl;
@@ -11642,6 +11704,7 @@ var
   ma_spatializer_set_attenuation_model: procedure(pSpatializer: Pma_spatializer; attenuationModel: ma_attenuation_model); cdecl;
   ma_spatializer_set_cone: procedure(pSpatializer: Pma_spatializer; innerAngleInRadians: Single; outerAngleInRadians: Single; outerGain: Single); cdecl;
   ma_spatializer_set_direction: procedure(pSpatializer: Pma_spatializer; x: Single; y: Single; z: Single); cdecl;
+  ma_spatializer_set_directional_attenuation_factor: procedure(pSpatializer: Pma_spatializer; directionalAttenuationFactor: Single); cdecl;
   ma_spatializer_set_doppler_factor: procedure(pSpatializer: Pma_spatializer; dopplerFactor: Single); cdecl;
   ma_spatializer_set_max_distance: procedure(pSpatializer: Pma_spatializer; maxDistance: Single); cdecl;
   ma_spatializer_set_max_gain: procedure(pSpatializer: Pma_spatializer; maxGain: Single); cdecl;
@@ -12290,6 +12353,10 @@ var
   PHYSFS_writeULE16: function(_file: PPHYSFS_File; val: PHYSFS_uint16): Integer; cdecl;
   PHYSFS_writeULE32: function(_file: PPHYSFS_File; val: PHYSFS_uint32): Integer; cdecl;
   PHYSFS_writeULE64: function(_file: PPHYSFS_File; val: PHYSFS_uint64): Integer; cdecl;
+  PHYSFSRWOPS_makeRWops: function(handle: PPHYSFS_File): PSDL_RWops; cdecl;
+  PHYSFSRWOPS_openAppend: function(const fname: PUTF8Char): PSDL_RWops; cdecl;
+  PHYSFSRWOPS_openRead: function(const fname: PUTF8Char): PSDL_RWops; cdecl;
+  PHYSFSRWOPS_openWrite: function(const fname: PUTF8Char): PSDL_RWops; cdecl;
   pieColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; color: Uint32): Integer; cdecl;
   pieRGBA: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; rad: Sint16; start: Sint16; _end: Sint16; r: Uint8; g: Uint8; b: Uint8; a: Uint8): Integer; cdecl;
   pixelColor: function(renderer: PSDL_Renderer; x: Sint16; y: Sint16; color: Uint32): Integer; cdecl;
@@ -13763,9 +13830,11 @@ begin
   ma_delay_uninit := GetProcAddress(LDllHandle, 'ma_delay_uninit');
   ma_device_config_init := GetProcAddress(LDllHandle, 'ma_device_config_init');
   ma_device_get_context := GetProcAddress(LDllHandle, 'ma_device_get_context');
+  ma_device_get_info := GetProcAddress(LDllHandle, 'ma_device_get_info');
   ma_device_get_log := GetProcAddress(LDllHandle, 'ma_device_get_log');
   ma_device_get_master_volume := GetProcAddress(LDllHandle, 'ma_device_get_master_volume');
   ma_device_get_master_volume_db := GetProcAddress(LDllHandle, 'ma_device_get_master_volume_db');
+  ma_device_get_name := GetProcAddress(LDllHandle, 'ma_device_get_name');
   ma_device_get_state := GetProcAddress(LDllHandle, 'ma_device_get_state');
   ma_device_handle_backend_data_callback := GetProcAddress(LDllHandle, 'ma_device_handle_backend_data_callback');
   ma_device_init := GetProcAddress(LDllHandle, 'ma_device_init');
@@ -14203,9 +14272,12 @@ begin
   ma_sound_get_data_format := GetProcAddress(LDllHandle, 'ma_sound_get_data_format');
   ma_sound_get_data_source := GetProcAddress(LDllHandle, 'ma_sound_get_data_source');
   ma_sound_get_direction := GetProcAddress(LDllHandle, 'ma_sound_get_direction');
+  ma_sound_get_direction_to_listener := GetProcAddress(LDllHandle, 'ma_sound_get_direction_to_listener');
+  ma_sound_get_directional_attenuation_factor := GetProcAddress(LDllHandle, 'ma_sound_get_directional_attenuation_factor');
   ma_sound_get_doppler_factor := GetProcAddress(LDllHandle, 'ma_sound_get_doppler_factor');
   ma_sound_get_engine := GetProcAddress(LDllHandle, 'ma_sound_get_engine');
   ma_sound_get_length_in_pcm_frames := GetProcAddress(LDllHandle, 'ma_sound_get_length_in_pcm_frames');
+  ma_sound_get_listener_index := GetProcAddress(LDllHandle, 'ma_sound_get_listener_index');
   ma_sound_get_max_distance := GetProcAddress(LDllHandle, 'ma_sound_get_max_distance');
   ma_sound_get_max_gain := GetProcAddress(LDllHandle, 'ma_sound_get_max_gain');
   ma_sound_get_min_distance := GetProcAddress(LDllHandle, 'ma_sound_get_min_distance');
@@ -14225,8 +14297,11 @@ begin
   ma_sound_group_get_cone := GetProcAddress(LDllHandle, 'ma_sound_group_get_cone');
   ma_sound_group_get_current_fade_volume := GetProcAddress(LDllHandle, 'ma_sound_group_get_current_fade_volume');
   ma_sound_group_get_direction := GetProcAddress(LDllHandle, 'ma_sound_group_get_direction');
+  ma_sound_group_get_direction_to_listener := GetProcAddress(LDllHandle, 'ma_sound_group_get_direction_to_listener');
+  ma_sound_group_get_directional_attenuation_factor := GetProcAddress(LDllHandle, 'ma_sound_group_get_directional_attenuation_factor');
   ma_sound_group_get_doppler_factor := GetProcAddress(LDllHandle, 'ma_sound_group_get_doppler_factor');
   ma_sound_group_get_engine := GetProcAddress(LDllHandle, 'ma_sound_group_get_engine');
+  ma_sound_group_get_listener_index := GetProcAddress(LDllHandle, 'ma_sound_group_get_listener_index');
   ma_sound_group_get_max_distance := GetProcAddress(LDllHandle, 'ma_sound_group_get_max_distance');
   ma_sound_group_get_max_gain := GetProcAddress(LDllHandle, 'ma_sound_group_get_max_gain');
   ma_sound_group_get_min_distance := GetProcAddress(LDllHandle, 'ma_sound_group_get_min_distance');
@@ -14248,6 +14323,7 @@ begin
   ma_sound_group_set_attenuation_model := GetProcAddress(LDllHandle, 'ma_sound_group_set_attenuation_model');
   ma_sound_group_set_cone := GetProcAddress(LDllHandle, 'ma_sound_group_set_cone');
   ma_sound_group_set_direction := GetProcAddress(LDllHandle, 'ma_sound_group_set_direction');
+  ma_sound_group_set_directional_attenuation_factor := GetProcAddress(LDllHandle, 'ma_sound_group_set_directional_attenuation_factor');
   ma_sound_group_set_doppler_factor := GetProcAddress(LDllHandle, 'ma_sound_group_set_doppler_factor');
   ma_sound_group_set_fade_in_milliseconds := GetProcAddress(LDllHandle, 'ma_sound_group_set_fade_in_milliseconds');
   ma_sound_group_set_fade_in_pcm_frames := GetProcAddress(LDllHandle, 'ma_sound_group_set_fade_in_pcm_frames');
@@ -14284,6 +14360,7 @@ begin
   ma_sound_set_attenuation_model := GetProcAddress(LDllHandle, 'ma_sound_set_attenuation_model');
   ma_sound_set_cone := GetProcAddress(LDllHandle, 'ma_sound_set_cone');
   ma_sound_set_direction := GetProcAddress(LDllHandle, 'ma_sound_set_direction');
+  ma_sound_set_directional_attenuation_factor := GetProcAddress(LDllHandle, 'ma_sound_set_directional_attenuation_factor');
   ma_sound_set_doppler_factor := GetProcAddress(LDllHandle, 'ma_sound_set_doppler_factor');
   ma_sound_set_fade_in_milliseconds := GetProcAddress(LDllHandle, 'ma_sound_set_fade_in_milliseconds');
   ma_sound_set_fade_in_pcm_frames := GetProcAddress(LDllHandle, 'ma_sound_set_fade_in_pcm_frames');
@@ -14313,6 +14390,7 @@ begin
   ma_spatializer_get_attenuation_model := GetProcAddress(LDllHandle, 'ma_spatializer_get_attenuation_model');
   ma_spatializer_get_cone := GetProcAddress(LDllHandle, 'ma_spatializer_get_cone');
   ma_spatializer_get_direction := GetProcAddress(LDllHandle, 'ma_spatializer_get_direction');
+  ma_spatializer_get_directional_attenuation_factor := GetProcAddress(LDllHandle, 'ma_spatializer_get_directional_attenuation_factor');
   ma_spatializer_get_doppler_factor := GetProcAddress(LDllHandle, 'ma_spatializer_get_doppler_factor');
   ma_spatializer_get_heap_size := GetProcAddress(LDllHandle, 'ma_spatializer_get_heap_size');
   ma_spatializer_get_input_channels := GetProcAddress(LDllHandle, 'ma_spatializer_get_input_channels');
@@ -14323,6 +14401,7 @@ begin
   ma_spatializer_get_output_channels := GetProcAddress(LDllHandle, 'ma_spatializer_get_output_channels');
   ma_spatializer_get_position := GetProcAddress(LDllHandle, 'ma_spatializer_get_position');
   ma_spatializer_get_positioning := GetProcAddress(LDllHandle, 'ma_spatializer_get_positioning');
+  ma_spatializer_get_relative_position_and_direction := GetProcAddress(LDllHandle, 'ma_spatializer_get_relative_position_and_direction');
   ma_spatializer_get_rolloff := GetProcAddress(LDllHandle, 'ma_spatializer_get_rolloff');
   ma_spatializer_get_velocity := GetProcAddress(LDllHandle, 'ma_spatializer_get_velocity');
   ma_spatializer_init := GetProcAddress(LDllHandle, 'ma_spatializer_init');
@@ -14351,6 +14430,7 @@ begin
   ma_spatializer_set_attenuation_model := GetProcAddress(LDllHandle, 'ma_spatializer_set_attenuation_model');
   ma_spatializer_set_cone := GetProcAddress(LDllHandle, 'ma_spatializer_set_cone');
   ma_spatializer_set_direction := GetProcAddress(LDllHandle, 'ma_spatializer_set_direction');
+  ma_spatializer_set_directional_attenuation_factor := GetProcAddress(LDllHandle, 'ma_spatializer_set_directional_attenuation_factor');
   ma_spatializer_set_doppler_factor := GetProcAddress(LDllHandle, 'ma_spatializer_set_doppler_factor');
   ma_spatializer_set_max_distance := GetProcAddress(LDllHandle, 'ma_spatializer_set_max_distance');
   ma_spatializer_set_max_gain := GetProcAddress(LDllHandle, 'ma_spatializer_set_max_gain');
@@ -14999,6 +15079,10 @@ begin
   PHYSFS_writeULE16 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE16');
   PHYSFS_writeULE32 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE32');
   PHYSFS_writeULE64 := GetProcAddress(LDllHandle, 'PHYSFS_writeULE64');
+  PHYSFSRWOPS_makeRWops := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_makeRWops');
+  PHYSFSRWOPS_openAppend := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_openAppend');
+  PHYSFSRWOPS_openRead := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_openRead');
+  PHYSFSRWOPS_openWrite := GetProcAddress(LDllHandle, 'PHYSFSRWOPS_openWrite');
   pieColor := GetProcAddress(LDllHandle, 'pieColor');
   pieRGBA := GetProcAddress(LDllHandle, 'pieRGBA');
   pixelColor := GetProcAddress(LDllHandle, 'pixelColor');
