@@ -33,7 +33,7 @@ You simply add `SDL` to your uses section and everything will be linked in your 
 - <a href="https://github.com/tinyBigGAMES/SDL/wiki" target="_blank">Wiki</a>
 - <a href="https://tinybiggames.com/contact/" target="_blank">Contact</a>
 
-***NOTE:** We're using SDL for our game projects therefore these bindings will always remain up to date.* :cool:
+
 <p align="center">
 <img src="media/delphi.png" alt="Delphi">
 </p>
