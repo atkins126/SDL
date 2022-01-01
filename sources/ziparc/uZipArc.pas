@@ -35,7 +35,7 @@
  NOTE: We're using SDL for our game projects therefore these bindings will
        always remain up to date.🆒
 
- Copyright © 2021 tinyBigGAMES™ LLC
+ Copyright © 2021-2022 tinyBigGAMES™ LLC
  All Rights Reserved.
 
  Website: https://tinybiggames.com
@@ -137,7 +137,7 @@ procedure TZipArc.Header;
 begin
   WriteLn;
   WriteLn('ZipArc™ Archive Utilty');
-  WriteLn('Copyright © 2021 tinyBigGAMES™');
+  WriteLn('Copyright © 2021-2022 tinyBigGAMES™');
   WriteLn('All Rights Reserved.');
 end;
 
