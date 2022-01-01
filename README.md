@@ -32,6 +32,10 @@ You simply add `SDL` to your uses section and everything will be linked in your 
 - <a href="https://github.com/tinyBigGAMES/SDL/discussions" target="_blank">Discussions</a>
 - <a href="https://github.com/tinyBigGAMES/SDL/wiki" target="_blank">Wiki</a>
 - <a href="https://tinybiggames.com/contact/" target="_blank">Contact</a>
+- <a href="https://libsdl.org/" target="_blank">SDL website</a>
+- <a href="https://wiki.libsdl.org/FrontPage" target="_blank">SDL Wiki</a>
+- <a href="https://discourse.libsdl.org/" target="_blank">SDL Forums</a>
+- <a href="https://www.youtube.com/results?search_query=sdl+game+development&sp=CAI%253D" target="_blank">SDL on YouTube</a>
 
 
 <p align="center">
