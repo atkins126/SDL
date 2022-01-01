@@ -39,5 +39,5 @@ You simply add `SDL` to your uses section and everything will be linked in your 
 </p>
 <h5 align="center">
 
-Made with :heart: in Delphi 11
+Made with :heart: in Delphi
 </h5>
