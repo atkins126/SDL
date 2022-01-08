@@ -33,9 +33,6 @@
    and ready for use. You will have direct access to all the above
    libraries.
 
- NOTE: We're using SDL for our game projects therefore these bindings will
-       always remain up to date.🆒    
-
  Copyright © 2021-2022 tinyBigGAMES™ LLC
  All Rights Reserved.
 
