@@ -2,7 +2,7 @@
 
 [![Chat on Discord](https://img.shields.io/discord/754884471324672040.svg?logo=discord)](https://discord.gg/tPWjMwK) [![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social)](https://twitter.com/tinyBigGAMES)
 # SDL
-### Simple DirectMedia Layer for Delphi
+### Simple DirectMedia Layer
 
 Pascal bindings that allow you to use **SDL** and other useful libraries with <a href="https://www.embarcadero.com/es/products/delphi" target="_blank">Delphi</a>. 
 
@@ -32,12 +32,16 @@ You simply add `SDL` to your uses section and everything will be linked in your 
 - <a href="https://github.com/tinyBigGAMES/SDL/discussions" target="_blank">Discussions</a>
 - <a href="https://github.com/tinyBigGAMES/SDL/wiki" target="_blank">Wiki</a>
 - <a href="https://tinybiggames.com/contact/" target="_blank">Contact</a>
+- <a href="https://libsdl.org/" target="_blank">SDL website</a>
+- <a href="https://wiki.libsdl.org/FrontPage" target="_blank">SDL Wiki</a>
+- <a href="https://discourse.libsdl.org/" target="_blank">SDL Forums</a>
+- <a href="https://www.youtube.com/results?search_query=sdl+game+development&sp=CAI%253D" target="_blank">SDL on YouTube</a>
 
-***NOTE:** We're using SDL for our game projects therefore these bindings will always remain up to date.* :cool:
+
 <p align="center">
 <img src="media/delphi.png" alt="Delphi">
 </p>
 <h5 align="center">
 
-Made with :heart: in Delphi 11
+Made with :heart: in Delphi
 </h5>
